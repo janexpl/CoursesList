@@ -1,0 +1,19 @@
+{{ define "courses/update" }}
+<h1>Edycja kursu</h1>
+<form method="post" action="/courses/update/process">
+        <div class="form-group">
+          <label for="courseName">Nazwa kursu</label>
+          <input type="text" class="form-control" name="courseName" id="courseName"  placeholder="Wpisz nazwę kursu" required value = "{{ .Data.Name }}">
+        </div>
+        <div class="form-group">
+          <label for="courseSymbol">Symbol</label>
+          <input type="text" class="form-control" name="courseSymbol" id="courseSymbol" placeholder="Wpisz symbol" required disabled value = "{{ .Data.Symbol }}">
+        </div>
+        <div class="form-group">
+                <label for="courseSymbol">Wazność w latach</label>
+                <input type="number" class="form-control" name="courseExpT" id="courseExpT" placeholder="Wpisz termin waznosci w latach" required value = "{{ .Data.ExpiryTime }}"> 
+        </div>
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+      </form>
+
+{{ end }}

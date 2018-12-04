@@ -1,0 +1,92 @@
+{{ define "companies/create" }}
+<h1>Nowy kursant</h1>
+<form class="needs-validation border border-light p-5" novalidate method="post" action="/companies/create/process">
+  <div class="form-row">
+      <div class="col-md-12 mb-2">
+          <label for="name">Nazwa firmy</label>
+          <input type="text" class="form-control" name="name" id="name"  placeholder="Wpisz nazwę" required>
+          <div class="invalid-feedback">
+              Wpisz nazwę firmy
+          </div>
+      </div>  
+    </div>
+    <div class="form-row">
+      <div class="col-md-3 mb-2">
+          <label for="street">Ulica</label>
+          <input type="text" class="form-control" name="street" id="street"  placeholder="Wpisz adres" >
+          <div class="invalid-feedback">
+                Uzupełnij ulicę
+              </div>
+      </div>  
+      <div class="col-md-3 mb-2">
+          <label for="city">Miejscowość</label>
+          <input type="text" class="form-control" name="city" id="city"  placeholder="Wpisz miejscowość" required>
+          <div class="invalid-feedback">
+            Uzupełnij miejscowość
+          </div>
+      </div> 
+      <div class="col-md-3 mb-2">
+          <label for="zipcode">Kod pocztowy</label>
+          <input type="text" class="form-control" name="zipcode" id="zipcode"  placeholder="Wpisz kod pocztowy" required>
+          <div class="invalid-feedback">
+              Wpisz kod pocztowy
+          </div>
+      </div> 
+      <div class="col-md-3 mb-2">
+          <label for="nip">NIP</label>
+          <input type="text" class="form-control" name="nip" id="nip"  placeholder="Nip w formacie 1234567890" required>
+          <div class="invalid-feedback">
+              Wpisz nip
+          </div>
+      </div> 
+  </div>
+  <div class="form-row">
+      <div class="col-md-4 mb-3">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" name="email" id="email"  placeholder="Wpisz email do kontaktu" >
+          
+      </div>  
+      <div class="col-md-4 mb-3">
+          <label for="contactperson">Osoba kontaktowa</label>
+          <input type="text" class="form-control" name="contactperson" id="contactperson"  placeholder="Imię nazwisko osoby kontaktowej" >
+          
+      </div>  
+      <div class="col-md-4 mb-3">
+          <label for="telephone">Telefon kontaktowy</label>
+          <input type="tel" class="form-control" name="telephone" id="telephone"  placeholder="Wpisz telefon kontaktowy" required>
+          <div class="invalid-feedback">
+              Wpisz telefon kontaktowy
+          </div>
+      </div>  
+      
+      </div>
+      <div class="form-row">
+          <div class="col-md-12 mb-3">
+              <label for="note">Notatki</label>
+              <textarea name="note" id="note" cols="1000" rows="5" class="form-control"></textarea>
+          </div>  
+      </div>
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+      </form>
+      <script type="text/javascript">
+      (function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+      </script>
+
+
+{{ end }}

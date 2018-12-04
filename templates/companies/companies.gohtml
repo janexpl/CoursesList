@@ -1,0 +1,50 @@
+{{ define "companies/companies"}}
+
+<h1>Lista firm</h1>
+<table id="compTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th class="th-sm" scope="col">Nazwa</th>
+            <th class="th-sm" scope="col">Ulica</th>
+            <th class="th-sm" scope="col">Miejscowość</th>
+            <th class="th-sm" scope="col">Kod pocztowy</th>
+            <th class="th-sm" scope="col">NIP</th>
+            <th class="th-sm" scope="col">Numer telefonu</th>
+            
+            <th></th>
+          </tr>
+        </thead>
+       
+        <tbody>
+                {{ range .Data }}
+          <tr>
+            <td>{{ .Name }}</td>
+            <td>{{ .Street }}</td>
+            <td>{{ .City }}</td>
+            <td>{{ .Zipcode }}</td>
+            <td>{{ .Nip }}</td>
+            <td>{{ .TelephoneNo }}</td>
+            
+            <td>
+            <a class="btn btn-sm btn-danger" data-toggle="confirmation"
+            data-btn-ok-label="Kontynuować?" data-btn-ok-class="btn-success"
+            data-btn-ok-icon-class="fa fa-check" 
+            data-btn-cancel-label="Anuluj" data-btn-cancel-class="btn-danger"
+            data-btn-cancel-icon-class="fa fa-ban" 
+            data-title="Usuń" data-content="Czy na pewno usunąć?" href="/companies/delete/process?nip={{ .Nip }}">
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-sm btn-success" href="/companies/update?nip={{ .Nip }}">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+          </a>
+          <a class="btn btn-sm btn-success" href="/companies/show?nip={{ .Nip }}">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+          </a>
+             
+          </tr>
+          
+          {{ end }}
+        </tbody>
+      </table>
+      
+{{ end }}

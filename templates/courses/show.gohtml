@@ -1,0 +1,94 @@
+{{ define "courses/show"}}
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="course-tab" data-toggle="tab" href="#course" role="tab" aria-controls="course" aria-selected="true">Szczegóły kursu</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="certificates-tab" data-toggle="tab" href="#certificates" role="tab" aria-controls="certificates" aria-selected="false">Wystawione zaświadczenia</a>
+        </li>
+
+      </ul>
+      <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="course" role="tabpanel" aria-labelledby="student-tab"><br>
+                    <div class="row ">
+                            <div class="col-md-6 mb-2 ">
+                                Nazwa kursu
+                                
+                            </div>  
+                            <div class="col-md-6 mb-2 ">
+                                    <strong>{{ .Course.Name }}</strong>
+                            </div>
+                    </div>
+                    <div class="row ">
+                            <div class="col-md-6 mb-2 ">
+                                Symbol
+                                
+                            </div>  
+                            <div class="col-md-6 mb-2 ">
+                                    <strong>{{ .Course.Symbol }}</strong>
+                            </div>
+                    </div>
+                    <div class="row ">
+                            <div class="col-md-6 mb-2 ">
+                                Data waznosci
+                            </div>  
+                            <div class="col-md-6 mb-2 ">
+                                    <strong>{{ .Course.ExpiryTime }}</strong>
+                            </div>
+                    </div>
+                </div>
+            <div class="tab-pane fade" id="certificates" role="tabpanel" aria-labelledby="certificates-tab">
+                <h1>Lista zaświadczeń</h1>
+                <table id="studentsTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                          <tr>
+                            <th class="th-sm" scope="col">Data wystawienia</th>
+                            <th class="th-sm" scope="col">Imię</th>
+                            <th class="th-sm" scope="col">Nazwisko</th>
+                            <th class="th-sm" scope="col">Data urodzenia</th>
+                            <th class="th-sm" scope="col">Miejsce urodzenia</th>
+                            <th class="th-sm" scope="col">PESEL</th>
+                            <th class="th-sm" scope="col">Numer</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                       
+                        <tbody>
+                                {{ range .Cert }}
+                          <tr>
+                            <td>{{ dateformat .Date }}</td>
+                            <td>{{ .Student.Firstname }}</td>
+                            <td>{{ .Student.Lastname }}</td>
+                            <td>{{ dateformat .Student.Birthdate }}</td>
+                            <td>{{ .Student.Birthplace }}</td>
+                            <td>{{ .Student.Pesel }}</td>
+                            <td>{{ .Registry.Number }}/{{ .Registry.Course.Symbol }}/{{ .Registry.Year }}</td>
+                            <td>
+                            <a class="btn btn-sm btn-danger" data-toggle="confirmation"
+                            data-btn-ok-label="Kontynuować?" data-btn-ok-class="btn-success"
+                            data-btn-ok-icon-class="fa fa-check" 
+                            data-btn-cancel-label="Anuluj" data-btn-cancel-class="btn-danger"
+                            data-btn-cancel-icon-class="fa fa-ban" 
+                            data-title="Usuń" data-content="Czy na pewno usunąć?" href="/certificates/delete/process?id={{ .ID }}">
+                              <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </a>
+                            <a class="btn btn-sm btn-success" href="/certificates/update?id={{ .ID }}">
+                                <i class="fa fa-edit" aria-hidden="true"></i>
+                          </a>
+                          <a class="btn btn-sm btn-success" href="/certificates/show?id={{ .ID }}">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                          </a>
+                             
+                          </tr>
+                          
+                          {{ end }}
+                        </tbody>
+                      </table>
+
+
+            </div>
+        </div>
+
+
+
+{{ end }}

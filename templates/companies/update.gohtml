@@ -1,0 +1,86 @@
+{{ define "students/update" }}
+<h1>Aktualizuj dane</h1>
+
+<form class="needs-validation border border-light p-5" novalidate method="post" action="/students/update/process">
+  <div class="form-row">
+      <div class="col-md-2 mb-2">
+          <label for="firstname">Imię</label>
+          <input type="text" class="form-control" name="firstname" id="firstname"  placeholder="Wpisz imię" required value="{{ .Data.Firstname}}">
+          <div class="invalid-feedback">
+              Wpisz imię kursanta
+          </div>
+      </div>  
+
+      <div class="col-md-2 mb-2">
+          <label for="secondname">Drugie imię</label>
+          <input type="text" class="form-control" name="secondname" id="secondname"  placeholder="Wpisz drugie imię" value="{{ .Data.Secondname}}">
+          
+      </div>  
+      <div class="col-md-3 mb-2">
+          <label for="lastname">Nazwisko</label>
+          <input type="text" class="form-control" name="lastname" id="lastname"  placeholder="Wpisz nazwisko" required value="{{ .Data.Lastname}}">
+          <div class="invalid-feedback">
+              Wpisz nazwisko kursanta
+          </div>
+      </div> 
+      <div class="col-md-2 mb-2">
+          <label for="birthdate">Data urodzenia</label>
+          <input type="date" class="form-control" name="birthdate" id="birthdate"  placeholder="Wpisz datę urodzenia" required value= "{{ formdatefmt .Data.Birthdate }}" >
+          <div class="invalid-feedback">
+              Wpisz datę urodzenia
+          </div>
+      </div> 
+      <div class="col-md-3 mb-2">
+          <label for="birthplace">Miejsce urodzenia</label>
+          <input type="text" class="form-control" name="birthplace" id="birthplace"  placeholder="Wpisz miejsce urodzenia" required value="{{ .Data.Birthplace}}">
+          <div class="invalid-feedback">
+              Wpisz miejsce urodzenia
+          </div>
+      </div> 
+  </div>
+  <div class="form-row">
+      <div class="col-md-3 mb-3">
+          <label for="pesel">Pesel</label>
+          <input type="number" class="form-control" name="pesel" id="pesel"  placeholder="Wpisz pesel" required disabled value="{{ .Data.Pesel}}" >
+          <div class="invalid-feedback">
+              Wpisz pesel kursanta
+          </div>
+      </div>  
+      <div class="col-md-3 mb-3">
+          <label for="adstreet">Adres zamieszkania</label>
+          <input type="text" class="form-control" name="adstreet" id="adstreet"  placeholder="Wpisz ulicę zamieszkania" required value="{{ .Data.AddressStreet}}">
+          <div class="invalid-feedback">
+              Wpisz miejsce zamieszkania
+          </div>
+      </div>  
+      <div class="col-md-3 mb-3">
+          <label for="adcity">Miasto zamieszkania</label>
+          <input type="text" class="form-control" name="adcity" id="adcity"  placeholder="Wpisz miasto zamieszkania" required value="{{ .Data.AddressCity}}">
+          <div class="invalid-feedback">
+              Wpisz miasto zamieszkania
+          </div>
+      </div>  
+      <div class="col-md-3 mb-3">
+          <label for="zip">Kod pocztowy</label>
+          <input type="text" class="form-control" name="zip" id="zip"  placeholder="Wpisz kod pocztowy" required value="{{ .Data.AddressZip}}">
+          <div class="invalid-feedback">
+              Wpisz kod pocztowy
+          </div>
+      </div>  
+      
+      
+      </div>
+      <div class="form-row">
+          <div class="col-md-3 mb-3">
+              <label for="telephone">Numer kontaktowy</label>
+              <input type="tel" class="form-control" name="telephone" id="telephone"  placeholder="Numer telefonu" required value="{{ .Data.TelephoneNo}}">
+              <div class="invalid-feedback">
+                  Wpisz numer telefonu
+              </div>
+          </div>  
+      </div>
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+      </form>
+      
+
+{{ end }}

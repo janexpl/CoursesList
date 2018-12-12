@@ -1,0 +1,58 @@
+{{ define "users/login" }}
+<div class="container ">
+<h1>Zaloguj się</h1>
+<form class="needs-validation border border-light p-3" novalidate method="post" action="/users/login/process">
+  <div class="form-row justify-content-md-center">
+      <div class="col-md-4 mb-2">
+        <label data-error="wrong" data-success="right" for="email">Email</label>
+          <input type="email" class="form-control validate" name="email" id="email"  placeholder="Wpisz email" required>
+          <div class="invalid-feedback">
+              Wpisz email
+          </div>
+      </div>
+  </div>
+  <div class="form-row justify-content-md-center">
+      <div class="col-md-4 mb-2">
+          <label for="password">Hasło</label>
+          <input type="password" class="form-control validate" name="password" id="password" placeholder="Wpisz hasło" required>
+          <div class="invalid-feedback">
+              Wpisz hasło
+          </div>
+        </div>
+  </div>
+  <div class="form-row justify-content-md-center">
+        <div class="col-md-2 mb-2">
+        <button type="submit" class="btn btn-primary">Zaloguj</button>  
+        </div>
+        <div class="col-md-2 mb-2">
+        <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Zarejestruj</a>        
+            </div>
+
+    </div>
+
+    </form>
+</div>
+      {{ template "users/signup"}}
+<script>
+ (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+            event.stopPropagation();
+        }
+            form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+
+
+</script>
+
+{{ end }}

@@ -1,0 +1,52 @@
+{{ define "users/update" }}
+<h1>Aktualizuj dane uzytkownika</h1>
+<form class="border border-light p-5" role="form" method="post" action="/users/update/process">
+    <input type="hidden" id="id" name="id" value="{{ .Data.ID }}">
+        <div class="form-row justify-content-md-left">
+    <div class="col-md-6 mb-1">
+      <i class="fa fa-name prefix grey-text"></i>
+      <label data-error="wrong" data-success="right" for="sfirstname">Imię</label>
+      <input type="text" id="sfirstname" name="sfirstname" class="form-control validate" value="{{ .Data.Firstname }}">
+     
+    </div>
+          </div>
+          <div class="form-row justify-content-md-left">
+    <div class="col-md-6 mb-1">
+          <i class="fa fa-name prefix grey-text"></i>
+          <label data-error="wrong" data-success="right" for="slastname">Nazwisko</label>
+          <input type="text" id="slastname" name="slastname" class="form-control validate" value="{{ .Data.Lastname }}">
+         
+   </div>
+  </div>
+   <div class="form-row justify-content-md-left">
+    <div class="col-md-6 mb-1">
+      <i class="fa fa-envelope prefix grey-text"></i>
+      <label data-error="wrong" data-success="right" for="semail">Email</label>
+      <input type="email" id="semail" name="semail" class="form-control validate" value="{{ .Data.Email }}">
+     
+    </div>
+
+  </div>
+    <div class="form-row justify-content-md-left">
+    <div class="col-md-6 mb-1">
+      <i class="fa fa-lock prefix grey-text"></i>
+      <label data-error="wrong" data-success="right" for="spassword">Hasło</label>
+      <input type="password" id="spassword" name="spassword" class="form-control validate">
+      
+    </div>
+    </div>
+    <div class="form-row justify-content-md-left">
+            <div class="col-md-1 mb-1">
+              <i class="fa fa-lock prefix grey-text"></i>
+              <label data-error="wrong" data-success="right" for="srole">Administrator</label>
+              <input type="checkbox" id="srole" name="srole" class="form-control validate" 
+              {{ if eq .Data.Role 1 }}checked{{ end }}>
+            </div>
+            </div>
+
+  
+  <div class="modal-footer d-flex justify-content-center">
+    <button type="submit" class="btn btn-deep-orange">Aktualizuj</button>
+  </div>
+  </form>
+{{ end }}

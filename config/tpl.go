@@ -60,18 +60,6 @@ func init() {
 		template.
 			New("t").Funcs(layoutFuncs).
 			ParseGlob("templates/*/*.gohtml"))
-	//	lms, err := filepath.Glob("templates/*.gohtml")
-	/* if err != nil {
-		log.Fatal(err)
-	}
-	for _, lm := range lms {
-		b, err := ioutil.ReadFile(lm)
-		if err != nil {
-			log.Fatal(err)
-		}
-		name := strings.TrimPrefix(lm, trimPrefix)
-		template.Must(LYT.New(name).Parse(string(b)))
-	}*/
 
 }
 
@@ -79,9 +67,10 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, name string, data ma
 	if data == nil {
 		data = map[string]interface{}{}
 	}
-
-	//data["CurrentUser"] = RequestUser(r)
-	//data["Flash"] = r.URL.Query().Get("flash")
+	un, err := GetLoggedUser(r)
+	
+	data["CurrentUser"] = un
+	data["Flash"], _ = getFlash(w, r)
 	templates = template.Must(
 		template.
 			New("t").Funcs(layoutFuncs).
@@ -100,7 +89,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, name string, data ma
 
 	layoutClone.Funcs(funcs)
 
-	err := layoutClone.Execute(w, data)
+	err = layoutClone.Execute(w, data)
 
 	if err != nil {
 		http.Error(

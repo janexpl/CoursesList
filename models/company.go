@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -23,16 +24,17 @@ type Company struct {
 	//Certificates []Cert
 }
 
-func (c *Company) PutCompany(r *http.Request) error {
+func (c *Company) PutCompany(r *http.Request) (int64, error) {
 
 	nip := c.clearnip(r.FormValue("nip"))
+	fmt.Println(nip)
 	if !c.checkNip(nip) {
-		return errors.New("Błędny numer NIP")
+		return 0, errors.New("Błędny numer NIP")
 	}
 	company := Company{}
 	err := config.DB.QueryRow("SELECT nip FROM companies WHERE nip=$1", nip).Scan(&company.Nip)
 	if company.Nip != "" {
-		return errors.New("Istnieje juz firma o takim numerze nip.")
+		return 0, errors.New("Istnieje juz firma o takim numerze nip.")
 	}
 
 	//company.ID = bson.NewObjectId()
@@ -45,12 +47,12 @@ func (c *Company) PutCompany(r *http.Request) error {
 	company.ContactPerson = r.FormValue("contactperson")
 	company.TelephoneNo = r.FormValue("telephone")
 	company.Note = r.FormValue("note")
-
-	_, err = config.DB.Exec("INSERT INTO companies(name,street,city,zipcode,nip,email,contactperson,telephoneno,note) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)", company.Name, company.Street, company.City, company.Zipcode, company.Nip, company.Email, company.ContactPerson, company.TelephoneNo, company.Note)
+	var cid int64
+	err = config.DB.QueryRow("INSERT INTO companies(name,street,city,zipcode,nip,email,contactperson,telephoneno,note) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id", company.Name, company.Street, company.City, company.Zipcode, company.Nip, company.Email, company.ContactPerson, company.TelephoneNo, company.Note).Scan(&cid)
 	if err != nil {
-		return errors.New("500. Internal Server Error." + err.Error())
+		return 0, errors.New("500. Internal Server Error." + err.Error())
 	}
-	return nil
+	return cid, nil
 }
 
 func (c *Company) AllCompanies() ([]Company, error) {
@@ -81,7 +83,7 @@ func (c *Company) DeleteCompany(r *http.Request) error {
 	if nip == "" {
 		return errors.New("400. Bad Request.")
 	}
-	_, err := config.DB.Exec("DELETE FROM courses WHERE nip = $1", nip)
+	_, err := config.DB.Exec("DELETE FROM companies WHERE nip = $1", nip)
 
 	if err != nil {
 		return errors.New("500. Internal Server Error")

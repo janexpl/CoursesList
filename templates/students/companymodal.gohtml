@@ -1,0 +1,173 @@
+{{ define "students/companymodal"}}
+
+<div class="modal fade" id="modalCompanyForm" tabindex="-1" role="dialog" aria-labelledby="companyAddLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addCompanyLabel">Dodaj firmę</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p class="statusMsg"></p>
+                <form class="needs-validation border border-light p-5" role="form"  data-async novalidate>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-2">
+                            <label for="name">Nazwa firmy</label>
+                            <input type="text" class="form-control" name="name" id="name"  placeholder="Wpisz nazwę" required>
+                            <div class="invalid-feedback">
+                                Wpisz nazwę firmy
+                            </div>
+                        </div>  
+                      </div>
+                      <div class="form-row">
+                        <div class="col-md-3 mb-2">
+                            <label for="street">Ulica</label>
+                            <input type="text" class="form-control" name="street" id="street"  placeholder="Wpisz adres" >
+                            <div class="invalid-feedback">
+                                  Uzupełnij ulicę
+                                </div>
+                        </div>  
+                        <div class="col-md-3 mb-2">
+                            <label for="city">Miejscowość</label>
+                            <input type="text" class="form-control" name="city" id="city"  placeholder="Wpisz miejscowość" required>
+                            <div class="invalid-feedback">
+                              Uzupełnij miejscowość
+                            </div>
+                        </div> 
+                        <div class="col-md-3 mb-2">
+                            <label for="zipcode">Kod pocztowy</label>
+                            <input type="text" class="form-control" name="zipcode" id="zipcode"  placeholder="Wpisz kod pocztowy" required>
+                            <div class="invalid-feedback">
+                                Wpisz kod pocztowy
+                            </div>
+                        </div> 
+                        <div class="col-md-3 mb-2">
+                            <label for="nip">NIP</label>
+                            <input type="text" class="form-control" name="nip" id="nip"  placeholder="Nip w formacie 1234567890" required>
+                            <div class="invalid-feedback">
+                                Wpisz nip
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="email" id="email"  placeholder="Wpisz email do kontaktu" >
+                            
+                        </div>  
+                        <div class="col-md-4 mb-3">
+                            <label for="contactperson">Osoba kontaktowa</label>
+                            <input type="text" class="form-control" name="contactperson" id="contactperson"  placeholder="Imię nazwisko osoby kontaktowej" >
+                            
+                        </div>  
+                        <div class="col-md-4 mb-3">
+                            <label for="telephone">Telefon kontaktowy</label>
+                            <input type="tel" class="form-control" name="telephone" id="telephone"  placeholder="Wpisz telefon kontaktowy" required>
+                            <div class="invalid-feedback">
+                                Wpisz telefon kontaktowy
+                            </div>
+                        </div>  
+                        
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12 mb-3">
+                                <label for="note">Notatki</label>
+                                <textarea name="note" id="note" cols="1000" rows="5" class="form-control"></textarea>
+                            </div>  
+                        </div>
+                        
+                        
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+              <button type="button" class="btn btn-primary" onclick="saveCompany()">Zapisz</button>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+ 
+ <script type="text/javascript">
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+            event.stopPropagation();
+        }
+            form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+
+var $companyselect = $('#company-select').selectize({
+  valueField: 'ID',
+  labelField: 'Name',
+  searchField: 'Name',
+  create: function(input){
+    $('#name').val(input);
+    $('#modalCompanyForm').modal({show: true});
+
+  },
+  load: function(query, callback) {
+    if (!query.length) return callback();
+    $.ajax({
+        url: '/companies/getalljson',
+        type: 'GET',
+        dataType: 'json',
+        error: function() {
+            callback();
+        },
+        success: function(res) {
+            callback(res);
+        }
+    });
+  }
+});
+
+function saveCompany(){
+    var name = $('#name').val();
+    var street = $('#street').val();
+    var city = $('#city').val();
+    var zipcode = $('#zipcode').val();
+    var nip = $('#nip').val();
+    var email = $('#email').val();
+    var contactperson = $('#contactperson').val();
+    var note = $('#note').val();
+
+    if (name.trim()==""||city.trim()==""||zipcode.trim()==""||nip.trim()==""){
+        $('.invalid-feedback').fadeIn();
+        $('.form-control').css('invalid');
+        return false
+    }
+    $.ajax({
+            url: "/companies/addfrommodal",
+            type: "POST",
+            data: { name : name, street : street, city : city, zipcode : zipcode, nip : nip, email : email, contactperson : contactperson, note : note },
+            
+            success: function(data,status){
+                var select = $companyselect[0].selectize;
+                select.addOption({
+                    ID : data,
+                    Name : name,
+
+                });
+                select.addItem(data);
+
+                $('#modalCompanyForm').modal('hide')
+                select.unlock();
+            }
+        });
+}
+</script> 
+
+{{ end }}

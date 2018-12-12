@@ -1,261 +1,155 @@
 {{ define "students/create" }}
 <h1>Nowy kursant</h1>
-<form class="needs-validation border border-light p-5" novalidate method="post" action="/students/create/process">
+<form
+  class="needs-validation border border-light p-5"
+  novalidate
+  method="post"
+  action="/students/create/process"
+>
   <div class="form-row">
-      <div class="col-md-2 mb-2">
-          <label for="firstname">Imię</label>
-          <input type="text" class="form-control" name="firstname" id="firstname"  placeholder="Wpisz imię" required>
-          <div class="invalid-feedback">
-              Wpisz imię kursanta
-          </div>
-      </div>  
-      <div class="col-md-2 mb-2">
-          <label for="secondname">Drugie imię</label>
-          <input type="text" class="form-control" name="secondname" id="secondname"  placeholder="Wpisz drugie imię" >
-          
-      </div>  
-      <div class="col-md-3 mb-2">
-          <label for="lastname">Nazwisko</label>
-          <input type="text" class="form-control" name="lastname" id="lastname"  placeholder="Wpisz nazwisko" required>
-          <div class="invalid-feedback">
-              Wpisz nazwisko kursanta
-          </div>
-      </div> 
-      <div class="col-md-2 mb-2">
-          <label for="birthdate">Data urodzenia</label>
-          <input type="date" class="form-control" name="birthdate" id="birthdate"  placeholder="Wpisz datę urodzenia" required>
-          <div class="invalid-feedback">
-              Wpisz datę urodzenia
-          </div>
-      </div> 
-      <div class="col-md-3 mb-2">
-          <label for="birthplace">Miejsce urodzenia</label>
-          <input type="text" class="form-control" name="birthplace" id="birthplace"  placeholder="Wpisz miejsce urodzenia" required>
-          <div class="invalid-feedback">
-              Wpisz miejsce urodzenia
-          </div>
-      </div> 
+    <div class="col-md-2 mb-2">
+      <label for="firstname">Imię</label>
+      <input
+        type="text"
+        class="form-control"
+        name="firstname"
+        id="firstname"
+        placeholder="Wpisz imię"
+        required
+      />
+      <div class="invalid-feedback">Wpisz imię kursanta</div>
+    </div>
+    <div class="col-md-2 mb-2">
+      <label for="secondname">Drugie imię</label>
+      <input
+        type="text"
+        class="form-control"
+        name="secondname"
+        id="secondname"
+        placeholder="Wpisz drugie imię"
+      />
+    </div>
+    <div class="col-md-3 mb-2">
+      <label for="lastname">Nazwisko</label>
+      <input
+        type="text"
+        class="form-control"
+        name="lastname"
+        id="lastname"
+        placeholder="Wpisz nazwisko"
+        required
+      />
+      <div class="invalid-feedback">Wpisz nazwisko kursanta</div>
+    </div>
+    <div class="col-md-2 mb-2">
+      <label for="birthdate">Data urodzenia</label>
+      <input
+        type="date"
+        class="form-control"
+        name="birthdate"
+        id="birthdate"
+        placeholder="Wpisz datę urodzenia"
+        required
+      />
+      <div class="invalid-feedback">Wpisz datę urodzenia</div>
+    </div>
+    <div class="col-md-3 mb-2">
+      <label for="birthplace">Miejsce urodzenia</label>
+      <input
+        type="text"
+        class="form-control"
+        name="birthplace"
+        id="birthplace"
+        placeholder="Wpisz miejsce urodzenia"
+        required
+      />
+      <div class="invalid-feedback">Wpisz miejsce urodzenia</div>
+    </div>
   </div>
   <div class="form-row">
-      <div class="col-md-3 mb-3">
-          <label for="pesel">Pesel</label>
-          <input type="number" class="form-control" name="pesel" id="pesel"  placeholder="Wpisz pesel" required>
-          <div class="invalid-feedback">
-              Wpisz pesel kursanta
-          </div>
-      </div>  
-      <div class="col-md-3 mb-3">
-          <label for="adstreet">Adres zamieszkania</label>
-          <input type="text" class="form-control" name="adstreet" id="adstreet"  placeholder="Wpisz ulicę zamieszkania" required>
-          <div class="invalid-feedback">
-              Wpisz miejsce zamieszkania
-          </div>
-      </div>  
-      <div class="col-md-3 mb-3">
-          <label for="adcity">Miasto zamieszkania</label>
-          <input type="text" class="form-control" name="adcity" id="adcity"  placeholder="Wpisz miasto zamieszkania" required>
-          <div class="invalid-feedback">
-              Wpisz miasto zamieszkania
-          </div>
-      </div>  
-      <div class="col-md-3 mb-3">
-          <label for="zip">Kod pocztowy</label>
-          <input type="text" class="form-control" name="zip" id="zip"  placeholder="Wpisz kod pocztowy" required>
-          <div class="invalid-feedback">
-              Wpisz kod pocztowy
-          </div>
-      </div>  
-      
-      
-      </div>
-      <div class="form-row">
-          <div class="col-md-3 mb-3">
-              <label for="telephone">Numer kontaktowy</label>
-              <input type="tel" class="form-control" name="telephone" id="telephone"  placeholder="Numer telefonu" required>
-              <div class="invalid-feedback">
-                  Wpisz numer telefonu
-              </div>
-          </div>  
-      </div>
-      <div class="form-row">
-            <div class="col-md-6 mb-3 ">
-              <label for="company-select">Pracodawca</label>
-          
-          
-              <select id="company-select" name="company"  class="form-control" title="Wybierz firmę">
-               <!--  {{ range .Data }}
-                <option value="{{ .ID }}">{{ .Name }}</option>  
-                {{ end }} -->
-              </select>
+    <div class="col-md-3 mb-3">
+      <label for="pesel">Pesel</label>
+      <input
+        type="number"
+        class="form-control"
+        name="pesel"
+        id="pesel"
+        placeholder="Wpisz pesel"
+        required
+      />
+      <div class="invalid-feedback">Wpisz pesel kursanta</div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="adstreet">Adres zamieszkania</label>
+      <input
+        type="text"
+        class="form-control"
+        name="adstreet"
+        id="adstreet"
+        placeholder="Wpisz ulicę zamieszkania"
+        required
+      />
+      <div class="invalid-feedback">Wpisz miejsce zamieszkania</div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="adcity">Miasto zamieszkania</label>
+      <input
+        type="text"
+        class="form-control"
+        name="adcity"
+        id="adcity"
+        placeholder="Wpisz miasto zamieszkania"
+        required
+      />
+      <div class="invalid-feedback">Wpisz miasto zamieszkania</div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="zip">Kod pocztowy</label>
+      <input
+        type="text"
+        class="form-control"
+        name="zip"
+        id="zip"
+        placeholder="Wpisz kod pocztowy"
+        required
+      />
+      <div class="invalid-feedback">Wpisz kod pocztowy</div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-3 mb-3">
+      <label for="telephone">Numer kontaktowy</label>
+      <input
+        type="tel"
+        class="form-control"
+        name="telephone"
+        id="telephone"
+        placeholder="Numer telefonu"
+        required
+      />
+      <div class="invalid-feedback">Wpisz numer telefonu</div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-6 mb-3 ">
+      <label for="company-select">Pracodawca</label>
 
-            </div> 
-      </div>
-        <button type="submit" class="btn btn-primary">Zapisz</button>
-      </form>
-      <div class="modal fade" id="modalCompanyForm" tabindex="-1" role="dialog" aria-labelledby="companyAddLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="addCompanyLabel">Dodaj firmę</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <p class="statusMsg"></p>
-                <form class="needs-validation border border-light p-5" data-target="#company-select" data-async novalidate action="/companies/addfrommodal" method="POST" >
-                    <div class="form-row">
-                        <div class="col-md-12 mb-2">
-                            <label for="name">Nazwa firmy</label>
-                            <input type="text" class="form-control" name="name" id="name"  placeholder="Wpisz nazwę" required>
-                            <div class="invalid-feedback">
-                                Wpisz nazwę firmy
-                            </div>
-                        </div>  
-                      </div>
-                      <div class="form-row">
-                        <div class="col-md-3 mb-2">
-                            <label for="street">Ulica</label>
-                            <input type="text" class="form-control" name="street" id="street"  placeholder="Wpisz adres" >
-                            <div class="invalid-feedback">
-                                  Uzupełnij ulicę
-                                </div>
-                        </div>  
-                        <div class="col-md-3 mb-2">
-                            <label for="city">Miejscowość</label>
-                            <input type="text" class="form-control" name="city" id="city"  placeholder="Wpisz miejscowość" required>
-                            <div class="invalid-feedback">
-                              Uzupełnij miejscowość
-                            </div>
-                        </div> 
-                        <div class="col-md-3 mb-2">
-                            <label for="zipcode">Kod pocztowy</label>
-                            <input type="text" class="form-control" name="zipcode" id="zipcode"  placeholder="Wpisz kod pocztowy" required>
-                            <div class="invalid-feedback">
-                                Wpisz kod pocztowy
-                            </div>
-                        </div> 
-                        <div class="col-md-3 mb-2">
-                            <label for="nip">NIP</label>
-                            <input type="text" class="form-control" name="nip" id="nip"  placeholder="Nip w formacie 1234567890" required>
-                            <div class="invalid-feedback">
-                                Wpisz nip
-                            </div>
-                        </div> 
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-4 mb-3">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" id="email"  placeholder="Wpisz email do kontaktu" >
-                            
-                        </div>  
-                        <div class="col-md-4 mb-3">
-                            <label for="contactperson">Osoba kontaktowa</label>
-                            <input type="text" class="form-control" name="contactperson" id="contactperson"  placeholder="Imię nazwisko osoby kontaktowej" >
-                            
-                        </div>  
-                        <div class="col-md-4 mb-3">
-                            <label for="telephone">Telefon kontaktowy</label>
-                            <input type="tel" class="form-control" name="telephone" id="telephone"  placeholder="Wpisz telefon kontaktowy" required>
-                            <div class="invalid-feedback">
-                                Wpisz telefon kontaktowy
-                            </div>
-                        </div>  
-                        
-                        </div>
-                        <div class="form-row">
-                            <div class="col-md-12 mb-3">
-                                <label for="note">Notatki</label>
-                                <textarea name="note" id="note" cols="1000" rows="5" class="form-control"></textarea>
-                            </div>  
-                        </div>
-                        
-                        
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-              <button type="submit" class="btn btn-primary" >Zapisz</button>
-            </form>
-            </div>
-          </div>
-        </div>
-      </div>
- 
- 
-      <script type="text/javascript">
-      (function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
-    </script>
-
-
-
-<script>
-$(document).ready(function() {
-$('#company-select').selectize({
-  valueField: 'ID',
-  labelField: 'Name',
-  searchField: 'Name',
-  create: function(input){
-    $('#name').val(input);
-    $('#modalCompanyForm').modal({show: true});
-  },
-  load: function(query, callback) {
-    if (!query.length) return callback();
-    $.ajax({
-        url: '/companies/getalljson',
-        type: 'GET',
-        dataType: 'json',
-        error: function() {
-            callback();
-        },
-        success: function(res) {
-            callback(res);
-        }
-    });
-  }
-});
-
-} );
-</script> 
-
-<!-- <script>
-$(document).ready(function() {
-   
-    $('#company-select').select2({
-        theme: 'bootstrap4',
-        tags: true,
-        ajax: {
-            url: '/companies/getalljson',
-            dataType: 'json',
-            processResults: function (data) {
-                console.log(data)
-            // Tranforms the top-level key of the response object from 'items' to 'results'
-                return {
-                    results: $.map(data, function(obj) {
-                     return { id: obj.ID, text: obj.Name };
-                    
-                    })
-                }
-            }  
-        } 
-    });
-});
-</script>  -->     
-      
+      <select
+        id="company-select"
+        name="company"
+        class="form-control"
+        title="Wybierz firmę"
+      >
+        <!--
+          {{ range .Data }}
+          <option value="{{ .ID }}">{{ .Name }}</option>
+          {{ end }}
+        -->
+      </select>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Zapisz</button>
+</form>
+{{ template "students/companymodal" }}
 
 {{ end }}

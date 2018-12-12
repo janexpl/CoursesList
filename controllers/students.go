@@ -78,7 +78,7 @@ func (st *StudentsController) CreateProcess(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	s := models.Student{}
-	err := s.PutStudent(r)
+	_, err := s.PutStudent(r)
 	if err != nil {
 
 		flash = err.Error()
@@ -176,7 +176,31 @@ func (st *StudentsController) Update(w http.ResponseWriter, r *http.Request) {
 
 	config.RenderTemplate(w, r, "students/update", data)
 }
+func (st *StudentsController) CreateFromModal(w http.ResponseWriter, r *http.Request) {
 
+	if r.Method != "POST" {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		return
+	}
+	
+	std := models.Student{}
+
+	sid, err := std.PutStudent(r)
+	if err != nil {
+		http.Error(w, http.StatusText(400), http.StatusBadRequest)
+		return
+	}
+	
+	uj, err := json.Marshal(sid)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK) // 200
+	fmt.Fprintf(w, "%s\n", uj)
+
+}
 func (st *StudentsController) UpdateProcess(w http.ResponseWriter, r *http.Request) {
 	var flash string
 	if r.Method != "POST" {

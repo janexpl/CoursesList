@@ -1,0 +1,240 @@
+{{ define "certificates/studentmodal" }}
+
+
+<div class="modal fade" id="modalStudentForm" tabindex="-1" role="dialog" aria-labelledby="studentAddLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addStudentLabel">Dodaj kursanta</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p class="statusMsg"></p>
+                <form class="needs-validation border border-light p-5" role="form"  data-async novalidate >
+                    <div class="form-row">
+                        <div class="col-md-3 mb-2">
+                            <label for="firstname">Imię</label>
+                            <input type="text" class="form-control" name="firstname" id="firstname"  placeholder="Wpisz imię" required>
+                            <div class="invalid-feedback">
+                                Wpisz imię kursanta
+                            </div>
+                        </div>  
+                        <div class="col-md-3 mb-2">
+                            <label for="secondname">Drugie imię</label>
+                            <input type="text" class="form-control" name="secondname" id="secondname"  placeholder="Wpisz drugie imię" >
+                            
+                        </div>  
+                        <div class="col-md-5 mb-2">
+                            <label for="lastname">Nazwisko</label>
+                            <input type="text" class="form-control" name="lastname" id="lastname"  placeholder="Wpisz nazwisko" required>
+                            <div class="invalid-feedback">
+                                Wpisz nazwisko kursanta
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3 mb-2">
+                            <label for="birthdate">Data urodzenia</label>
+                            <input type="date" class="form-control" name="birthdate" id="birthdate"  placeholder="Wpisz datę urodzenia" required>
+                            <div class="invalid-feedback">
+                                Wpisz datę urodzenia
+                            </div>
+                        </div> 
+                        <div class="col-md-4 mb-2">
+                            <label for="birthplace">Miejsce urodzenia</label>
+                            <input type="text" class="form-control" name="birthplace" id="birthplace"  placeholder="Wpisz miejsce urodzenia" required>
+                            <div class="invalid-feedback">
+                                Wpisz miejsce urodzenia
+                            </div>
+                        </div> 
+                        <div class="col-md-4 mb-3">
+                                <label for="pesel">Pesel</label>
+                                <input type="number" class="form-control" name="pesel" id="pesel"  placeholder="Wpisz pesel" required>
+                                <div class="invalid-feedback">
+                                    Wpisz pesel kursanta
+                                </div>
+                        </div>  
+                    </div>
+                
+                    <div class="form-row">
+                        
+                        <div class="col-md-5 mb-3">
+                            <label for="adstreet">Adres zamieszkania</label>
+                            <input type="text" class="form-control" name="adstreet" id="adstreet"  placeholder="Wpisz ulicę zamieszkania" required>
+                            <div class="invalid-feedback">
+                                Wpisz miejsce zamieszkania
+                            </div>
+                        </div>  
+                        <div class="col-md-3 mb-3">
+                            <label for="adcity">Miasto zamieszkania</label>
+                            <input type="text" class="form-control" name="adcity" id="adcity"  placeholder="Wpisz miasto zamieszkania" required>
+                            <div class="invalid-feedback">
+                                Wpisz miasto zamieszkania
+                            </div>
+                        </div>  
+                        <div class="col-md-3 mb-3">
+                            <label for="zip">Kod pocztowy</label>
+                            <input type="text" class="form-control" name="zip" id="zip"  placeholder="Wpisz kod pocztowy" required>
+                            <div class="invalid-feedback">
+                                Wpisz kod pocztowy
+                            </div>
+                        </div>  
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="telephone">Numer kontaktowy</label>
+                                <input type="tel" class="form-control" name="telephone" id="telephone"  placeholder="Numer telefonu" required>
+                                <div class="invalid-feedback">
+                                    Wpisz numer telefonu
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="form-row">
+                              <div class="col-md-6 mb-3 ">
+                                <label for="company-select">Pracodawca</label>
+                            
+                            
+                                <select id="company-select" name="company"  class="form-control" title="Wybierz firmę">
+                                
+                                </select>
+                  
+                              </div> 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                            <button type="button" class="btn btn-primary" onclick="saveStudent()">Zapisz</button>
+                        </form>
+                        </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<script>
+
+function yyyymmdd(startd) {          
+    var y = startd.getFullYear();
+    var m = startd.getMonth() + 1;
+    var d = startd.getDate();
+    return '' + y + (m < 10 ? '-0' : '-') + m + (d < 10 ? '-0' : '-') + d;
+}
+
+
+
+$('#course-select').change(getlastnumber);
+$('#year').keyup(getlastnumber);
+$('#enddate').click(countenddate);
+$('#course-select').selectize();
+var $studentselect = $('#student-select').selectize({
+    valueField: 'ID',
+    searchField:['Lastname','Firstname'],
+    render: {
+            option: function(data, escape) {
+                        var bdate = new Date(data.Birthdate);
+
+                        return '<div class="option">' +
+                               '<span class="firstname">' + escape(data.Firstname) + ' </span>' +
+                               '<span class="lastname">' + escape(data.Lastname) + ' </span><br>' +
+                               '<span class="pesel"><strong>Pesel</strong> ' + escape(data.Pesel) + '</span>' +
+                               '<span class="pesel"><strong>Data urodzenia</strong> ' + escape(yyyymmdd(bdate)) + '</span>' +
+                               '</div>';
+                            },
+                        item: function(data, escape) {
+							    return '<div class="item">' + escape(data.Firstname) + ' ' + escape(data.Lastname) + '</div>';
+						}
+                        },
+                    create: function(input) {
+                        $('#firstname').val(input);
+                            $('#modalStudentForm').modal({show: true});
+                        },
+                    load: function(query, callback) {
+                        if (!query.length) return callback();
+                        $.ajax({
+                            url: '/students/getalljson',
+                            type: 'GET',
+                            dataType: 'json',
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            callback(res);
+                        }
+                        });
+                    }
+                    });
+                    var $companyselect = $('#company-select').selectize({
+                            valueField: 'ID',
+                            labelField: 'Name',
+                            searchField: 'Name',
+                            create: false,
+
+                            load: function(query, callback) {
+                            if (!query.length) return callback();
+                                $.ajax({
+                                    url: '/companies/getalljson',
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    error: function() {
+                                        callback();
+                                    },
+                                    success: function(res) {
+                                        callback(res);
+                                    }
+                                });
+                            }
+                    });
+
+
+function saveStudent(){
+    
+    var firstname = $('#firstname').val();
+    var secondname = $('#secondname').val();
+    var lastname = $('#lastname').val();
+    var birthdate = $('#birthdate').val();
+    var birthplace = $('#birthplace').val();
+    var pesel = $('#pesel').val();
+    var adstreet = $('#adstreet').val();
+    var adcity = $('#adcity').val();
+    var zip = $('#zip').val();
+    var telephone = $('#telephone').val();
+    var company =$('#company-select').val();
+
+    if (firstname.trim() == ''||lastname.trim() == ''||pesel.trim() == ''||birthdate.trim() == ''||birthplace.trim() == ''||telephone.trim() == ''){
+        $('.invalid-feedback').fadeIn();
+        $('.form-control').css('invalid');
+        return false;
+    }
+
+    $.ajax({
+            url: "/students/addfrommodal",
+            type: "POST",
+            data: { firstname : firstname,
+                    secondname : secondname,
+                    lastname : lastname,
+                    birthdate : birthdate,
+                    birthplace : birthplace,
+                    pesel : pesel,
+                    adstreet : adstreet,
+                    adcity : adcity,
+                    zip : zip,
+                    telephone : telephone,
+                    company : company},
+            
+            success: function(data,status){
+                var select = $studentselect[0].selectize;
+                console.log(firstname);
+                var option = {ID: data, Firstname : firstname, Lastname : lastname, Pesel : pesel, Birthdate : birthdate}
+                 
+                select.addOption(option);
+                select.addItem(data);
+
+                $('#modalStudentForm').modal('hide')
+                select.unlock();
+            }
+        });
+}
+</script>   
+
+{{ end }}

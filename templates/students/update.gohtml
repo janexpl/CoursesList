@@ -94,7 +94,10 @@
         <button type="submit" class="btn btn-primary">Zapisz</button>
       </form>
 
-      <div class="modal fade" id="modalCompanyForm" tabindex="-1" role="dialog" aria-labelledby="companyAddLabel" aria-hidden="true">
+
+      {{ template "students/companymodal" }}
+
+      <!-- <div class="modal fade" id="modalCompanyForm" tabindex="-1" role="dialog" aria-labelledby="companyAddLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -182,6 +185,11 @@
               </div>
             </div>
           </div>
+
+
+
+
+
       <script>
             $(document).ready(function() {
             $('#company-select').selectize({
@@ -229,5 +237,5 @@
     }, false);
 })();
 
-</script>
+</script> -->
 {{ end }}

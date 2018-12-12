@@ -67,13 +67,20 @@ func (c *CompaniesController) CreateFromModal(w http.ResponseWriter, r *http.Req
 	}
 	cp := models.Company{}
 
-	err := cp.PutCompany(r)
+	id, err := cp.PutCompany(r)
 	if err != nil {
 		http.Error(w, http.StatusText(400), http.StatusBadRequest)
 		return
 	}
+	uj, err := json.Marshal(id)
+	if err != nil {
+		fmt.Println(err)
+	}
 
-	http.Redirect(w, r, "#", http.StatusMovedPermanently)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK) // 200
+	fmt.Fprintf(w, "%s\n", uj)
+	//http.Redirect(w, r, "#", http.StatusMovedPermanently)
 
 }
 
@@ -84,7 +91,7 @@ func (c *CompaniesController) CreateProcess(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	cp := models.Company{}
-	err := cp.PutCompany(r)
+	_, err := cp.PutCompany(r)
 	if err != nil {
 		flash = err.Error()
 		config.RenderTemplate(w, r, "companies/create", map[string]interface{}{

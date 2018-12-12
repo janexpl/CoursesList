@@ -28,16 +28,16 @@ type Student struct {
 	//Certificates []Cert
 }
 
-func (s *Student) PutStudent(r *http.Request) error {
+func (s *Student) PutStudent(r *http.Request) (int64, error) {
 	if !s.checkPesel(r.FormValue("pesel")) {
-		return errors.New("Błędny numer pesel")
+		return 0, errors.New("Błędny numer pesel")
 	}
 	student := Student{}
 	pesel, _ := strconv.ParseInt(r.FormValue("pesel"), 0, 64)
 	err := config.DB.QueryRow("SELECT pesel FROM students WHERE pesel=$1", pesel).Scan(&student.Pesel)
 
 	if student.Pesel != 0 {
-		return errors.New("Istnieje juz kursant o takim samym numerze pesel")
+		return 0, errors.New("Istnieje juz kursant o takim samym numerze pesel")
 	}
 	var cpid int
 	cp := Company{}
@@ -47,7 +47,7 @@ func (s *Student) PutStudent(r *http.Request) error {
 		cpid, _ = strconv.Atoi(r.FormValue("company"))
 		cp, err = cp.GetCompanyWithId(cpid)
 		if err != nil {
-			return err
+			return 0, err
 		}
 	}
 	//course.ID = bson.NewObjectId()
@@ -62,13 +62,13 @@ func (s *Student) PutStudent(r *http.Request) error {
 	student.AddressZip = r.FormValue("zip")
 	student.TelephoneNo = r.FormValue("telephone")
 	student.Company = cp
-
-	_, err = config.DB.Exec("INSERT INTO students(firstname,lastname,secondname,birthdate,birthplace,pesel,addressstreet,addresscity,telephoneno,company_id,addresszip) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)", student.Firstname, student.Lastname, student.Secondname, student.Birthdate, student.Birthplace, student.Pesel, student.AddressStreet, student.AddressCity, student.TelephoneNo, student.Company.ID, student.AddressZip)
+	var sid int64
+	err = config.DB.QueryRow("INSERT INTO students(firstname,lastname,secondname,birthdate,birthplace,pesel,addressstreet,addresscity,telephoneno,company_id,addresszip) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id", student.Firstname, student.Lastname, student.Secondname, student.Birthdate, student.Birthplace, student.Pesel, student.AddressStreet, student.AddressCity, student.TelephoneNo, student.Company.ID, student.AddressZip).Scan(&sid)
 
 	if err != nil {
-		return errors.New("500. Internal Server Error." + err.Error())
+		return 0, errors.New("500. Internal Server Error." + err.Error())
 	}
-	return nil
+	return sid, nil
 }
 func (s *Student) AllStudentsWithCompany(cp Company) ([]Student, error) {
 
@@ -199,7 +199,7 @@ FROM
 			return nil, err
 		}
 		students = append(students, st)
-		fmt.Println(students)
+
 	}
 
 	if err != nil {

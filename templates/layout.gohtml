@@ -32,10 +32,13 @@
        <script type="text/javascript" src="/assets/js/selectize.min.js"></script> 
         <!-- <script type="text/javascript" src="/assets/js/select2.full.min.js"></script> -->
     </head>
+    <header>
+            {{ template "header" . }}
+    </header>
     <body>
-        {{ template "header" }}
+       
         {{ if .Flash }}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" id="flash" role="alert">
                 {{ .Flash }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -51,6 +54,14 @@
         
         
         <script type="text/javascript" src="/assets/js/app.js"></script>
+        <script>
+        
+$(function() {
+    $('#flash').delay(500).fadeIn('normal', function() {
+       $(this).delay(2500).fadeOut();
+    });
+ });
+        </script>
      </body>
      
 </html>

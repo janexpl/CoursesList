@@ -148,8 +148,6 @@ func (cr *CoursesController) DeleteProcess(w http.ResponseWriter, r *http.Reques
 
 func (cr *CoursesController) Update(w http.ResponseWriter, r *http.Request) {
 	var flash string
-
-	fmt.Println("Update")
 	if r.Method != "GET" {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 		return

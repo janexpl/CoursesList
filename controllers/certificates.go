@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/janexpl/CoursesList/config"
@@ -21,13 +20,10 @@ func (crt *CertificatesController) Index(w http.ResponseWriter, r *http.Request)
 	}
 	c := models.Certificate{}
 	certificates, err := c.AllCertificates()
-
-	fmt.Println(certificates)
 	if err != nil {
 		http.Error(w, http.StatusText(500)+err.Error(), http.StatusInternalServerError)
 		return
 	}
-
 	data := map[string]interface{}{
 		"Data": certificates,
 	}

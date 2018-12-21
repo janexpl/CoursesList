@@ -52,10 +52,13 @@ func main() {
 	users := controllers.NewUsersController()
 	http.HandleFunc("/users/signup", users.Signup)
 	//http.HandleFunc("/users/login/process", users.Login)
+
+	http.HandleFunc("/users/create", authorized(users.Create))
 	http.HandleFunc("/users/login", users.LoginForm)
 	http.HandleFunc("/users/login/process", users.LoginProcess)
 	http.HandleFunc("/users/logout", authorized(users.Logout))
 	http.HandleFunc("/users", authorized(users.Index))
+	http.HandleFunc("/users/json", authorized(users.HandleJson))
 	http.HandleFunc("/users/update", authorized(users.Update))
 	http.HandleFunc("/users/update/process", authorized(users.UpdateProcess))
 	registries := controllers.NewRegistriesController()

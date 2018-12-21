@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -10,10 +11,17 @@ import (
 )
 
 type Course struct {
-	ID         int64
-	Name       string
-	Symbol     string
-	ExpiryTime int
+	ID            int64
+	Name          string
+	Symbol        string
+	ExpiryTime    int
+	CourseProgram json.RawMessage
+}
+
+type CourseProgram struct {
+	Subject      string
+	TheoryTime   int
+	PracticeTime int
 }
 
 func (cr *Course) PutCourse(r *http.Request) error {
@@ -24,15 +32,30 @@ func (cr *Course) PutCourse(r *http.Request) error {
 	if course.Symbol != "" {
 		return errors.New("Istnieje juz taki kurs.")
 	}
-
+	courseprograms := []CourseProgram{
+		{
+			Subject:      "Ogólne wiadomości z zakresu BHP",
+			TheoryTime:   3,
+			PracticeTime: 0},
+		{
+			Subject:      "Nowy temat",
+			TheoryTime:   3,
+			PracticeTime: 1},
+	}
+	bs, err := json.Marshal(courseprograms)
+	if err != nil {
+		fmt.Println("error: ", err)
+	}
+	course.CourseProgram = bs
 	course.Name = r.FormValue("courseName")
 	course.Symbol = smb
 	course.ExpiryTime, _ = strconv.Atoi(r.FormValue("courseExpT"))
 	if course.Symbol == "" || course.Name == "" {
 		return errors.New("Proszę wypełnić wskazane pola")
 	}
-	_, err = config.DB.Exec("INSERT INTO courses(name,symbol,expirytime) VALUES ($1,$2,$3)", course.Name, course.Symbol, course.ExpiryTime)
+	_, err = config.DB.Exec("INSERT INTO courses(name,symbol,expirytime,courseprogram) VALUES ($1,$2,$3,$4)", course.Name, course.Symbol, course.ExpiryTime, course.CourseProgram)
 	if err != nil {
+		fmt.Println(err.Error())
 		return errors.New("500. Internal Server Error." + err.Error())
 	}
 	return nil
@@ -48,10 +71,11 @@ func (cr *Course) AllCourses() ([]Course, error) {
 	crs := []Course{}
 	for rows.Next() {
 		cr := Course{}
-		err := rows.Scan(&cr.ID, &cr.Name, &cr.Symbol, &cr.ExpiryTime)
+		err := rows.Scan(&cr.ID, &cr.Name, &cr.Symbol, &cr.ExpiryTime, &cr.CourseProgram)
 		if err != nil {
 			return nil, err
 		}
+		fmt.Println(cr.CourseProgram)
 		crs = append(crs, cr)
 	}
 
@@ -64,7 +88,7 @@ func (cr *Course) GetCourseWithId(r *http.Request) (Course, error) {
 	id := r.FormValue("courseid")
 	crs := Course{}
 	err := config.DB.QueryRow("SELECT * FROM courses WHERE id = $1", id).
-		Scan(&crs.ID, &crs.Name, &crs.Symbol, &crs.ExpiryTime)
+		Scan(&crs.ID, &crs.Name, &crs.Symbol, &crs.ExpiryTime, &crs.CourseProgram)
 	if err != nil {
 		return crs, err
 	}
@@ -86,7 +110,7 @@ func (cr *Course) DeleteCourse(r *http.Request) error {
 }
 
 func (cr *Course) OneCourse(r *http.Request) (Course, error) {
-	
+
 	crs := Course{}
 	smb := r.FormValue("symbol")
 	if smb == "" {
@@ -94,7 +118,7 @@ func (cr *Course) OneCourse(r *http.Request) (Course, error) {
 	}
 
 	row := config.DB.QueryRow("SELECT * FROM courses WHERE symbol = $1", smb)
-	err := row.Scan(&crs.ID, &crs.Name, &crs.Symbol, &crs.ExpiryTime)
+	err := row.Scan(&crs.ID, &crs.Name, &crs.Symbol, &crs.ExpiryTime, &crs.CourseProgram)
 	if err != nil {
 		return crs, err
 	}

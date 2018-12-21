@@ -12,7 +12,7 @@
                       Kursy
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/courses">Pokaz wszystkie</a>
+                        <a class="dropdown-item" href="/courses">Pokaż wszystkie</a>
                         <a class="dropdown-item" href="/courses/create">Nowy kurs</a>
                     </div>
             </li>
@@ -23,7 +23,7 @@
                     Kursanci
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/students">Pokaz wszystkich</a>
+                    <a class="dropdown-item" href="/students">Pokaż wszystkich</a>
                     <a class="dropdown-item" href="/students/create">Nowy kursant</a>
                 </div>
             </li>
@@ -32,7 +32,7 @@
                     Klienci
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/companies">Pokaz wszyskie</a>
+                    <a class="dropdown-item" href="/companies">Pokaż wszyskie</a>
                     <a class="dropdown-item" href="/companies/create">Nowa firma</a>
                 </div>
 
@@ -50,13 +50,9 @@
                 </li>
             {{ if eq .CurrentUser.Admin 1}}
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Uzytkownicy
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/users">Pokaz wszystkich</a>
-                    <a class="dropdown-item" href="/users/create">Nowe uzytkownik</a>
-                </div>
+                <a class="nav-link" href="/users" id="users" role="button" >
+                    Użytkownicy
+                </a> 
             </li>
             {{ end }}
     </ul>

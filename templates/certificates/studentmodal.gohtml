@@ -123,68 +123,6 @@ function yyyymmdd(startd) {
 
 
 
-$('#course-select').change(getlastnumber);
-$('#year').keyup(getlastnumber);
-$('#enddate').click(countenddate);
-$('#course-select').selectize();
-var $studentselect = $('#student-select').selectize({
-    valueField: 'ID',
-    searchField:['Lastname','Firstname'],
-    render: {
-            option: function(data, escape) {
-                        var bdate = new Date(data.Birthdate);
-
-                        return '<div class="option">' +
-                               '<span class="firstname">' + escape(data.Firstname) + ' </span>' +
-                               '<span class="lastname">' + escape(data.Lastname) + ' </span><br>' +
-                               '<span class="pesel"><strong>Pesel</strong> ' + escape(data.Pesel) + '</span>' +
-                               '<span class="pesel"><strong>Data urodzenia</strong> ' + escape(yyyymmdd(bdate)) + '</span>' +
-                               '</div>';
-                            },
-                        item: function(data, escape) {
-							    return '<div class="item">' + escape(data.Firstname) + ' ' + escape(data.Lastname) + '</div>';
-						}
-                        },
-                    create: function(input) {
-                        $('#firstname').val(input);
-                            $('#modalStudentForm').modal({show: true});
-                        },
-                    load: function(query, callback) {
-                        if (!query.length) return callback();
-                        $.ajax({
-                            url: '/students/getalljson',
-                            type: 'GET',
-                            dataType: 'json',
-                        error: function() {
-                            callback();
-                        },
-                        success: function(res) {
-                            callback(res);
-                        }
-                        });
-                    }
-                    });
-                    var $companyselect = $('#company-select').selectize({
-                            valueField: 'ID',
-                            labelField: 'Name',
-                            searchField: 'Name',
-                            create: false,
-
-                            load: function(query, callback) {
-                            if (!query.length) return callback();
-                                $.ajax({
-                                    url: '/companies/getalljson',
-                                    type: 'GET',
-                                    dataType: 'json',
-                                    error: function() {
-                                        callback();
-                                    },
-                                    success: function(res) {
-                                        callback(res);
-                                    }
-                                });
-                            }
-                    });
 
 
 function saveStudent(){

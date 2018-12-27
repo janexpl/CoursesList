@@ -214,3 +214,44 @@ func (c *Certificate) DeleteCertificate(r *http.Request) error {
 	}
 	return nil
 }
+
+func (c *Certificate) GetCertificate(r *http.Request) (Certificate, error) {
+	id := r.FormValue("id")
+	row := config.DB.QueryRow(`SELECT
+	certificates.id,
+    certificates.date,
+    students.firstname,
+    students.secondname,
+    students.lastname,
+    students.birthdate,
+    students.birthplace,
+    students.pesel,
+    certificates.coursedatestart,
+    certificates.coursedateend,
+    registries.number,
+    registries.year,
+	courses.symbol,
+	courses.name,
+	courses.courseprogram,
+	courses.certfrontpage
+FROM
+	certificates
+	
+    INNER JOIN students ON students.id = certificates.student_id
+    INNER JOIN registries ON certificates.registry_id= registries.id
+	INNER JOIN courses ON courses.id=registries.course_id
+WHERE certificates.id = $1`, id)
+		err := row.
+			Scan(&c.ID,
+				&c.Date,
+				&c.Student.Firstname, &c.Student.Secondname, &c.Student.Lastname, &c.Student.Birthdate, &c.Student.Birthplace, &c.Student.Pesel,
+				&c.CourseDateStart, &c.CourseDateEnd,
+				&c.Registry.Number, &c.Registry.Year,
+				&c.Registry.Course.Symbol, &c.Registry.Course.Name,&c.Registry.Course.CourseProgram,&c.Registry.Course.CertFrontpage)
+
+		if err != nil {
+			return *c, err
+		}
+
+	return *c, nil
+}

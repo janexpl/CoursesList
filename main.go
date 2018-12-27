@@ -14,6 +14,7 @@ func main() {
 	courses := controllers.NewCoursesController()
 
 	http.Handle("/assets/", http.StripPrefix("/assets", http.FileServer(http.Dir("./assets"))))
+	http.Handle("/node_modules/", http.StripPrefix("/node_modules", http.FileServer(http.Dir("./node_modules"))))
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 
 	http.HandleFunc("/courses/create/process", authorized(courses.CreateProcess))
@@ -21,6 +22,8 @@ func main() {
 	http.HandleFunc("/courses/show", authorized(courses.Show))
 	http.HandleFunc("/courses/delete/process", authorized(courses.DeleteProcess))
 	http.HandleFunc("/courses", authorized(courses.Index))
+	http.HandleFunc("/courses/json", authorized(courses.HandleJson))
+	http.HandleFunc("/courses/createjson", authorized(courses.Createjson))
 	http.HandleFunc("/courses/update/process", authorized(courses.UpdateProcess))
 	http.HandleFunc("/courses/update", authorized(courses.Update))
 	http.HandleFunc("/courses/getcoursejson", authorized(courses.GetCourseJson))
@@ -47,8 +50,10 @@ func main() {
 	certificates := controllers.NewCertificatesController()
 	http.HandleFunc("/certificates", authorized(certificates.Index))
 	http.HandleFunc("/certificates/create", authorized(certificates.Create))
+	http.HandleFunc("/certificates/update", authorized(certificates.Update))
 	http.HandleFunc("/certificates/create/process", authorized(certificates.CreateProcess))
 	http.HandleFunc("/certificates/delete/process", authorized(certificates.DeleteProcess))
+	http.HandleFunc("/certificates/print", authorized(certificates.Print))
 	users := controllers.NewUsersController()
 	http.HandleFunc("/users/signup", users.Signup)
 	//http.HandleFunc("/users/login/process", users.Login)

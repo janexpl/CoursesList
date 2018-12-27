@@ -5,26 +5,30 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Title Page</title>
+        <title>Lista szkoleń</title>
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Bootstrap core CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/assets/css/addons/datatables.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="/assets/css/mdb.min.css" rel="stylesheet">
-    <link href="/assets/css/selectize.bootstrap4.css" rel="stylesheet">
-    <!-- <link href="/assets/css/select2-bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="/assets/css/select2.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-    <link href="/assets/css/style.css" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/css/addons/datatables.min.css" rel="stylesheet">
+        <!-- Material Design Bootstrap -->
+        <link href="/assets/css/mdb.min.css" rel="stylesheet">
+        <link href="/assets/css/selectize.bootstrap4.css" rel="stylesheet">
+        <!-- <link href="/assets/css/select2-bootstrap4.min.css" rel="stylesheet"> -->
+        <link rel="stylesheet" href="/assets/css/select2.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+        <!-- Your custom styles (optional) -->
+        <link href="/assets/css/style.css" rel="stylesheet">
 
-    <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
         <!-- Bootstrap tooltips -->
+        <script src="../node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
+        <!-- <script src="../node_modules/@ckeditor/ckeditor5-build-classic/build/translations/pl.js"></script> -->
+        <script src="../node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js"></script>
+
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
@@ -42,7 +46,6 @@
             {{ template "header" . }}
     </header>
     <body>
-       
         {{ if .Flash }}
         <div class="alert alert-success alert-dismissible fade show" id="flash" role="alert">
                 {{ .Flash }}
@@ -57,8 +60,6 @@
                 {{ yield }}
                
         </div>
-        
-        
         <script type="text/javascript" src="/assets/js/app.js"></script>
         <script>
         

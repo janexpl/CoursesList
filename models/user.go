@@ -51,14 +51,12 @@ func (u *User) OneUser(r *http.Request) (User, error) {
 func (u *User) PutUser(r *http.Request) (User, error) {
 	if strings.Contains(r.Header.Get("Content-Type"), "json") {
 		json.NewDecoder(r.Body).Decode(&u)
-		fmt.Println(*u)
-		fmt.Printf("%s", u.SPassword)
 		bpas, err := bcrypt.GenerateFromPassword([]byte(u.SPassword), bcrypt.MinCost)
 		if err != nil {
 			return *u, err
 		}
 		u.Password = bpas
-		fmt.Println(*u)
+		
 	} else {
 		u.Email = r.FormValue("semail")
 		u.Firstname = r.FormValue("sfirstname")
@@ -106,8 +104,7 @@ func (u *User) DeleteUser(r *http.Request) error {
 func (u *User) UpdateUser(r *http.Request) error {
 	var password string
 	if strings.Contains(r.Header.Get("Content-Type"), "json") {
-		fmt.Println("JSON")
-		fmt.Println(&r.Body)
+
 		json.NewDecoder(r.Body).Decode(&u)
 		cost, _ := bcrypt.Cost([]byte(u.SPassword))
 		fmt.Println(cost)

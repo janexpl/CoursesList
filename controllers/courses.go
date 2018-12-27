@@ -26,19 +26,62 @@ func (cr *CoursesController) Index(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, http.StatusText(500)+err.Error(), http.StatusInternalServerError)
 		return
 	}
-	for _, z := range crs {
-		fmt.Println(z.Name)
-
-	}
-
 	data := map[string]interface{}{
 		"Data": crs,
 	}
 	config.RenderTemplate(w, r, "courses/courses", data)
 }
+func (cr *CoursesController) HandleJson(w http.ResponseWriter, r *http.Request) {
+	crs := models.Course{}
 
+	switch r.Method {
+	case "GET":
+		crs, err := crs.AllCourses()
+		if err != nil {
+			http.Error(w, http.StatusText(500)+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		uj, err := json.Marshal(crs)
+		if err != nil {
+			fmt.Println(err)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK) // 200
+		fmt.Fprintf(w, "%s\n", uj)
+	case "POST":
+		err := crs.PutCourseJson(r)
+		if err != nil {
+			http.Error(w, http.StatusText(406), http.StatusNotAcceptable)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated) // 201
+		fmt.Fprintf(w, "", nil)
+		http.Redirect(w, r, "courses", http.StatusSeeOther)
+	case "DELETE":
+		// err := us.DeleteUser(r)
+		// if err != nil {
+		// 	http.Error(w, http.StatusText(406), http.StatusNotAcceptable)
+		// 	return
+		// }
+		// w.Header().Set("Content-Type", "application/json")
+		// w.WriteHeader(http.StatusOK) // 201
+	case "PUT":
+		err := crs.UpdateCourse(r)
+		if err != nil {
+			http.Error(w, http.StatusText(406), http.StatusNotAcceptable)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK) // 201
+		fmt.Fprintf(w, "", nil)
+	}
+}
 func (cr *CoursesController) Create(w http.ResponseWriter, r *http.Request) {
 	config.RenderTemplate(w, r, "courses/create", nil)
+}
+func (cr *CoursesController) Createjson(w http.ResponseWriter, r *http.Request) {
+	config.RenderTemplate(w, r, "courses/create2", nil)
 }
 func (cr *CoursesController) GetCourseJson(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
@@ -163,7 +206,7 @@ func (cr *CoursesController) Update(w http.ResponseWriter, r *http.Request) {
 		"Data":  crs,
 		"Flash": flash,
 	}
-	fmt.Println(crs)
+
 	config.RenderTemplate(w, r, "courses/update", data)
 }
 

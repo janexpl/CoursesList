@@ -1,0 +1,60 @@
+{{ define "courses/create_old" }}
+<h1>Nowy kurs</h1>
+<form class="needs-validation border border-light p-5" novalidate method="post" action="/courses/create/process">
+  <div class="form-row">
+      <div class="col-md-12 mb-2">
+          <label for="courseName">Nazwa kursu</label>
+          <input type="text" class="form-control" name="courseName" id="courseName"  placeholder="Wpisz nazwę kursu" required>
+          <div class="invalid-feedback">
+              Wpisz nazwę kursu
+          </div>
+
+
+      </div>
+  </div>
+
+  
+  <div class="form-row">
+      <div class="col-md-4 mb-2">
+          <label for="courseSymbol">Symbol</label>
+          <input type="text" class="form-control" name="courseSymbol" id="courseSymbol" placeholder="Wpisz symbol" required>
+          <div class="invalid-feedback">
+              Wpisz symbol kursu
+          </div>
+        </div>
+      <div class="col-md-4 mb-2">
+              <label for="courseExpT">Wazność w latach</label>
+              <input type="number" class="form-control" name="courseExpT" id="courseExpT" placeholder="Wpisz termin waznosci w latach" required> 
+              <div class="invalid-feedback">
+                  Wpisz termin waznosci
+              </div>
+              </div>
+
+      
+
+  </div>
+        
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+      </form>
+
+      <script type="text/javascript">
+        (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+        </script>
+
+{{ end }}

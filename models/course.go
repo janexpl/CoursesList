@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/janexpl/CoursesList/config"
 )
@@ -14,16 +13,26 @@ type Course struct {
 	ID            int64
 	Name          string
 	Symbol        string
-	ExpiryTime    int
+	ExpiryTime    string
 	CourseProgram json.RawMessage
+	CertFrontpage string
 }
 
 type CourseProgram struct {
 	Subject      string
-	TheoryTime   int
-	PracticeTime int
+	TheoryTime   string
+	PracticeTime string
 }
 
+func (cr *Course) PutCourseJson(r *http.Request) error {
+	json.NewDecoder(r.Body).Decode(&cr)
+	fmt.Println(*cr)
+	_, err := config.DB.Exec("INSERT INTO courses(name,symbol,expirytime,courseprogram,certfrontpage) VALUES ($1,$2,$3,$4,$5)", cr.Name, cr.Symbol, cr.ExpiryTime, cr.CourseProgram, cr.CertFrontpage)
+	if err != nil {
+		errors.New("500. Internal Server Error." + err.Error())
+	}
+	return nil
+}
 func (cr *Course) PutCourse(r *http.Request) error {
 	smb := r.FormValue("courseSymbol")
 	course := Course{}
@@ -35,12 +44,12 @@ func (cr *Course) PutCourse(r *http.Request) error {
 	courseprograms := []CourseProgram{
 		{
 			Subject:      "Ogólne wiadomości z zakresu BHP",
-			TheoryTime:   3,
-			PracticeTime: 0},
+			TheoryTime:   "3",
+			PracticeTime: "0"},
 		{
 			Subject:      "Nowy temat",
-			TheoryTime:   3,
-			PracticeTime: 1},
+			TheoryTime:   "3",
+			PracticeTime: "1"},
 	}
 	bs, err := json.Marshal(courseprograms)
 	if err != nil {
@@ -49,7 +58,7 @@ func (cr *Course) PutCourse(r *http.Request) error {
 	course.CourseProgram = bs
 	course.Name = r.FormValue("courseName")
 	course.Symbol = smb
-	course.ExpiryTime, _ = strconv.Atoi(r.FormValue("courseExpT"))
+	course.ExpiryTime = r.FormValue("courseExpT")
 	if course.Symbol == "" || course.Name == "" {
 		return errors.New("Proszę wypełnić wskazane pola")
 	}
@@ -62,7 +71,7 @@ func (cr *Course) PutCourse(r *http.Request) error {
 }
 
 func (cr *Course) AllCourses() ([]Course, error) {
-	rows, err := config.DB.Query("SELECT * FROM courses")
+	rows, err := config.DB.Query("SELECT id,name,symbol,expirytime,courseprogram FROM courses")
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +96,7 @@ func (cr *Course) AllCourses() ([]Course, error) {
 func (cr *Course) GetCourseWithId(r *http.Request) (Course, error) {
 	id := r.FormValue("courseid")
 	crs := Course{}
-	err := config.DB.QueryRow("SELECT * FROM courses WHERE id = $1", id).
+	err := config.DB.QueryRow("SELECT id,name,symbol,expirytime,courseprogram FROM courses WHERE id = $1", id).
 		Scan(&crs.ID, &crs.Name, &crs.Symbol, &crs.ExpiryTime, &crs.CourseProgram)
 	if err != nil {
 		return crs, err
@@ -118,7 +127,7 @@ func (cr *Course) OneCourse(r *http.Request) (Course, error) {
 	}
 
 	row := config.DB.QueryRow("SELECT * FROM courses WHERE symbol = $1", smb)
-	err := row.Scan(&crs.ID, &crs.Name, &crs.Symbol, &crs.ExpiryTime, &crs.CourseProgram)
+	err := row.Scan(&crs.ID, &crs.Name, &crs.Symbol, &crs.ExpiryTime, &crs.CourseProgram, &crs.CertFrontpage)
 	if err != nil {
 		return crs, err
 	}
@@ -127,14 +136,21 @@ func (cr *Course) OneCourse(r *http.Request) (Course, error) {
 }
 
 func (cr *Course) UpdateCourse(r *http.Request) error {
-	course := Course{}
-	course.Name = r.FormValue("courseName")
-	course.Symbol = r.FormValue("courseSymbol")
-	course.ExpiryTime, _ = strconv.Atoi(r.FormValue("courseExpT"))
+	// course := Course{}
+	// course.Name = r.FormValue("courseName")
+	// course.Symbol = r.FormValue("courseSymbol")
+	// course.ExpiryTime, _ = strconv.Atoi(r.FormValue("courseExpT"))
 
-	_, err := config.DB.Exec("UPDATE courses SET name=$1, symbol=$2, expirytime=$3 where symbol=$2", course.Name, course.Symbol, course.ExpiryTime)
+	// _, err := config.DB.Exec("UPDATE courses SET name=$1, symbol=$2, expirytime=$3 where symbol=$2", course.Name, course.Symbol, course.ExpiryTime)
+	// if err != nil {
+	// 	return err
+	// }
+	// return nil
+	json.NewDecoder(r.Body).Decode(&cr)
+	fmt.Println(*cr)
+	_, err := config.DB.Exec("UPDATE courses SET name=$1,symbol=$2,expirytime=$3,courseprogram=$4,certfrontpage=$5 WHERE symbol=$2", cr.Name, cr.Symbol, cr.ExpiryTime, cr.CourseProgram, cr.CertFrontpage)
 	if err != nil {
-		return err
+		errors.New("500. Internal Server Error." + err.Error())
 	}
 	return nil
 }

@@ -1,6 +1,6 @@
 {{ define "certificates/create" }}
 
-<h1>Nowy kursant</h1>
+<h1>Nowe zaświadczenie</h1>
 <form
   class="needs-validation border border-light p-5"
   novalidate
@@ -9,7 +9,7 @@
 >
   <div class="form-row">
     <div class="col-md-2 mb-3">
-      <label for="course-select">Rejstr</label>
+      <label for="course-select">Rejestr</label>
       <select
         id="course-select"
         name="courseid"
@@ -21,7 +21,7 @@
         {{ end }}
       </select>
     </div>
-    <div class="col-md-2 mb=3">
+    <div class="col-md-2 mb-3">
       <label for="year">Rok</label>
       <input
         type="number"
@@ -33,7 +33,7 @@
       />
       <div class="invalid-feedback">Wpisz rok wydania zaświadczenia</div>
     </div>
-    <div class="col-md-2 mb=3">
+    <div class="col-md-2 mb-3">
       <label for="year">Numer</label>
       <input
         type="number"
@@ -47,7 +47,7 @@
     </div>
   </div>
   <div class="form-row">
-    <div class="col-md-2 mb=3">
+    <div class="col-md-2 mb-3">
       <label for="certdate">Data wystawienia</label>
       <input
         type="date"
@@ -59,7 +59,7 @@
       />
       <div class="invalid-feedback">Wpisz datę</div>
     </div>
-    <div class="col-md-2 mb=3">
+    <div class="col-md-2 mb-3">
       <label for="startdate">Data rozpoczęcia</label>
       <input
         type="date"
@@ -71,7 +71,7 @@
       />
       <div class="invalid-feedback">Wpisz datę</div>
     </div>
-    <div class="col-md-2 mb=3">
+    <div class="col-md-2 mb-3">
       <label for="enddate">Data zakończenia</label>
       <input
         type="date"
@@ -85,7 +85,7 @@
     </div>
   </div>
   <div class="form-row">
-    <div class="col-md-6 mb=3">
+    <div class="col-md-6 mb-3">
       <label for="student">Kursant</label>
       <select
         id="student-select"
@@ -157,6 +157,70 @@
       false
     );
   })();
+
+
+$('#course-select').change(getlastnumber);
+$('#year').keyup(getlastnumber);
+$('#enddate').click(countenddate);
+$('#course-select').selectize();
+var $studentselect = $('#student-select').selectize({
+    valueField: 'ID',
+    searchField:['Lastname','Firstname'],
+    render: {
+            option: function(data, escape) {
+                        var bdate = new Date(data.Birthdate);
+
+                        return '<div class="option">' +
+                               '<span class="firstname">' + escape(data.Firstname) + ' </span>' +
+                               '<span class="lastname">' + escape(data.Lastname) + ' </span><br>' +
+                               '<span class="pesel"><strong>Pesel</strong> ' + escape(data.Pesel) + '</span>' +
+                               '<span class="pesel"><strong>Data urodzenia</strong> ' + escape(yyyymmdd(bdate)) + '</span>' +
+                               '</div>';
+                            },
+                        item: function(data, escape) {
+							    return '<div class="item">' + escape(data.Firstname) + ' ' + escape(data.Lastname) + '</div>';
+						}
+                        },
+                    create: function(input) {
+                        $('#firstname').val(input);
+                            $('#modalStudentForm').modal({show: true});
+                        },
+                    load: function(query, callback) {
+                        if (!query.length) return callback();
+                        $.ajax({
+                            url: '/students/getalljson',
+                            type: 'GET',
+                            dataType: 'json',
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            callback(res);
+                        }
+                        });
+                    }
+                    });
+                    var $companyselect = $('#company-select').selectize({
+                            valueField: 'ID',
+                            labelField: 'Name',
+                            searchField: 'Name',
+                            create: false,
+
+                            load: function(query, callback) {
+                            if (!query.length) return callback();
+                                $.ajax({
+                                    url: '/companies/getalljson',
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    error: function() {
+                                        callback();
+                                    },
+                                    success: function(res) {
+                                        callback(res);
+                                    }
+                                });
+                            }
+                    });
 </script>
 
 {{ template "certificates/studentmodal" }}

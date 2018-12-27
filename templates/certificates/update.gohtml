@@ -1,0 +1,238 @@
+{{ define "certificates/update" }}
+
+<h1>Modyfikuj zaświadczenie</h1>
+<form
+  class="needs-validation border border-light p-5"
+  novalidate
+  method="post"
+  action="/certificates/create/process"
+>
+  <div class="form-row">
+    <div class="col-md-2 mb-3">
+      <label for="course-select">Rejestr</label>
+      <select
+        id="course-select"
+        name="courseid"
+        class="form-control"
+        title="Wybierz symbol"
+      >
+      <option selected="selected">{{ .Data.Registry.Course.Symbol }}</option>
+        {{ range.Course }}
+        <option value="{{.ID}}">{{.Symbol}}</option>
+        {{ end }}
+        
+      </select>
+    </div>
+    <div class="col-md-2 mb=3">
+      <label for="year">Rok</label>
+      <input
+        type="number"
+        class="form-control"
+        name="year"
+        id="year"
+        placeholder="Wpisz rok"
+        value="{{ .Data.Registry.Year }}"
+        required
+      />
+      <div class="invalid-feedback">Wpisz rok wydania zaświadczenia</div>
+    </div>
+    <div class="col-md-2 mb=3">
+      <label for="year">Numer</label>
+      <input
+        type="number"
+        class="form-control"
+        name="number"
+        id="number"
+        placeholder="Wpisz numer"
+        value="{{ .Data.Registry.Number }}"
+        required
+      />
+      <div class="invalid-feedback">Wpisz prawidłowy numer</div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-2 mb=3">
+      <label for="certdate">Data wystawienia</label>
+      <input
+        type="date"
+        class="form-control"
+        name="certdate"
+        id="certdate"
+        placeholder="Wpisz datę"
+        value="{{ formdatefmt .Data.Date }}"
+        required
+      />
+      <div class="invalid-feedback">Wpisz datę</div>
+    </div>
+    <div class="col-md-2 mb=3">
+      <label for="startdate">Data rozpoczęcia</label>
+      <input
+        type="date"
+        class="form-control"
+        name="startdate"
+        id="startdate"
+        placeholder="Wpisz datę"
+        value="{{ formdatefmt .Data.CourseDateStart }}"
+        required
+      />
+      <div class="invalid-feedback">Wpisz datę</div>
+    </div>
+    <div class="col-md-2 mb=3">
+      <label for="enddate">Data zakończenia</label>
+      <input
+        type="date"
+        class="form-control"
+        name="enddate"
+        id="enddate"
+        placeholder="Wpisz datę"
+        value="{{ formdatefmt .Data.CourseDateEnd }}"
+        required
+      />
+      <div class="invalid-feedback">Wpisz datę</div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-6 mb=3">
+      <label for="student">Kursant</label>
+      
+      <select
+        id="student-select"
+        name="student"
+        class="form-control"
+        title="Wybierz pracownika"
+        
+      >
+      <option selected="selected">{{ .Data.Student.Firstname }} {{ .Data.Student.Secondname }} {{ .Data.Student.Lastname }}</option>
+      </select>
+      <div class="invalid-feedback">Wpisz kursanta</div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Zapisz</button>
+</form>
+
+<script>
+  function getlastnumber() {
+    $regno = $("#course-select").val();
+    $year = $("#year").val();
+    $.ajax({
+      url: "/registries/getlastnumber",
+      type: "GET",
+      data: { id: $regno, year: $year },
+
+      success: function(data, status) {
+        $("#number").val(data + 1);
+      }
+    });
+  }
+
+  function countenddate() {
+    var regno = $("#course-select").val();
+    $.ajax({
+      url: "/courses/getcoursejson",
+      type: "GET",
+      data: { courseid: regno },
+
+      success: function(data, status) {
+        var startdate = $("#startdate").val();
+        console.log(startdate);
+        var date = new Date(startdate);
+
+        $("#enddate").val(yyyymmdd(date));
+      }
+    });
+  }
+
+  (function() {
+    "use strict";
+    window.addEventListener(
+      "load",
+      function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName("needs-validation");
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener(
+            "submit",
+            function(event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      },
+      false
+    );
+  })();
+
+
+$('#course-select').change(getlastnumber);
+$('#year').keyup(getlastnumber);
+$('#enddate').click(countenddate);
+$('#course-select').selectize();
+var $studentselect = $('#student-select').selectize({
+    valueField: 'ID',
+    searchField:['Lastname','Firstname'],
+    render: {
+            option: function(data, escape) {
+                        var bdate = new Date(data.Birthdate);
+
+                        return '<div class="option">' +
+                               '<span class="firstname">' + escape(data.Firstname) + ' </span>' +
+                               '<span class="lastname">' + escape(data.Lastname) + ' </span><br>' +
+                               '<span class="pesel"><strong>Pesel</strong> ' + escape(data.Pesel) + '</span>' +
+                               '<span class="pesel"><strong>Data urodzenia</strong> ' + escape(yyyymmdd(bdate)) + '</span>' +
+                               '</div>';
+                            },
+                        item: function(data, escape) {
+							    return '<div class="item">' + escape(data.Firstname) + ' ' + escape(data.Lastname) + '</div>';
+						}
+                        },
+                    create: function(input) {
+                        $('#firstname').val(input);
+                            $('#modalStudentForm').modal({show: true});
+                        },
+                    load: function(query, callback) {
+                        if (!query.length) return callback();
+                        $.ajax({
+                            url: '/students/getalljson',
+                            type: 'GET',
+                            dataType: 'json',
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            callback(res);
+                        }
+                        });
+                    }
+                    });
+                    var $companyselect = $('#company-select').selectize({
+                            valueField: 'ID',
+                            labelField: 'Name',
+                            searchField: 'Name',
+                            create: false,
+
+                            load: function(query, callback) {
+                            if (!query.length) return callback();
+                                $.ajax({
+                                    url: '/companies/getalljson',
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    error: function() {
+                                        callback();
+                                    },
+                                    success: function(res) {
+                                        callback(res);
+                                    }
+                                });
+                            }
+                    });
+</script>
+
+{{ template "certificates/studentmodal" }}
+
+{{ end }}

@@ -53,9 +53,7 @@ func init() {
 			New("layout.gohtml").
 			Funcs(layoutFuncs).
 			ParseFiles("templates/layout.gohtml", "templates/header.gohtml"))
-	for _, t := range layout.Templates() {
-		fmt.Println(t.Name())
-	}
+
 	templates = template.Must(
 		template.
 			New("t").Funcs(layoutFuncs).
@@ -70,7 +68,10 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, name string, data ma
 	un, err := GetLoggedUser(r)
 	
 	data["CurrentUser"] = un
-	data["Flash"], _ = getFlash(w, r)
+	if data["Flash"] == "" {
+		data["Flash"], _ = getFlash(w, r)
+	}
+
 	templates = template.Must(
 		template.
 			New("t").Funcs(layoutFuncs).

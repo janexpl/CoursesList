@@ -3,8 +3,9 @@ package models
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
+
+	"github.com/janexpl/CoursesList/logging"
 
 	"github.com/janexpl/CoursesList/config"
 )
@@ -26,7 +27,6 @@ type CourseProgram struct {
 
 func (cr *Course) PutCourseJson(r *http.Request) error {
 	json.NewDecoder(r.Body).Decode(&cr)
-	fmt.Println(*cr)
 	_, err := config.DB.Exec("INSERT INTO courses(name,symbol,expirytime,courseprogram,certfrontpage) VALUES ($1,$2,$3,$4,$5)", cr.Name, cr.Symbol, cr.ExpiryTime, cr.CourseProgram, cr.CertFrontpage)
 	if err != nil {
 		errors.New("500. Internal Server Error." + err.Error())
@@ -37,7 +37,6 @@ func (cr *Course) PutCourse(r *http.Request) error {
 	smb := r.FormValue("courseSymbol")
 	course := Course{}
 	err := config.DB.QueryRow("SELECT symbol FROM courses WHERE symbol=$1", smb).Scan(&course.Symbol)
-	fmt.Println(course.Symbol)
 	if course.Symbol != "" {
 		return errors.New("Istnieje juz taki kurs.")
 	}
@@ -53,7 +52,7 @@ func (cr *Course) PutCourse(r *http.Request) error {
 	}
 	bs, err := json.Marshal(courseprograms)
 	if err != nil {
-		fmt.Println("error: ", err)
+		logging.Error.Println(err.Error())
 	}
 	course.CourseProgram = bs
 	course.Name = r.FormValue("courseName")
@@ -64,7 +63,7 @@ func (cr *Course) PutCourse(r *http.Request) error {
 	}
 	_, err = config.DB.Exec("INSERT INTO courses(name,symbol,expirytime,courseprogram) VALUES ($1,$2,$3,$4)", course.Name, course.Symbol, course.ExpiryTime, course.CourseProgram)
 	if err != nil {
-		fmt.Println(err.Error())
+		logging.Error.Println(err.Error())
 		return errors.New("500. Internal Server Error." + err.Error())
 	}
 	return nil
@@ -84,7 +83,6 @@ func (cr *Course) AllCourses() ([]Course, error) {
 		if err != nil {
 			return nil, err
 		}
-		fmt.Println(cr.CourseProgram)
 		crs = append(crs, cr)
 	}
 
@@ -147,7 +145,6 @@ func (cr *Course) UpdateCourse(r *http.Request) error {
 	// }
 	// return nil
 	json.NewDecoder(r.Body).Decode(&cr)
-	fmt.Println(*cr)
 	_, err := config.DB.Exec("UPDATE courses SET name=$1,symbol=$2,expirytime=$3,courseprogram=$4,certfrontpage=$5 WHERE symbol=$2", cr.Name, cr.Symbol, cr.ExpiryTime, cr.CourseProgram, cr.CertFrontpage)
 	if err != nil {
 		errors.New("500. Internal Server Error." + err.Error())

@@ -106,6 +106,7 @@
                                         :headers="headers"
                                         :items="program"
                                         class="elevation-1"
+                                        hide-actions
                                       >
                                       <template slot="items" slot-scope="props">
                                             <td>${ props.item.Subject }</td>
@@ -139,6 +140,7 @@ new Vue({
         editorConfig: {
             language: 'pl'
         },
+        
         headers: [
             {
                 text: 'Temat',

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/janexpl/CoursesList/logging"
 	"github.com/janexpl/CoursesList/models"
 )
 
@@ -28,7 +29,7 @@ func (c *RegistriesController) GetLastNumberWithSymbol(w http.ResponseWriter, r 
 	}
 	uj, err := json.Marshal(number)
 	if err != nil {
-		fmt.Println(err)
+		logging.Error.Println(err.Error())
 	}
 
 	w.Header().Set("Content-Type", "application/json")

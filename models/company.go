@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -27,7 +26,6 @@ type Company struct {
 func (c *Company) PutCompany(r *http.Request) (int64, error) {
 
 	nip := c.clearnip(r.FormValue("nip"))
-	fmt.Println(nip)
 	if !c.checkNip(nip) {
 		return 0, errors.New("Błędny numer NIP")
 	}

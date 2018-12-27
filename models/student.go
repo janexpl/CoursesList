@@ -3,7 +3,6 @@ package models
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -113,7 +112,6 @@ WHERE students.company_id = $1`, cp.ID)
 }
 
 func (s *Student) GetStudentWithId(id int64) (Student, error) {
-	fmt.Println(id)
 	st := Student{}
 	var cpid sql.NullInt64
 	var cpname sql.NullString
@@ -146,7 +144,6 @@ func (s *Student) GetStudentWithId(id int64) (Student, error) {
 	} else {
 		st.Company.Name = ""
 	}
-	fmt.Println(st)
 	if err != nil {
 		return st, err
 	}
@@ -226,7 +223,6 @@ func (s *Student) OneStudent(r *http.Request) (Student, error) {
 	var cpid sql.NullInt64
 	var cpname sql.NullString
 	pesel := r.FormValue("pesel")
-	fmt.Println(pesel)
 	if pesel == "" {
 		return st, errors.New("400. Bad Request.")
 	}
@@ -264,7 +260,7 @@ func (s *Student) OneStudent(r *http.Request) (Student, error) {
 	if err != nil {
 		return st, err
 	}
-	fmt.Println(st)
+
 	return st, nil
 
 }
@@ -294,7 +290,6 @@ func (s *Student) UpdateStudent(r *http.Request) error {
 	student.AddressZip = r.FormValue("zip")
 	student.TelephoneNo = r.FormValue("telephone")
 	student.Company = cp
-	fmt.Println(student)
 	_, err = config.DB.Exec("UPDATE students SET firstname=$1,lastname=$2,secondname=$3,birthdate=$4,birthplace=$5,pesel=$6,addressstreet=$7,addresscity=$8,telephoneno=$9,company_id=$10,addresszip=$11 where pesel=$6", student.Firstname, student.Lastname, student.Secondname, student.Birthdate, student.Birthplace, student.Pesel, student.AddressStreet, student.AddressCity, student.TelephoneNo, student.Company.ID, student.AddressZip)
 	if err != nil {
 		return err

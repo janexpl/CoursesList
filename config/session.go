@@ -66,7 +66,7 @@ func AlreadyLoggedIn(w http.ResponseWriter, req *http.Request) bool {
 
 	c, err := req.Cookie("session")
 	if err != nil {
-		logging.Trace.Println("Nie zalogowane")
+
 		return false
 	}
 	se, ok := dbSessions[c.Value]
@@ -78,7 +78,7 @@ func AlreadyLoggedIn(w http.ResponseWriter, req *http.Request) bool {
 	c.MaxAge = sessionLength
 	c.Path = "/"
 	http.SetCookie(w, c)
-	logging.Trace.Println("Zalogowane")
+
 	return true
 }
 
@@ -87,7 +87,7 @@ func GetLoggedUser(req *http.Request) (loggedUser, error) {
 	c, err := req.Cookie("session")
 
 	if err != nil {
-		fmt.Println("błąd")
+		logging.Error.Println(err.Error())
 		return loggedUser{}, err
 	}
 	se, _ := dbUsers[c.Value]

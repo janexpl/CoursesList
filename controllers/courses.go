@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/janexpl/CoursesList/config"
+	"github.com/janexpl/CoursesList/logging"
 	"github.com/janexpl/CoursesList/models"
 )
 
@@ -43,7 +44,7 @@ func (cr *CoursesController) HandleJson(w http.ResponseWriter, r *http.Request) 
 		}
 		uj, err := json.Marshal(crs)
 		if err != nil {
-			fmt.Println(err)
+			logging.Error.Println(err.Error())
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK) // 200
@@ -97,9 +98,9 @@ func (cr *CoursesController) GetCourseJson(w http.ResponseWriter, r *http.Reques
 	}
 	uj, err := json.Marshal(course)
 	if err != nil {
-		fmt.Println(err)
+		logging.Error.Println(err.Error())
 	}
-	fmt.Println(course)
+	
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK) // 200
 	fmt.Fprintf(w, "%s\n", uj)

@@ -3443,3 +3443,470 @@ TRACE: 2018/12/26 22:27:18 session.go:81: Zalogowane
 TRACE: 2018/12/26 22:27:19 session.go:81: Zalogowane
 TRACE: 2018/12/26 22:27:29 session.go:81: Zalogowane
 TRACE: 2018/12/26 22:27:31 session.go:81: Zalogowane
+INFO: 2018/12/27 07:18:35 main.go:72: Server started on port 8080
+TRACE: 2018/12/27 07:18:51 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 07:18:51 main.go:86: authorized
+TRACE: 2018/12/27 07:18:51 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 07:18:57 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 07:18:57 users.go:135: Logowanie
+TRACE: 2018/12/27 07:18:57 session.go:81: Zalogowane
+TRACE: 2018/12/27 07:19:15 session.go:81: Zalogowane
+TRACE: 2018/12/27 07:19:20 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:33:30 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 10:33:30 main.go:86: authorized
+TRACE: 2018/12/27 10:33:30 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 10:33:37 session.go:69: Nie zalogowane
+ERROR: 2018/12/27 10:33:37 users.go:131: Hasło albo uzytkownik błędne
+TRACE: 2018/12/27 10:33:37 users.go:135: Logowanie
+TRACE: 2018/12/27 10:33:37 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 10:33:37 main.go:86: authorized
+TRACE: 2018/12/27 10:33:37 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 10:33:45 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 10:33:45 users.go:135: Logowanie
+TRACE: 2018/12/27 10:33:45 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:33:49 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:33:55 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:33:58 session.go:81: Zalogowane
+INFO: 2018/12/27 10:37:43 main.go:72: Server started on port 8080
+TRACE: 2018/12/27 10:37:58 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 10:37:58 main.go:86: authorized
+TRACE: 2018/12/27 10:37:58 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 10:38:04 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 10:38:04 users.go:135: Logowanie
+TRACE: 2018/12/27 10:38:04 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:38:07 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:38:13 session.go:81: Zalogowane
+INFO: 2018/12/27 10:41:01 main.go:72: Server started on port 8080
+TRACE: 2018/12/27 10:41:05 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 10:41:05 main.go:86: authorized
+TRACE: 2018/12/27 10:41:05 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 10:42:35 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 10:42:35 users.go:135: Logowanie
+TRACE: 2018/12/27 10:42:35 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:42:38 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:42:39 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:46:51 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:47:02 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:47:04 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:48:20 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:48:26 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:49:04 session.go:81: Zalogowane
+TRACE: 2018/12/27 10:59:57 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 10:59:57 main.go:86: authorized
+TRACE: 2018/12/27 10:59:57 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 11:00:04 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 11:00:04 users.go:135: Logowanie
+TRACE: 2018/12/27 11:00:04 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:00:09 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:00:26 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:00:44 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:03:32 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:03:44 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:04:16 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:06:19 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:06:27 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:51:44 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 11:51:44 main.go:86: authorized
+TRACE: 2018/12/27 11:51:44 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 11:51:52 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 11:51:52 users.go:135: Logowanie
+TRACE: 2018/12/27 11:51:52 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:51:54 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:52:53 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:53:17 session.go:81: Zalogowane
+TRACE: 2018/12/27 11:59:49 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:04:10 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:04:11 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:04:30 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:04:31 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:04:48 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:05:31 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:05:32 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:06:20 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:06:20 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:09:06 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:09:07 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:09:16 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:10:05 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:10:05 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:10:39 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:10:39 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:19:02 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:19:03 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:23:39 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:23:40 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:23:51 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:23:51 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:24:08 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:24:09 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:24:14 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:25:41 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:27:02 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:27:03 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:28:53 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:28:54 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:29:23 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:29:24 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:29:46 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:29:47 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:30:35 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:30:36 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:32:00 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:32:01 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:32:28 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:32:28 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:34:15 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:34:16 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:35:00 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:35:01 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:36:09 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:36:11 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:44:48 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:44:50 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:46:45 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:47:15 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:47:41 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:47:55 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:48:05 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:48:19 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:48:30 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:48:37 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:48:48 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:48:56 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:49:12 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:54:47 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:54:49 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:54:49 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:57:10 session.go:81: Zalogowane
+TRACE: 2018/12/27 12:57:11 session.go:81: Zalogowane
+INFO: 2018/12/27 13:00:28 main.go:73: Server started on port 8080
+TRACE: 2018/12/27 13:00:38 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:00:38 main.go:87: authorized
+TRACE: 2018/12/27 13:00:38 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:00:44 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:00:44 users.go:135: Logowanie
+TRACE: 2018/12/27 13:00:44 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:00:47 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:00:48 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:00:55 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:00:58 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:00:58 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:00:58 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:01:10 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:01:10 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:01:10 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:01:14 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:01:15 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:01:22 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:01:24 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:01:24 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:01:24 session.go:81: Zalogowane
+INFO: 2018/12/27 13:06:13 main.go:73: Server started on port 8080
+TRACE: 2018/12/27 13:06:19 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:06:19 main.go:87: authorized
+TRACE: 2018/12/27 13:06:19 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:06:26 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:06:26 users.go:135: Logowanie
+TRACE: 2018/12/27 13:06:26 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:06:53 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:06:54 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:07:00 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:07:00 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:07:01 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:07:02 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:07:02 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:08:07 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:08:07 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:08:07 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:08:09 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:08:10 session.go:81: Zalogowane
+INFO: 2018/12/27 13:09:09 main.go:73: Server started on port 8080
+TRACE: 2018/12/27 13:09:18 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:09:18 main.go:87: authorized
+TRACE: 2018/12/27 13:09:19 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:09:24 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:09:24 users.go:135: Logowanie
+TRACE: 2018/12/27 13:09:24 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:09:26 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:09:27 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:09:34 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:09:35 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:09:35 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:09:35 session.go:81: Zalogowane
+INFO: 2018/12/27 13:11:10 main.go:73: Server started on port 8080
+TRACE: 2018/12/27 13:11:24 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:11:24 main.go:87: authorized
+TRACE: 2018/12/27 13:11:24 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:11:34 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:11:34 users.go:135: Logowanie
+TRACE: 2018/12/27 13:11:34 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:11:36 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:11:37 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:11:50 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:11:51 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:11:54 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:11:54 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:11:54 session.go:81: Zalogowane
+INFO: 2018/12/27 13:30:00 main.go:73: Server started on port 8080
+TRACE: 2018/12/27 13:30:12 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:30:12 main.go:87: authorized
+TRACE: 2018/12/27 13:30:12 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:30:18 session.go:69: Nie zalogowane
+ERROR: 2018/12/27 13:30:18 users.go:131: Hasło albo uzytkownik błędne
+TRACE: 2018/12/27 13:30:18 users.go:135: Logowanie
+TRACE: 2018/12/27 13:30:18 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:30:18 main.go:87: authorized
+TRACE: 2018/12/27 13:30:18 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:30:24 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:30:24 users.go:135: Logowanie
+TRACE: 2018/12/27 13:30:24 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:30:26 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:30:27 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:30:31 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:30:31 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:30:32 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:30:32 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:33:03 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:33:04 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:33:04 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:33:05 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:33:05 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:33:05 session.go:81: Zalogowane
+INFO: 2018/12/27 13:40:38 main.go:73: Server started on port 8080
+TRACE: 2018/12/27 13:40:44 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:40:44 main.go:87: authorized
+TRACE: 2018/12/27 13:40:44 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:40:50 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:40:50 users.go:135: Logowanie
+TRACE: 2018/12/27 13:40:50 session.go:81: Zalogowane
+INFO: 2018/12/27 13:42:11 main.go:73: Server started on port 8080
+TRACE: 2018/12/27 13:42:20 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:42:20 main.go:87: authorized
+TRACE: 2018/12/27 13:42:20 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:42:25 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:42:25 users.go:135: Logowanie
+TRACE: 2018/12/27 13:42:25 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:47:59 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:48:03 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:48:31 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:51:58 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:52:03 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:52:04 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:52:18 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:52:22 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:52:22 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:52:22 main.go:87: authorized
+TRACE: 2018/12/27 13:52:22 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:52:30 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:52:30 users.go:135: Logowanie
+TRACE: 2018/12/27 13:52:30 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:53:15 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:53:18 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:53:18 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:53:33 session.go:81: Zalogowane
+TRACE: 2018/12/27 13:53:33 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 13:53:33 main.go:87: authorized
+TRACE: 2018/12/27 13:53:33 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:23:52 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:23:52 users.go:135: Logowanie
+TRACE: 2018/12/27 14:23:52 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:24:03 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:24:09 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:27:47 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:27:49 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:27:50 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:32:17 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:32:35 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:34:31 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:34:32 session.go:81: Zalogowane
+INFO: 2018/12/27 14:37:57 main.go:73: Server started on port 8080
+TRACE: 2018/12/27 14:39:49 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:39:49 main.go:87: authorized
+TRACE: 2018/12/27 14:39:49 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:39:57 session.go:69: Nie zalogowane
+ERROR: 2018/12/27 14:39:57 users.go:131: Hasło albo uzytkownik błędne
+TRACE: 2018/12/27 14:39:57 users.go:135: Logowanie
+TRACE: 2018/12/27 14:39:57 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:39:57 main.go:87: authorized
+TRACE: 2018/12/27 14:39:57 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:40:08 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:40:08 users.go:135: Logowanie
+TRACE: 2018/12/27 14:40:08 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:40:12 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:40:14 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:40:15 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:47:49 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:47:49 main.go:87: authorized
+TRACE: 2018/12/27 14:47:49 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:47:51 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:47:51 users.go:135: Logowanie
+TRACE: 2018/12/27 14:47:51 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:47:57 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:47:58 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:47:59 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:48:15 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:50:05 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:50:16 session.go:81: Zalogowane
+ERROR: 2018/12/27 14:50:16 certificates.go:31: sql: Scan error on column index 18, name "certfrontpage": unsupported Scan, storing driver.Value type <nil> into type *string
+TRACE: 2018/12/27 14:50:27 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:50:55 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:50:55 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:50:55 main.go:87: authorized
+TRACE: 2018/12/27 14:50:55 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:50:57 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 14:50:57 users.go:135: Logowanie
+TRACE: 2018/12/27 14:50:57 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:51:07 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:51:18 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:51:23 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:51:24 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:51:25 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:51:25 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:51:32 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:51:43 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:51:46 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:51:47 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:55:07 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:55:13 session.go:81: Zalogowane
+TRACE: 2018/12/27 14:55:18 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:36:20 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:36:20 main.go:87: authorized
+TRACE: 2018/12/27 19:36:20 session.go:69: Nie zalogowane
+INFO: 2018/12/27 19:38:13 main.go:76: Server started on port 8080
+INFO: 2018/12/27 19:38:27 main.go:76: Server started on port 8080
+INFO: 2018/12/27 19:39:47 main.go:76: Server started on port 8080
+INFO: 2018/12/27 19:40:16 main.go:76: Server started on port 8080
+INFO: 2018/12/27 19:40:29 main.go:76: Server started on port 8080
+INFO: 2018/12/27 19:40:35 main.go:76: Server started on port 8080
+TRACE: 2018/12/27 19:40:48 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:40:48 main.go:90: authorized
+TRACE: 2018/12/27 19:40:48 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:40:52 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:40:52 users.go:135: Logowanie
+TRACE: 2018/12/27 19:40:52 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:43:52 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:43:56 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:43:57 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:44:08 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:44:11 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:44:14 session.go:81: Zalogowane
+ERROR: 2018/12/27 19:44:14 certificates.go:31: sql: Scan error on column index 18, name "certfrontpage": unsupported Scan, storing driver.Value type <nil> into type *string
+TRACE: 2018/12/27 19:44:23 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:45:05 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:45:05 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:46:03 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:46:04 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:46:52 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:46:52 main.go:90: authorized
+TRACE: 2018/12/27 19:46:52 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:47:03 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:47:03 users.go:135: Logowanie
+TRACE: 2018/12/27 19:47:03 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:47:07 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:47:09 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:47:09 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:47:50 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:48:01 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:48:01 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:48:03 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:48:04 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:48:04 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:48:04 session.go:81: Zalogowane
+INFO: 2018/12/27 19:48:58 main.go:76: Server started on port 8080
+TRACE: 2018/12/27 19:49:03 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:49:04 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:49:10 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:49:11 session.go:81: Zalogowane
+INFO: 2018/12/27 19:50:23 main.go:78: Server started on port8080
+TRACE: 2018/12/27 19:50:42 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:50:54 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:50:54 main.go:92: authorized
+TRACE: 2018/12/27 19:50:54 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:51:08 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:51:08 users.go:135: Logowanie
+TRACE: 2018/12/27 19:51:08 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:51:12 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:51:14 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:51:14 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:51:54 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:51:55 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:52:25 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:52:25 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:52:26 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:52:48 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:52:55 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:52:55 session.go:81: Zalogowane
+INFO: 2018/12/27 19:54:05 main.go:78: Server started on port8080
+TRACE: 2018/12/27 19:54:31 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:54:31 main.go:92: authorized
+TRACE: 2018/12/27 19:54:31 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:54:40 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 19:54:40 users.go:135: Logowanie
+TRACE: 2018/12/27 19:54:40 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:54:44 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:54:49 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:54:50 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:56:12 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:56:13 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:56:40 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:56:41 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:57:27 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:57:29 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:57:33 session.go:81: Zalogowane
+TRACE: 2018/12/27 19:57:35 session.go:81: Zalogowane
+INFO: 2018/12/27 20:07:57 main.go:78: Server started on port8080
+TRACE: 2018/12/27 20:08:02 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:08:02 main.go:92: authorized
+TRACE: 2018/12/27 20:08:02 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:08:04 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:08:04 users.go:135: Logowanie
+TRACE: 2018/12/27 20:08:04 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:08:11 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:08:16 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:08:17 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:10:16 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:10:20 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:10:31 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:10:32 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:10:41 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:10:44 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:10:45 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:12:10 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:12:11 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:12:56 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:12:56 main.go:92: authorized
+TRACE: 2018/12/27 20:12:56 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:13:02 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:13:02 users.go:135: Logowanie
+TRACE: 2018/12/27 20:13:02 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:13:08 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:13:11 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:13:11 session.go:81: Zalogowane
+INFO: 2018/12/27 20:15:37 main.go:78: Server started on port8080
+INFO: 2018/12/27 20:15:47 main.go:78: Server started on port8080
+TRACE: 2018/12/27 20:15:59 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:15:59 main.go:92: authorized
+TRACE: 2018/12/27 20:15:59 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:15:59 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:16:06 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:16:06 users.go:135: Logowanie
+TRACE: 2018/12/27 20:16:06 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:16:06 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:16:12 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:16:12 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:16:17 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:16:17 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:16:18 session.go:81: Zalogowane
+INFO: 2018/12/27 20:18:03 main.go:78: Server started on port8080
+INFO: 2018/12/27 20:20:01 main.go:77: Server started on port80
+TRACE: 2018/12/27 20:20:10 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:20:10 session.go:81: Zalogowane
+INFO: 2018/12/27 20:21:26 main.go:77: Server started on port80
+TRACE: 2018/12/27 20:21:30 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:21:30 session.go:81: Zalogowane
+TRACE: 2018/12/27 20:21:55 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:21:55 main.go:91: authorized
+TRACE: 2018/12/27 20:21:55 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:21:57 session.go:69: Nie zalogowane
+TRACE: 2018/12/27 20:21:57 users.go:135: Logowanie
+TRACE: 2018/12/27 20:21:57 session.go:81: Zalogowane

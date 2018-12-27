@@ -29,9 +29,9 @@
         <!-- <script src="../node_modules/@ckeditor/ckeditor5-build-classic/build/translations/pl.js"></script> -->
         <script src="../node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js"></script>
 
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.js"></script>
         <script type="text/javascript" src="/assets/js/popper.min.js"></script>
         <script type="text/javascript" src="/assets/js/addons/datatables.min.js"></script>
         <!-- Bootstrap core JavaScript -->
@@ -40,6 +40,7 @@
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="/assets/js/mdb.min.js"></script>
        <script type="text/javascript" src="/assets/js/selectize.min.js"></script> 
+
         <!-- <script type="text/javascript" src="/assets/js/select2.full.min.js"></script> -->
     </head>
     <header>
@@ -53,16 +54,13 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
         </div>
-       
         {{ end }}
-        
         <div class="container">
                 {{ yield }}
                
         </div>
         <script type="text/javascript" src="/assets/js/app.js"></script>
         <script>
-        
 $(function() {
     $('#flash').delay(500).fadeIn('normal', function() {
        $(this).delay(2500).fadeOut();

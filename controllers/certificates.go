@@ -49,7 +49,7 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 		rw := fmt.Sprintf("<tr><td>%v</td><td>%v</td><td class='hour'>%v</td><td class='hour'>%v</td></tr>", i, row.Subject, row.TheoryTime, row.PracticeTime)
 		back = back + rw
 		i++
-		fmt.Println(row)
+
 	}
 	back = back + `</table></body><style>
 	table {
@@ -69,7 +69,6 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	p {
 	font-size: 20px;
 		}</style></html>`
-	fmt.Println(back)
 
 	page := front + back
 	//Printing certificate
@@ -110,10 +109,6 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	fmt.Println("Done")
-	// Output: Done
-
 	buf.WriteTo(w)
 }
 
@@ -132,6 +127,7 @@ func (crt *CertificatesController) Index(w http.ResponseWriter, r *http.Request)
 	data := map[string]interface{}{
 		"Data": certificates,
 	}
+	
 	config.RenderTemplate(w, r, "certificates/certificates", data)
 }
 
@@ -174,6 +170,31 @@ func (crt *CertificatesController) Update(w http.ResponseWriter, r *http.Request
 
 	config.RenderTemplate(w, r, "certificates/update", data)
 }
+func (crt *CertificatesController) UpdateProcess(w http.ResponseWriter, r *http.Request) {
+	var flash string
+	if r.Method != "POST" {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		return
+	}
+	cr := models.Certificate{}
+	err := cr.UpdateCertificate(r)
+	if err != nil {
+		flash = err.Error()
+	} else {
+		flash = "Dane zapisano poprawnie"
+	}
+	certs, err := cr.AllCertificates()
+	if err != nil {
+		flash = err.Error()
+	}
+	data := map[string]interface{}{
+		"Data":  certs,
+		"Flash": flash,
+	}
+
+	config.RenderTemplate(w, r, "certificates/certificates", data)
+}
+
 func (crt *CertificatesController) CreateProcess(w http.ResponseWriter, r *http.Request) {
 	var flash string
 	if r.Method != "POST" {

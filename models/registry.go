@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -21,7 +20,6 @@ func (reg *Registry) GetLastNumber(r *http.Request) (int, error) {
 	id := r.FormValue("id")
 	year := r.FormValue("year")
 	err := config.DB.QueryRow("SELECT MAX(number) FROM registries WHERE course_id = $1 and year = $2", id, year).Scan(&number)
-	fmt.Println(number)
 	if err != nil {
 		if number == 0 {
 			number = 0
@@ -41,8 +39,6 @@ func (reg *Registry) PutRegistry(r *http.Request) (int, error) {
 	rg.Course = cr
 	id := 0
 	err = config.DB.QueryRow("INSERT INTO registries(course_id,year,number) VALUES ($1,$2,$3) RETURNING id", rg.Course.ID, rg.Year, rg.Number).Scan(&id)
-
-	fmt.Println(id)
 	if err != nil {
 		return id, errors.New("500. Internal Server Error." + err.Error())
 	}

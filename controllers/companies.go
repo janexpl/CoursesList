@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/janexpl/CoursesList/config"
+	"github.com/janexpl/CoursesList/logging"
 	"github.com/janexpl/CoursesList/models"
 )
 
@@ -28,7 +29,7 @@ func (c *CompaniesController) GetAllJson(w http.ResponseWriter, r *http.Request)
 	}
 	uj, err := json.Marshal(companies)
 	if err != nil {
-		fmt.Println(err)
+		logging.Error.Println(err.Error())
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -43,7 +44,7 @@ func (c *CompaniesController) Index(w http.ResponseWriter, r *http.Request) {
 	}
 	cp := models.Company{}
 	companies, err := cp.AllCompanies()
-	fmt.Println(companies)
+
 	if err != nil {
 		http.Error(w, http.StatusText(500)+err.Error(), http.StatusInternalServerError)
 		return
@@ -74,7 +75,8 @@ func (c *CompaniesController) CreateFromModal(w http.ResponseWriter, r *http.Req
 	}
 	uj, err := json.Marshal(id)
 	if err != nil {
-		fmt.Println(err)
+		logging.Error.Println(err.Error())
+
 	}
 
 	w.Header().Set("Content-Type", "application/json")

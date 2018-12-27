@@ -1,7 +1,9 @@
 package main
 
 import (
+	"flag"
 	"net/http"
+	"strconv"
 
 	"github.com/janexpl/CoursesList/config"
 	"github.com/janexpl/CoursesList/controllers"
@@ -9,7 +11,9 @@ import (
 )
 
 func main() {
-
+	port := flag.Int("port", 8080, "an int")
+	flag.Parse()
+	ports := strconv.Itoa(*port)
 	http.HandleFunc("/", index)
 	courses := controllers.NewCoursesController()
 
@@ -51,6 +55,7 @@ func main() {
 	http.HandleFunc("/certificates", authorized(certificates.Index))
 	http.HandleFunc("/certificates/create", authorized(certificates.Create))
 	http.HandleFunc("/certificates/update", authorized(certificates.Update))
+	http.HandleFunc("/certificates/update/process", authorized(certificates.UpdateProcess))
 	http.HandleFunc("/certificates/create/process", authorized(certificates.CreateProcess))
 	http.HandleFunc("/certificates/delete/process", authorized(certificates.DeleteProcess))
 	http.HandleFunc("/certificates/print", authorized(certificates.Print))
@@ -69,8 +74,8 @@ func main() {
 	registries := controllers.NewRegistriesController()
 
 	http.HandleFunc("/registries/getlastnumber", registries.GetLastNumberWithSymbol)
-	logging.Info.Println("Server started on port 8080")
-	http.ListenAndServe(":8080", nil)
+	logging.Info.Println("Server started on port" + ports)
+	http.ListenAndServe(":"+ports, nil)
 
 }
 func index(w http.ResponseWriter, r *http.Request) {
@@ -83,7 +88,6 @@ func authorized(h http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// code before
 		if !config.AlreadyLoggedIn(w, r) {
-			logging.Trace.Println("authorized")
 			http.Redirect(w, r, "/users/login", http.StatusSeeOther)
 			return
 		}

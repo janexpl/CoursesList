@@ -5,8 +5,10 @@
   class="needs-validation border border-light p-5"
   novalidate
   method="post"
-  action="/certificates/create/process"
+  action="/certificates/update/process"
 >
+  <input hidden name="ID" value="{{ .Data.ID }}"></input>
+  <input hidden name="RegID" value="{{ .Data.Registry.ID }}"></input>
   <div class="form-row">
     <div class="col-md-2 mb-3">
       <label for="course-select">Rejestr</label>
@@ -15,8 +17,9 @@
         name="courseid"
         class="form-control"
         title="Wybierz symbol"
+        disabled
       >
-      <option selected="selected">{{ .Data.Registry.Course.Symbol }}</option>
+      <option selected value="{{ .Data.Registry.Course.ID }}">{{ .Data.Registry.Course.Symbol }}</option>
         {{ range.Course }}
         <option value="{{.ID}}">{{.Symbol}}</option>
         {{ end }}
@@ -32,6 +35,7 @@
         id="year"
         placeholder="Wpisz rok"
         value="{{ .Data.Registry.Year }}"
+        disabled
         required
       />
       <div class="invalid-feedback">Wpisz rok wydania zaświadczenia</div>
@@ -45,6 +49,7 @@
         id="number"
         placeholder="Wpisz numer"
         value="{{ .Data.Registry.Number }}"
+        disabled
         required
       />
       <div class="invalid-feedback">Wpisz prawidłowy numer</div>
@@ -100,9 +105,8 @@
         name="student"
         class="form-control"
         title="Wybierz pracownika"
-        
       >
-      <option selected="selected">{{ .Data.Student.Firstname }} {{ .Data.Student.Secondname }} {{ .Data.Student.Lastname }}</option>
+      
       </select>
       <div class="invalid-feedback">Wpisz kursanta</div>
     </div>
@@ -176,10 +180,11 @@ $('#course-select').selectize();
 var $studentselect = $('#student-select').selectize({
     valueField: 'ID',
     searchField:['Lastname','Firstname'],
+    preload: true,
     render: {
             option: function(data, escape) {
+                        
                         var bdate = new Date(data.Birthdate);
-
                         return '<div class="option">' +
                                '<span class="firstname">' + escape(data.Firstname) + ' </span>' +
                                '<span class="lastname">' + escape(data.Lastname) + ' </span><br>' +
@@ -191,25 +196,34 @@ var $studentselect = $('#student-select').selectize({
 							    return '<div class="item">' + escape(data.Firstname) + ' ' + escape(data.Lastname) + '</div>';
 						}
                         },
-                    create: function(input) {
-                        $('#firstname').val(input);
-                            $('#modalStudentForm').modal({show: true});
-                        },
-                    load: function(query, callback) {
-                        if (!query.length) return callback();
-                        $.ajax({
-                            url: '/students/getalljson',
-                            type: 'GET',
-                            dataType: 'json',
-                        error: function() {
-                            callback();
-                        },
-                        success: function(res) {
-                            callback(res);
-                        }
-                        });
-                    }
-                    });
+            create: function(input) {
+                $('#firstname').val(input);
+                    $('#modalStudentForm').modal({show: true});
+                },
+            load: function(query, callback) {
+
+              //  if (!query.length) return callback();
+                $.ajax({
+                    url: '/students/getalljson',
+                    type: 'GET',
+                    dataType: 'json',
+                error: function() {
+                    callback();
+                },
+                success: function(res) {
+                    var selectize = this;
+                    console.log("Load")
+                    callback(res);
+
+                }
+                });
+            },
+            onLoad: function() {
+              var selectize = this;
+              
+                    selectize.setValue(parseInt(`{{ .Data.Student.ID }}`,10));
+                }
+            });
                     var $companyselect = $('#company-select').selectize({
                             valueField: 'ID',
                             labelField: 'Name',
@@ -231,6 +245,7 @@ var $studentselect = $('#student-select').selectize({
                                 });
                             }
                     });
+                  
 </script>
 
 {{ template "certificates/studentmodal" }}

@@ -20,7 +20,7 @@ func init() {
 	if err != nil {
 		log.Fatalln("Failed to open log file")
 	}
-	//	defer file.Close()
+	defer file.Close()
 	multi := io.MultiWriter(file, os.Stdout)
 	Trace = log.New(multi,
 		"TRACE: ",

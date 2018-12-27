@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/janexpl/CoursesList/config"
+	"github.com/janexpl/CoursesList/logging"
 	"github.com/janexpl/CoursesList/models"
 )
 
@@ -21,7 +22,7 @@ func (st *StudentsController) Index(w http.ResponseWriter, r *http.Request) {
 	}
 	s := models.Student{}
 	students, err := s.AllStudents()
-	fmt.Println(students)
+
 	if err != nil {
 		http.Error(w, http.StatusText(500)+err.Error(), http.StatusInternalServerError)
 		return
@@ -62,9 +63,9 @@ func (st *StudentsController) GetAllJson(w http.ResponseWriter, r *http.Request)
 	}
 	uj, err := json.Marshal(students)
 	if err != nil {
-		fmt.Println(err)
+		logging.Error.Println(err.Error())
 	}
-	fmt.Println(students)
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK) // 200
 	fmt.Fprintf(w, "%s\n", uj)
@@ -182,7 +183,7 @@ func (st *StudentsController) CreateFromModal(w http.ResponseWriter, r *http.Req
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 		return
 	}
-	
+
 	std := models.Student{}
 
 	sid, err := std.PutStudent(r)
@@ -190,10 +191,10 @@ func (st *StudentsController) CreateFromModal(w http.ResponseWriter, r *http.Req
 		http.Error(w, http.StatusText(400), http.StatusBadRequest)
 		return
 	}
-	
+
 	uj, err := json.Marshal(sid)
 	if err != nil {
-		fmt.Println(err)
+		logging.Error.Println(err.Error())
 	}
 
 	w.Header().Set("Content-Type", "application/json")

@@ -28,23 +28,21 @@ func (u *UsersController) HandleJson(w http.ResponseWriter, r *http.Request) {
 		}
 		uj, err := json.Marshal(usrs)
 		if err != nil {
-			fmt.Println(err)
+			logging.Error.Println(err.Error())
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK) // 200
 		fmt.Fprintf(w, "%s\n", uj)
 	case "POST":
-		fmt.Println("POST")
-
 		us, err := us.PutUser(r)
 		if err != nil {
 			http.Error(w, http.StatusText(406), http.StatusNotAcceptable)
 			return
 		}
-		fmt.Println(us)
+
 		uj, err := json.Marshal(us)
 		if err != nil {
-			fmt.Println(err)
+			logging.Error.Println(err.Error())
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated) // 201
@@ -65,7 +63,6 @@ func (u *UsersController) HandleJson(w http.ResponseWriter, r *http.Request) {
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK) // 201
-
 	}
 }
 func (u *UsersController) Signup(w http.ResponseWriter, r *http.Request) {
@@ -85,7 +82,6 @@ func (u *UsersController) Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	} else {
 		flash = "Uzytkownika dodano poprawnie."
-
 	}
 	data := map[string]interface{}{
 		"Flash": flash,
@@ -139,8 +135,7 @@ func (u *UsersController) LoginProcess(w http.ResponseWriter, r *http.Request) {
 	logging.Trace.Println("Logowanie")
 	config.NewSession(w, r, user.Email, user.Role)
 	http.Redirect(w, r, "/certificates", http.StatusSeeOther)
-	//	fmt.Println(dbSessions)
-	//	config.RenderTemplate(w, r, "users/login", nil)
+
 }
 func (u *UsersController) Logout(w http.ResponseWriter, r *http.Request) {
 

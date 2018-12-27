@@ -31,7 +31,8 @@ func (c *Certificate) AllCertificates() ([]Certificate, error) {
     students.birthplace,
     students.pesel,
     certificates.coursedatestart,
-    certificates.coursedateend,
+	certificates.coursedateend,
+	registries.id,
     registries.number,
     registries.year,
     courses.symbol
@@ -52,7 +53,7 @@ FROM
 			Scan(&crt.ID,
 				&crt.Date,
 				&crt.Student.Firstname, &crt.Student.Secondname, &crt.Student.Lastname, &crt.Student.Birthdate, &crt.Student.Birthplace, &crt.Student.Pesel,
-				&crt.CourseDateStart, &crt.CourseDateEnd,
+				&crt.CourseDateStart, &crt.CourseDateEnd, &crt.Registry.ID,
 				&crt.Registry.Number, &crt.Registry.Year,
 				&crt.Registry.Course.Symbol)
 
@@ -126,7 +127,6 @@ func (c *Certificate) PutCertificate(r *http.Request) error {
 	st := Student{}
 	stid, _ := strconv.ParseInt(r.FormValue("student"), 0, 64)
 	st, err := st.GetStudentWithId(stid)
-	fmt.Println(st)
 	cr := Certificate{}
 	cr.Date, _ = time.Parse("2006-01-02", r.FormValue("certdate"))
 	cr.Student = st
@@ -143,7 +143,28 @@ func (c *Certificate) PutCertificate(r *http.Request) error {
 	}
 	return nil
 }
+func (c *Certificate) UpdateCertificate(r *http.Request) error {
 
+	st := Student{}
+	stid, _ := strconv.ParseInt(r.FormValue("student"), 0, 64)
+	st, err := st.GetStudentWithId(stid)
+	cr := Certificate{}
+	cr.ID, _ = strconv.ParseInt(r.FormValue("ID"), 0, 64)
+	cr.Date, _ = time.Parse("2006-01-02", r.FormValue("certdate"))
+	cr.Student = st
+	cr.CourseDateStart, _ = time.Parse("2006-01-02", r.FormValue("startdate"))
+	cr.CourseDateEnd, _ = time.Parse("2006-01-02", r.FormValue("enddate"))
+
+	regid, _ := strconv.ParseInt(r.FormValue("RegID"), 0, 64)
+	fmt.Println(regid, cr)
+	_, err = config.DB.Exec("UPDATE certificates SET date=$1 ,student_id=$2,coursedatestart=$3,coursedateend=$4,registry_id=$5 WHERE id=$6", cr.Date, cr.Student.ID, cr.CourseDateStart, cr.CourseDateEnd, regid, cr.ID)
+
+	if err != nil {
+
+		return errors.New("500. Internal Server Error." + err.Error())
+	}
+	return nil
+}
 func (c *Certificate) GetCertificatesWithCourseId(id int64) ([]Certificate, error) {
 	rows, err := config.DB.Query(`SELECT
 	certificates.id,
@@ -197,12 +218,10 @@ WHERE course_id = $1`, id)
 
 func (c *Certificate) DeleteCertificate(r *http.Request) error {
 	cid, _ := strconv.ParseInt(r.FormValue("id"), 0, 64)
-	fmt.Println("id", cid)
 	var rid int64
 
 	reg := Registry{}
 	err := config.DB.QueryRow("SELECT registry_id FROM certificates WHERE id = $1", cid).Scan(&rid)
-	fmt.Println("rid", rid)
 	if err != nil {
 		return err
 	}
@@ -219,7 +238,8 @@ func (c *Certificate) GetCertificate(r *http.Request) (Certificate, error) {
 	id := r.FormValue("id")
 	row := config.DB.QueryRow(`SELECT
 	certificates.id,
-    certificates.date,
+	certificates.date,
+	students.id,
     students.firstname,
     students.secondname,
     students.lastname,
@@ -227,9 +247,11 @@ func (c *Certificate) GetCertificate(r *http.Request) (Certificate, error) {
     students.birthplace,
     students.pesel,
     certificates.coursedatestart,
-    certificates.coursedateend,
+	certificates.coursedateend,
+	registries.id,
     registries.number,
-    registries.year,
+	registries.year,
+	courses.id,
 	courses.symbol,
 	courses.name,
 	courses.courseprogram,
@@ -241,17 +263,17 @@ FROM
     INNER JOIN registries ON certificates.registry_id= registries.id
 	INNER JOIN courses ON courses.id=registries.course_id
 WHERE certificates.id = $1`, id)
-		err := row.
-			Scan(&c.ID,
-				&c.Date,
-				&c.Student.Firstname, &c.Student.Secondname, &c.Student.Lastname, &c.Student.Birthdate, &c.Student.Birthplace, &c.Student.Pesel,
-				&c.CourseDateStart, &c.CourseDateEnd,
-				&c.Registry.Number, &c.Registry.Year,
-				&c.Registry.Course.Symbol, &c.Registry.Course.Name,&c.Registry.Course.CourseProgram,&c.Registry.Course.CertFrontpage)
+	err := row.
+		Scan(&c.ID,
+			&c.Date, &c.Student.ID,
+			&c.Student.Firstname, &c.Student.Secondname, &c.Student.Lastname, &c.Student.Birthdate, &c.Student.Birthplace, &c.Student.Pesel,
+			&c.CourseDateStart, &c.CourseDateEnd, &c.Registry.ID,
+			&c.Registry.Number, &c.Registry.Year, &c.Registry.Course.ID,
+			&c.Registry.Course.Symbol, &c.Registry.Course.Name, &c.Registry.Course.CourseProgram, &c.Registry.Course.CertFrontpage)
 
-		if err != nil {
-			return *c, err
-		}
+	if err != nil {
+		return *c, err
+	}
 
 	return *c, nil
 }

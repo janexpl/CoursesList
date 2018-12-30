@@ -163,21 +163,28 @@ func (u *UsersController) Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func (u *UsersController) Update(w http.ResponseWriter, r *http.Request) {
-	var flash string
-	if r.Method != "GET" {
-		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
-		return
-	}
-	us := models.User{}
-	us, err := us.OneUser(r)
-	if err != nil {
-		flash = err.Error()
-	}
-	data := map[string]interface{}{
-		"Data":  us,
-		"Flash": flash,
-	}
-	config.RenderTemplate(w, r, "users/update", data)
+	// var flash string
+	// if r.Method != "GET" {
+	// 	http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+	// 	return
+	// }
+	// loggedUser, err := config.GetLoggedUser(r)
+	// if err != nil {
+	// 	config.SetFlash(w, r, []byte(err.Error()))
+	// 	logging.Error.Println(err.Error())
+	// }
+	// us := models.User{}
+	// us, err = us.GetUser(loggedUser.Email)
+	// if err != nil {
+	// 	config.SetFlash(w, r, []byte(err.Error()))
+	// 	logging.Error.Println(err.Error())
+	// }
+
+	// data := map[string]interface{}{
+	// 	"Data":  us,
+	// 	"Flash": flash,
+	// }
+	config.RenderTemplate(w, r, "users/update", nil)
 }
 
 func (u *UsersController) UpdateProcess(w http.ResponseWriter, r *http.Request) {
@@ -206,4 +213,29 @@ func (u *UsersController) UpdateProcess(w http.ResponseWriter, r *http.Request) 
 	}
 
 	config.RenderTemplate(w, r, "users/users", data)
+}
+
+func (u *UsersController) GetUserJSON(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		return
+	}
+	loggedUser, err := config.GetLoggedUser(r)
+	if err != nil {
+		config.SetFlash(w, r, []byte(err.Error()))
+		logging.Error.Println(err.Error())
+	}
+	us := models.User{}
+	us, err = us.GetUser(loggedUser.Email)
+	if err != nil {
+		config.SetFlash(w, r, []byte(err.Error()))
+		logging.Error.Println(err.Error())
+	}
+	uj, err := json.Marshal(us)
+	if err != nil {
+		logging.Error.Println(err.Error())
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK) // 200
+	fmt.Fprintf(w, "%s\n", uj)
 }

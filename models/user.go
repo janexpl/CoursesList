@@ -3,9 +3,12 @@ package models
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/janexpl/CoursesList/logging"
 
 	"github.com/janexpl/CoursesList/config"
 	"golang.org/x/crypto/bcrypt"
@@ -101,19 +104,21 @@ func (u *User) DeleteUser(r *http.Request) error {
 	return err
 }
 func (u *User) UpdateUser(r *http.Request) error {
-	var password string
+	var query string
 	if strings.Contains(r.Header.Get("Content-Type"), "json") {
-
 		json.NewDecoder(r.Body).Decode(&u)
-		cost, _ := bcrypt.Cost([]byte(u.SPassword))
+		fmt.Println(u.SPassword, u.Password)
 
-		if cost == 0 {
-
+		if u.SPassword != "" {
 			bpas, err := bcrypt.GenerateFromPassword([]byte(u.SPassword), bcrypt.MinCost)
 			if err != nil {
 				return err
 			}
 			u.Password = bpas
+			query = fmt.Sprintf(`UPDATE users SET email='%v', password=%v, firstname='%v', lastname='%v', role=%v WHERE id=%v`, u.Email, u.Password, u.Firstname, u.Lastname, u.Role, u.ID)
+		} else {
+			query = fmt.Sprintf(`UPDATE users SET email='%v', firstname='%v', lastname='%v', role=%v WHERE id=%v`, u.Email, u.Firstname, u.Lastname, u.Role, u.ID)
+
 		}
 
 	} else {
@@ -126,25 +131,30 @@ func (u *User) UpdateUser(r *http.Request) error {
 		} else {
 			u.Role = 0
 		}
-		password = r.FormValue("spassword")
-		cost, _ := bcrypt.Cost([]byte(password))
-
-		if cost == 0 {
-			bpas, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
+		u.SPassword = r.FormValue("spassword")
+		if u.SPassword != "" {
+			bpas, err := bcrypt.GenerateFromPassword([]byte(u.SPassword), bcrypt.MinCost)
 			if err != nil {
 				return err
 			}
 			u.Password = bpas
+			query = fmt.Sprintf(`UPDATE users SET email='%v', password='%v', firstname='%v', lastname='%v', role=%v WHERE id=%v`, u.Email, u.Password, u.Firstname, u.Lastname, u.Role, u.ID)
+		} else {
+			query = fmt.Sprintf(`UPDATE users SET email='%v', firstname='%v', lastname='%v', role=%v WHERE id=%v`, u.Email, u.Firstname, u.Lastname, u.Role, u.ID)
+
 		}
+
 	}
 	//var email string
 	// err := config.DB.QueryRow("SELECT email FROM users WHERE email = $1 AND id <> $2", u.Email, u.ID).Scan(&email)
 	// if email != "" {
 	// 	return errors.New("Istnieje juz taki uzytkownik")
 	// }
+	fmt.Println(query)
+	_, err := config.DB.Exec(query)
 
-	_, err := config.DB.Exec("UPDATE users SET email=$1, password=$2, firstname=$3, lastname=$4, role=$5 WHERE id=$6", u.Email, u.Password, u.Firstname, u.Lastname, u.Role, u.ID)
 	if err != nil {
+		logging.Error.Println(err.Error())
 		return err
 	}
 	return nil

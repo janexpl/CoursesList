@@ -1,52 +1,127 @@
 {{ define "users/update" }}
-<h1>Aktualizuj dane uzytkownika</h1>
-<form class="border border-light p-5" role="form" method="post" action="/users/update/process">
-    <input type="hidden" id="id" name="id" value="{{ .Data.ID }}">
-        <div class="form-row justify-content-md-left">
-    <div class="col-md-6 mb-1">
-      <i class="fa fa-name prefix grey-text"></i>
-      <label data-error="wrong" data-success="right" for="sfirstname">Imię</label>
-      <input type="text" id="sfirstname" name="sfirstname" class="form-control validate" value="{{ .Data.Firstname }}">
-     
-    </div>
-          </div>
-          <div class="form-row justify-content-md-left">
-    <div class="col-md-6 mb-1">
-          <i class="fa fa-name prefix grey-text"></i>
-          <label data-error="wrong" data-success="right" for="slastname">Nazwisko</label>
-          <input type="text" id="slastname" name="slastname" class="form-control validate" value="{{ .Data.Lastname }}">
+<div id="app">
+    <v-app>
+      <v-content>
+        <v-toolbar flat color="white">
+          <v-toolbar-title>Zmień swoje dane</v-toolbar-title>
          
-   </div>
-  </div>
-   <div class="form-row justify-content-md-left">
-    <div class="col-md-6 mb-1">
-      <i class="fa fa-envelope prefix grey-text"></i>
-      <label data-error="wrong" data-success="right" for="semail">Email</label>
-      <input type="email" id="semail" name="semail" class="form-control validate" value="{{ .Data.Email }}">
-     
-    </div>
+        </v-toolbar>
+        <v-form ref="form" v-model="valid" lazy-validation>
+            <v-container >
+                <v-layout align-center justify-center row wrap>
+                  <v-flex xs8 >
+                    <v-text-field
+                      v-model="editedItem.firstname"
+                      label="Imię"
+                      :rules="nameRules"
+                      required
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs8>
+                    <v-text-field
+                      v-model="editedItem.lastname"
+                      label="Nazwisko"
+                      :rules="nameRules"
+                      required
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs8>
+                    <v-text-field
+                      v-model="editedItem.email"
+                      label="Email"
+                      :rules="emailRules"
+                      required
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs8>
+                    <v-text-field
+                      v-model="editedItem.spassword"
+                      label="Hasło"
+                      type="password"
+                      
+                      
+                    ></v-text-field>
+                  </v-flex>
+            </v-form>
+          </v-layout>
+          <v-layout align-end justify-end >
+            <v-flex xs2>
+             <v-btn color="blue darken-1" @click="save" :disabled="!valid">Zapisz</v-btn>
+            </v-flex>
+          </v-layout>
+          </v-container>
+        </v-content>
+    </v-app>
+</div>
 
-  </div>
-    <div class="form-row justify-content-md-left">
-    <div class="col-md-6 mb-1">
-      <i class="fa fa-lock prefix grey-text"></i>
-      <label data-error="wrong" data-success="right" for="spassword">Hasło</label>
-      <input type="password" id="spassword" name="spassword" class="form-control validate" value="{{ .Data.Password }}">
-      
-    </div>
-    </div>
-    <div class="form-row justify-content-md-left">
-            <div class="col-md-1 mb-1">
-              <i class="fa fa-lock prefix grey-text"></i>
-              <label data-error="wrong" data-success="right" for="srole">Administrator</label>
-              <input type="checkbox" id="srole" name="srole" class="form-control validate" 
-              {{ if eq .Data.Role 1 }}checked{{ end }}>
-            </div>
-            </div>
+<script>
+  Vue.use(Vuetify, {
+      theme: {
+        primary: '#3f51b5', // #E53935
+        secondary: '#E57373', // 
+        accent: '#3F51B5' // #3F51B5
+      }
+    });
+    new Vue({ el: '#app',
+    delimiters: ['${', '}'],
+    data: () => ({
+      valid: true,
+      nameRules: [
+        v => !!v || 'Uzupełnij dane',
+      ],
+      emailRules: [
+        v => !!v || 'E-mail jest wymagany',
+        v => /.+@.+/.test(v) || 'E-mail musi być poprawny'
+      ],
+      editedIndex: -1,
+      editedItem: {
+        id: 0,
+        firstname: '',
+        lastname: '',
+        email: '',
+        spassword: '',
+        role: false
+      },
+    }),
+    created () {
+      this.initialize()
+    },
+    methods: {
+      initialize () {
+        axios
+        .get('/users/getuser')
+        .then((response) => {
+            console.log(response.data)
+            this.editedItem = response.data;
+            this.editedIndex.spassword = '';
+        })
+      },
+      save () {
+        if (this.$refs.form.validate()) {
+          console.log(this.editedItem)
+        axios
+          .put('/users/json', {
+            id: this.editedItem.id,
+            firstname: this.editedItem.firstname,
+            lastname: this.editedItem.lastname,
+            spassword: this.editedItem.spassword,
+            email: this.editedItem.email,
+            role: this.editedItem.role
+          })
+          .then(function (response) {
+            window.location.replace('/')
+            // console.log(this.users);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        }
+      }
+    }
+  })
+</script>
 
-  
-  <div class="modal-footer d-flex justify-content-center">
-    <button type="submit" class="btn btn-deep-orange">Aktualizuj</button>
-  </div>
-  </form>
+<style>
+</style>
+
 {{ end }}

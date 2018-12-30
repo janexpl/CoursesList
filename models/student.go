@@ -28,9 +28,9 @@ type Student struct {
 }
 
 func (s *Student) PutStudent(r *http.Request) (int64, error) {
-	if !s.checkPesel(r.FormValue("pesel")) {
-		return 0, errors.New("Błędny numer pesel")
-	}
+	// if !s.checkPesel(r.FormValue("pesel")) {
+	// 	return 0, errors.New("Błędny numer pesel")
+	// }
 	student := Student{}
 	pesel, _ := strconv.ParseInt(r.FormValue("pesel"), 0, 64)
 	err := config.DB.QueryRow("SELECT pesel FROM students WHERE pesel=$1", pesel).Scan(&student.Pesel)

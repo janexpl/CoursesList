@@ -66,11 +66,10 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, name string, data ma
 		data = map[string]interface{}{}
 	}
 	un, err := GetLoggedUser(r)
-	
+
 	data["CurrentUser"] = un
-	if data["Flash"] == "" {
-		data["Flash"], _ = getFlash(w, r)
-	}
+
+	data["Flash"], _ = getFlash(w, r)
 
 	templates = template.Must(
 		template.

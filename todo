@@ -1,0 +1,7 @@
+
+- umożliwienie zmieniania hasła użytkownikom
+- dodanie JWT
+- stworzenie frontendu. 
+- dodanie możliwości wyboru użytkowanika odpowiedzialnego za dany certyfikat
+- moduł sprawdzający ważność certyfikatów + informacja mailowa dla osobu odpowiedzialnej 
+- 

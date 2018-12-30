@@ -70,7 +70,7 @@ func main() {
 	http.HandleFunc("/users", authorized(users.Index))
 	http.HandleFunc("/users/json", authorized(users.HandleJson))
 	http.HandleFunc("/users/update", authorized(users.Update))
-	http.HandleFunc("/users/update/process", authorized(users.UpdateProcess))
+	http.HandleFunc("/users/getuser", authorized(users.GetUserJSON))
 	registries := controllers.NewRegistriesController()
 
 	http.HandleFunc("/registries/getlastnumber", registries.GetLastNumberWithSymbol)

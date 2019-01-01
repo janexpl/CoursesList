@@ -12,6 +12,7 @@ var DB *sql.DB
 func init() {
 	var err error
 	connStr := "user=janusz dbname=courselist password=Acetamide#2015 host=localhost sslmode=disable"
+	//connStr := "user=certs dbname=courselist password=Acetamie2018 host=localhost sslmode=disable"
 	DB, err = sql.Open("postgres", connStr)
 	if err != nil {
 		panic(err)

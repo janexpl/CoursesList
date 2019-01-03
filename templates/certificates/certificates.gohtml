@@ -5,6 +5,7 @@
         <thead>
           <tr>
             <th class="th-sm" scope="col">Data wystawienia</th>
+            <th class="th-sm" scope="col">Data ważności</th>
             <th class="th-sm" scope="col">Imię</th>
             <th class="th-sm" scope="col">Drugie imię</th>
             <th class="th-sm" scope="col">Nazwisko</th>
@@ -20,6 +21,7 @@
                 {{ range .Data }}
           <tr>
             <td>{{ dateformat .Date }}</td>
+            <td>{{ countexpiry .Date .Registry.Course.ExpiryTime }}</td>
             <td>{{ .Student.Firstname }}</td>
             <td>{{ .Student.Secondname }}</td>
             <td>{{ .Student.Lastname }}</td>

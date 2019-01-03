@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -25,6 +26,7 @@ var (
 			return "", fmt.Errorf("yield called unexpectedly")
 		},
 		"dateformat":  dateformat,
+		"countexpiry": countexpiry,
 		"formdatefmt": formdatefmt,
 	}
 )
@@ -32,8 +34,12 @@ var (
 func dateformat(t time.Time) string {
 	return t.Format("02.01.2006")
 }
+func countexpiry(t time.Time, ext string) string {
+	year, _ := strconv.Atoi(ext)
+	expDate := t.AddDate(year, 0, 0)
+	return expDate.Format("02.01.2006")
+}
 func formdatefmt(t time.Time) string {
-
 	return t.Format("2006-01-02")
 }
 
@@ -82,7 +88,8 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, name string, data ma
 			err := templates.ExecuteTemplate(buf, name, data)
 			return template.HTML(buf.String()), err
 		},
-		"dateformat": dateformat,
+		"dateformat":  dateformat,
+		"countexpiry": countexpiry,
 	}
 
 	layoutClone, _ := layout.Clone()

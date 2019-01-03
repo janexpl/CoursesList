@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+	"strconv"
 	"strings"
 
 	wkhtmltopdf "github.com/SebastiaanKlippert/go-wkhtmltopdf"
@@ -36,6 +37,7 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	front = `<!doctype html><html><head><meta charset="utf-8"><title>ZAŚWIADCZENIE</title></head><body>` + front
 	back := `
 	<p style="page-break-before: always;">
+	<div class="table">
 	<table> <thead>
 	<tr>
 	  <th>Lp.</th>
@@ -45,24 +47,35 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	</tr>
   </thead>`
 	var i int = 1
+	var theorySum int = 0
+	var practiceSum int = 0
 	for _, row := range bck {
 		rw := fmt.Sprintf("<tr><td>%v</td><td>%v</td><td class='hour'>%v</td><td class='hour'>%v</td></tr>", i, row.Subject, row.TheoryTime, row.PracticeTime)
 		back = back + rw
+		tt, _ := strconv.Atoi(row.TheoryTime)
+		pt, _ := strconv.Atoi(row.PracticeTime)
+		theorySum = theorySum + tt
+		practiceSum = practiceSum + pt
 		i++
-
 	}
-	back = back + `</table></body><style>
+	rw := fmt.Sprintf(`<tr><td colspan="2">RAZEM</td><td class='hour'>%v</td><td class='hour'>%v</td></tr>`, strconv.Itoa(theorySum), strconv.Itoa(practiceSum))
+	back = back + rw + `</table></div></body><style>
+	body {
+		display : block; margin : 80px;
+	}
+	
 	table {
+		margin-top: 80px;
 		border-collapse: collapse;
 	  }
 	  .hour {
 		  text-align: center;
 	  }
-	  table, th, td {
+	  th, td {
 		padding: 15px;
 		border: 1px solid black;
-
 	  }
+
 	  h2{
 	  font-size: 50px;	
 		}
@@ -127,7 +140,7 @@ func (crt *CertificatesController) Index(w http.ResponseWriter, r *http.Request)
 	data := map[string]interface{}{
 		"Data": certificates,
 	}
-	
+
 	config.RenderTemplate(w, r, "certificates/certificates", data)
 }
 

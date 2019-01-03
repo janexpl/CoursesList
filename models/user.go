@@ -107,7 +107,7 @@ func (u *User) UpdateUser(r *http.Request) error {
 	var query string
 	if strings.Contains(r.Header.Get("Content-Type"), "json") {
 		json.NewDecoder(r.Body).Decode(&u)
-		fmt.Println(u.SPassword, u.Password)
+		
 
 		if u.SPassword != "" {
 			bpas, err := bcrypt.GenerateFromPassword([]byte(u.SPassword), bcrypt.MinCost)

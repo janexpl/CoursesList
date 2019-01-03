@@ -35,7 +35,8 @@ func (c *Certificate) AllCertificates() ([]Certificate, error) {
 	registries.id,
     registries.number,
     registries.year,
-    courses.symbol
+	courses.symbol,
+	courses.expirytime
 FROM
     certificates
     INNER JOIN students ON students.id = certificates.student_id
@@ -55,7 +56,7 @@ FROM
 				&crt.Student.Firstname, &crt.Student.Secondname, &crt.Student.Lastname, &crt.Student.Birthdate, &crt.Student.Birthplace, &crt.Student.Pesel,
 				&crt.CourseDateStart, &crt.CourseDateEnd, &crt.Registry.ID,
 				&crt.Registry.Number, &crt.Registry.Year,
-				&crt.Registry.Course.Symbol)
+				&crt.Registry.Course.Symbol, &crt.Registry.Course.ExpiryTime)
 
 		if err != nil {
 			return nil, err

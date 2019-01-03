@@ -1,0 +1,5 @@
+server = "localhost"
+user = "janusz"
+dbname = "courselist"
+password = "Acetamide#2015"
+sslmode = "disable"

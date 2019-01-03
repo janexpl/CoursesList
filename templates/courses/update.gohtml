@@ -130,6 +130,10 @@
     </v-app>
 </div>
 <script>
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
 Vue.use( CKEditor );
 new Vue({ 
     delimiters: ['${', '}'],
@@ -222,11 +226,13 @@ new Vue({
         },
         save () {
           if (this.editedIndex > -1){
+            this.editedItem.Subject = String(this.editedItem.Subject).replace(/(\r\n\t|\n|\r\t)/gm,"");
+            this.program.push(this.editedItem);
             Object.assign(this.program[this.editedIndex], this.editedItem)
           } else {
         //if (this.$refs.form.validate()) {
+          this.editedItem.Subject = String(this.editedItem.Subject).replace(/(\r\n\t|\n|\r\t)/gm,"");
           this.program.push(this.editedItem);
-          console.log(this.program)
           }
         this.close()
         },

@@ -27,6 +27,7 @@ type CourseProgram struct {
 
 func (cr *Course) PutCourseJson(r *http.Request) error {
 	json.NewDecoder(r.Body).Decode(&cr)
+
 	_, err := config.DB.Exec("INSERT INTO courses(name,symbol,expirytime,courseprogram,certfrontpage) VALUES ($1,$2,$3,$4,$5)", cr.Name, cr.Symbol, cr.ExpiryTime, cr.CourseProgram, cr.CertFrontpage)
 	if err != nil {
 		errors.New("500. Internal Server Error." + err.Error())

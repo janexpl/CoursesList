@@ -1,3 +1,4 @@
 courseslist.log
 node_modules/
 config/config.toml
+node_modules/@ckeditor/ckeditor5-build-classic

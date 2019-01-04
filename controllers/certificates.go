@@ -35,9 +35,13 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	err = json.Unmarshal(cert.Registry.Course.CourseProgram, &bck)
 	front := parseHtml(cert)
 	front = `<!doctype html><html><head><meta charset="utf-8"><title>ZAŚWIADCZENIE</title></head><body>` + front
-	back := `
-	<p style="page-break-before: always;">
-	<div class="table">
+	var back = ""
+	var rw = ""
+
+	if len(bck) != 0 {
+		back = `
+	
+	<span class="break"></span>
 	<table> <thead>
 	<tr>
 	  <th>Lp.</th>
@@ -46,33 +50,40 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	  <th>Liczba godzin  zajęć praktycznych (ćwiczeń)</th>
 	</tr>
   </thead>`
-	var i int = 1
-	var theorySum int = 0
-	var practiceSum int = 0
-	for _, row := range bck {
-		rw := fmt.Sprintf("<tr><td>%v</td><td>%v</td><td class='hour'>%v</td><td class='hour'>%v</td></tr>", i, row.Subject, row.TheoryTime, row.PracticeTime)
-		back = back + rw
-		tt, _ := strconv.Atoi(row.TheoryTime)
-		pt, _ := strconv.Atoi(row.PracticeTime)
-		theorySum = theorySum + tt
-		practiceSum = practiceSum + pt
-		i++
+		var i int = 1
+		var theorySum int = 0
+		var practiceSum int = 0
+		for _, row := range bck {
+			rw := fmt.Sprintf("<tr><td>%v</td><td>%v</td><td class='hour'>%v</td><td class='hour'>%v</td></tr>", i, row.Subject, row.TheoryTime, row.PracticeTime)
+			back = back + rw
+			tt, _ := strconv.Atoi(row.TheoryTime)
+			pt, _ := strconv.Atoi(row.PracticeTime)
+			theorySum = theorySum + tt
+			practiceSum = practiceSum + pt
+			i++
+		}
+		rw = fmt.Sprintf(`<tr><td colspan="2">RAZEM</td><td class='hour'>%v</td><td class='hour'>%v</td></tr>`, strconv.Itoa(theorySum), strconv.Itoa(practiceSum))
 	}
-	rw := fmt.Sprintf(`<tr><td colspan="2">RAZEM</td><td class='hour'>%v</td><td class='hour'>%v</td></tr>`, strconv.Itoa(theorySum), strconv.Itoa(practiceSum))
-	back = back + rw + `</table></div></body><style>
+	back = back + rw + `</table></body><style>
 	body {
-		display : block; margin : 80px;
+		display : block; 
+		margin : 80px;
 	}
-	
+	.break {
+			page-break-before: always;
+			display: inline-block;
+			height: 100px;
+	}
 	table {
-		margin-top: 80px;
+		font-size: 20px;
 		border-collapse: collapse;
 	  }
-	  .hour {
-		  text-align: center;
-	  }
-	  th, td {
+	.hour {
+		text-align: center;
+	}
+	 table th, td {
 		padding: 15px;
+
 		border: 1px solid black;
 	  }
 
@@ -81,7 +92,8 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 		}
 	p {
 	font-size: 20px;
-		}</style></html>`
+	
+	}</style></html>`
 
 	page := front + back
 	//Printing certificate

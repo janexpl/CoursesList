@@ -213,11 +213,11 @@ new Vue({
         },
         save () {
           if (this.editedIndex > -1){
-            this.editItem.Subject = this.editItem.Subject.replace("\n","");
+            this.editedItem.Subject = String(this.editedItem.Subject).replace(/(\r\n\t|\n|\r\t)/gm,"");
             Object.assign(this.program[this.editedIndex], this.editedItem)
           } else {
         //if (this.$refs.form.validate()) {
-          this.editItem.Subject = this.editItem.Subject.replace("\n","");
+          this.editedItem.Subject = String(this.editedItem.Subject).replace(/(\r\n\t|\n|\r\t)/gm,"");
           this.program.push(this.editedItem);
           console.log(this.program)
           }

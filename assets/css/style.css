@@ -82,9 +82,20 @@ table.dataTable thead .sorting_desc_disabled:after {
   display: block;
   color: #a0a0a0;
 }
-.login{
-  
-}
+
 body { 
   font-family: 'Roboto', sans-serif !important;
 }
+
+/* .navbar > .container,
+.navbar > .container-fluid
+ {
+  display: flex;
+  align-items: flex-start;
+  justify-content: left;
+}
+.navbar-right {
+  display: flex;
+  align-self: flex-end;
+  justify-self: end;
+} */

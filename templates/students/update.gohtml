@@ -48,21 +48,21 @@
       </div>  
       <div class="col-md-3 mb-3">
           <label for="adstreet">Adres zamieszkania</label>
-          <input type="text" class="form-control" name="adstreet" id="adstreet"  placeholder="Wpisz ulicę zamieszkania" required value="{{ .Data.AddressStreet}}">
+          <input type="text" class="form-control" name="adstreet" id="adstreet"  placeholder="Wpisz ulicę zamieszkania"  value="{{ .Data.AddressStreet}}">
           <div class="invalid-feedback">
               Wpisz miejsce zamieszkania
           </div>
       </div>  
       <div class="col-md-3 mb-3">
           <label for="adcity">Miasto zamieszkania</label>
-          <input type="text" class="form-control" name="adcity" id="adcity"  placeholder="Wpisz miasto zamieszkania" required value="{{ .Data.AddressCity}}">
+          <input type="text" class="form-control" name="adcity" id="adcity"  placeholder="Wpisz miasto zamieszkania"  value="{{ .Data.AddressCity}}">
           <div class="invalid-feedback">
               Wpisz miasto zamieszkania
           </div>
       </div>  
       <div class="col-md-3 mb-3">
           <label for="zip">Kod pocztowy</label>
-          <input type="text" class="form-control" name="zip" id="zip"  placeholder="Wpisz kod pocztowy" required value="{{ .Data.AddressZip}}">
+          <input type="text" class="form-control" name="zip" id="zip"  placeholder="Wpisz kod pocztowy"  value="{{ .Data.AddressZip}}">
           <div class="invalid-feedback">
               Wpisz kod pocztowy
           </div>
@@ -73,7 +73,7 @@
       <div class="form-row">
           <div class="col-md-3 mb-3">
               <label for="telephone">Numer kontaktowy</label>
-              <input type="tel" class="form-control" name="telephone" id="telephone"  placeholder="Numer telefonu" required value="{{ .Data.TelephoneNo}}">
+              <input type="tel" class="form-control" name="telephone" id="telephone"  placeholder="Numer telefonu"  value="{{ .Data.TelephoneNo}}">
               <div class="invalid-feedback">
                   Wpisz numer telefonu
               </div>

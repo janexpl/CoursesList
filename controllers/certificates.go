@@ -75,15 +75,15 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 			height: 100px;
 	}
 	table {
-		font-size: 20px;
+		
 		border-collapse: collapse;
 	  }
 	.hour {
 		text-align: center;
 	}
-	 table th, td {
+	 table, th, td {
 		padding: 15px;
-
+		font-size: 20px;
 		border: 1px solid black;
 	  }
 

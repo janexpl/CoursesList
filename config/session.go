@@ -66,7 +66,6 @@ func AlreadyLoggedIn(w http.ResponseWriter, req *http.Request) bool {
 
 	c, err := req.Cookie("session")
 	if err != nil {
-
 		return false
 	}
 	se, ok := dbSessions[c.Value]
@@ -81,7 +80,6 @@ func AlreadyLoggedIn(w http.ResponseWriter, req *http.Request) bool {
 
 	return true
 }
-
 func GetLoggedUser(req *http.Request) (loggedUser, error) {
 
 	c, err := req.Cookie("session")
@@ -107,25 +105,25 @@ func NewSession(w http.ResponseWriter, r *http.Request, email string, admin int)
 	http.SetCookie(w, c)
 	dbUsers[c.Value] = loggedUser{email, admin}
 	dbSessions[c.Value] = sessions{email, time.Now()}
-
 }
 
 func DeleteSession(w http.ResponseWriter, r *http.Request) {
-	c, _ := r.Cookie("session")
-	// delete the session
-	delete(dbSessions, c.Value)
-	delete(dbUsers, c.Value)
-	// remove the cookie
-	c = &http.Cookie{
-		Name:   "session",
-		Value:  "",
-		MaxAge: -1,
-		Path:   "/",
+	c, err := r.Cookie("session")
+	if err == nil {
+		delete(dbSessions, c.Value)
+		delete(dbUsers, c.Value)
+		// remove the cookie
+		c = &http.Cookie{
+			Name:   "session",
+			Value:  "",
+			MaxAge: -1,
+			Path:   "/",
+		}
+		http.SetCookie(w, c)
+		if time.Now().Sub(dbSessionsCleaned) > (time.Second * 30) {
+		go cleanSessions()
 	}
 
-	http.SetCookie(w, c)
-	if time.Now().Sub(dbSessionsCleaned) > (time.Second * 30) {
-		go cleanSessions()
 	}
 
 }

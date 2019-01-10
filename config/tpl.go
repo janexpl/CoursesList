@@ -74,9 +74,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, name string, data ma
 	un, err := GetLoggedUser(r)
 
 	data["CurrentUser"] = un
-
 	data["Flash"], _ = getFlash(w, r)
-
 	templates = template.Must(
 		template.
 			New("t").Funcs(layoutFuncs).

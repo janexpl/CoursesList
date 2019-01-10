@@ -76,18 +76,21 @@ func main() {
 	http.HandleFunc("/registries/getlastnumber", registries.GetLastNumberWithSymbol)
 	logging.Info.Println("Server started on port" + ports)
 	http.ListenAndServe(":"+ports, nil)
-
 }
 func index(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/certificates", http.StatusSeeOther)
-
 }
-
 func authorized(h http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// code before
+		un, _ := config.GetLoggedUser(r)
+		if un.Email == "" {
+			config.DeleteSession(w, r)
+			http.Redirect(w, r, "/users/login", http.StatusSeeOther)
+			return
+		}
 		if !config.AlreadyLoggedIn(w, r) {
+
 			http.Redirect(w, r, "/users/login", http.StatusSeeOther)
 			return
 		}

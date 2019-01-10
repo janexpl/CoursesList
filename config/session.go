@@ -33,7 +33,7 @@ var dbUsers = map[string]loggedUser{}
 var dbSessions = map[string]sessions{} // session ID, session
 var dbSessionsCleaned time.Time
 
-const sessionLength int = 600
+const sessionLength int = 2000
 
 // var dbUsers = map[string]models.User{} // user ID, user
 func SetFlash(w http.ResponseWriter, r *http.Request, m []byte) {

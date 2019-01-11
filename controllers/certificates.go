@@ -41,7 +41,8 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	if len(bck) != 0 {
 		back = `
 	
-	<span class="break"></span>
+	<div class="break"></div>
+	<div class="spacer"></div>
 	<table> <thead>
 	<tr>
 	  <th>Lp.</th>
@@ -71,8 +72,10 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	}
 	.break {
 			page-break-before: always;
-			display: inline-block;
-			height: 100px;
+			display: block;
+	}
+	.spacer {
+		height: 100px;
 	}
 	table {
 		
@@ -97,7 +100,7 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 
 	page := front + back
 	//Printing certificate
-
+	//fmt.Println(page)
 	pdfg, err := wkhtmltopdf.NewPDFGenerator()
 	if err != nil {
 		log.Fatal(err)

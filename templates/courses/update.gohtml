@@ -169,8 +169,8 @@ new Vue({
         editedIndex: -1,
         editedItem: {
             Subject: '',
-            TheoryTime: 0,
-            PracticeTime: 0,
+            TheoryTime: "0",
+            PracticeTime: "0",
         },
         dialog: false,
         program: [],
@@ -224,17 +224,23 @@ new Vue({
           this.editedIndex = -1
         }, 300)
         },
-        save () {
-          if (this.editedIndex > -1){
-            this.editedItem.Subject = String(this.editedItem.Subject).replace(/(\r\n\t|\n|\r\t)/gm,"");
-            this.program.push(this.editedItem);
-            Object.assign(this.program[this.editedIndex], this.editedItem)
-          } else {
-        //if (this.$refs.form.validate()) {
-          this.editedItem.Subject = String(this.editedItem.Subject).replace(/(\r\n\t|\n|\r\t)/gm,"");
+        save() {
+        if (this.editedIndex > -1) {
+          this.editedItem.Subject = String(this.editedItem.Subject).replace(
+            /(\r\n\t|\n|\r\t)/gm,
+            ""
+          );
+          Object.assign(this.program[this.editedIndex], this.editedItem);
+        } else {
+          //if (this.$refs.form.validate()) {
+          this.editedItem.Subject = String(this.editedItem.Subject).replace(
+            /(\r\n\t|\n|\r\t)/gm,
+            ""
+          );
           this.program.push(this.editedItem);
-          }
-        this.close()
+          
+        }
+        this.close();
         },
         editItem (item) {
         this.editedIndex = this.program.indexOf(item)

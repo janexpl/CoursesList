@@ -52,18 +52,20 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	</tr>
   </thead>`
 		var i int = 1
-		var theorySum int = 0
-		var practiceSum int = 0
+		var theorySum float64 = 0
+		var practiceSum float64 = 0
 		for _, row := range bck {
 			rw := fmt.Sprintf("<tr><td>%v</td><td>%v</td><td class='hour'>%v</td><td class='hour'>%v</td></tr>", i, row.Subject, row.TheoryTime, row.PracticeTime)
 			back = back + rw
-			tt, _ := strconv.Atoi(row.TheoryTime)
-			pt, _ := strconv.Atoi(row.PracticeTime)
+			tt, _ := strconv.ParseFloat(row.TheoryTime, 32)
+			pt, _ := strconv.ParseFloat(row.PracticeTime, 32)
 			theorySum = theorySum + tt
 			practiceSum = practiceSum + pt
 			i++
 		}
-		rw = fmt.Sprintf(`<tr><td colspan="2">RAZEM</td><td class='hour'>%v</td><td class='hour'>%v</td></tr>`, strconv.Itoa(theorySum), strconv.Itoa(practiceSum))
+		stheorySum := fmt.Sprintf("%.1f", theorySum)
+		spracticeSum := fmt.Sprintf("%.1f", practiceSum)
+		rw = fmt.Sprintf(`<tr><td colspan="2">RAZEM</td><td class='hour'>%v</td><td class='hour'>%v</td></tr>`, stheorySum, spracticeSum)
 	}
 	back = back + rw + `</table></body><style>
 	body {

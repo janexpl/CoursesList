@@ -70,6 +70,7 @@
                             <v-text-field
                               v-model="editedItem.TheoryTime"
                               label="Ilość godzin teoretycznych"
+                              @keyup="removeComma"
                               required
                             ></v-text-field>
                           </v-flex>
@@ -77,6 +78,7 @@
                             <v-text-field
                               v-model="editedItem.PracticeTime"
                               label="Ilość godzin praktycznych"
+                              @keyup="removeComma"
                               required
                             ></v-text-field>
                           </v-flex>
@@ -184,6 +186,10 @@
       });
     },
     methods: {
+      removeComma() {
+        this.editedItem.TheoryTime = String(this.editedItem.TheoryTime).replace(',','.');
+        this.editedItem.PracticeTime = String(this.editedItem.PracticeTime).replace(',','.');
+      },
       submit() {
         axios
           .post("/courses/json", {

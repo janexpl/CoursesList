@@ -1,258 +1,261 @@
 {{ define "courses/update" }}
 
 <div id="app">
-    <v-app>
-        <v-content>
-                <v-form ref="form" v-model="valid" lazy-validation>
-            <v-tabs
-            color="grey"
-            v-model="active"
-            >
-            <v-tabs-slider color="yellow"></v-tabs-slider>
-                <v-tab :key="1" ripple>
-                    Dane podstawowe
-                </v-tab>
-                <v-tab :key="2" ripple>
-                    Wzór certyfikatu
-                </v-tab>
-                <v-tab :key="3" ripple>
-                    Program szkolenia
-                </v-tab>
-                <v-tab-item :key="1">
-                    <v-card flat>
-                            <v-card-text>
-                                    <v-text-field
-                                        v-model="name"
-                                        :rules="nameRules"
-                                        label="Nazwa kursu"
-                                
-                                        required
-                                    ></v-text-field>
-                                    <v-text-field
-                                        v-model="symbol"
-                                        :rules="[v => !!v || 'Wpisz symbol kursu', v => !isUnique(v) || 'Istnieje już taki symbol']"
-                                        @change='isUnique($event)'
-                                        label="Symbol"
+  <v-app>
+    <v-content>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-tabs color="grey" v-model="active">
+          <v-tabs-slider color="yellow"></v-tabs-slider>
+          <v-tab :key="1" ripple> Dane podstawowe </v-tab>
+          <v-tab :key="2" ripple> Wzór certyfikatu </v-tab>
+          <v-tab :key="3" ripple> Program szkolenia </v-tab>
+          <v-tab-item :key="1">
+            <v-card flat>
+              <v-card-text>
+                <v-text-field
+                  v-model="name"
+                  :rules="nameRules"
+                  label="Nazwa kursu"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  v-model="symbol"
+                  :rules="[v => !!v || 'Wpisz symbol kursu', v => !isUnique(v) || 'Istnieje już taki symbol']"
+                  @change="isUnique($event)"
+                  label="Symbol"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  v-model="expirytime"
+                  :rules="expiryRules"
+                  label="Ważność"
+                  required
+                ></v-text-field>
+              </v-card-text>
+            </v-card>
+          </v-tab-item>
+          <v-tab-item :key="2">
+            <v-card flat>
+              <v-card-text>
+                <ckeditor
+                  :editor="editor"
+                  v-model="editorData"
+                  :config="editorConfig"
+                ></ckeditor>
+              </v-card-text>
+            </v-card>
+          </v-tab-item>
+          <v-tab-item :key="3">
+            <v-card flat>
+              <v-card-text>
+                <v-dialog v-model="dialog" max-width="500px">
+                  <v-btn slot="activator" fab lighth color="primary">
+                    <v-icon dark>add</v-icon>
+                  </v-btn>
 
-                                        required
-                                    ></v-text-field>
-                                    <v-text-field
-                                        v-model="expirytime"
-                                        :rules="expiryRules"
-                                        label="Ważność"
-                                        required
-                                    ></v-text-field>
-                            </v-card-text>
-                        </v-card>
-                </v-tab-item>
-                <v-tab-item :key="2">
-                        <v-card flat>
-                                <v-card-text>
-                                        <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
-                                </v-card-text>
-                        </v-card>
-                </v-tab-item>
-                <v-tab-item :key="3">
-                        <v-card flat>
-                                <v-card-text>
-                                        <v-dialog v-model="dialog" max-width="500px">
-                                                <v-btn slot="activator" fab lighth color="primary">
-                                                    <v-icon dark>add</v-icon>
-                                                </v-btn>
-                                           
-                                              <v-card>
-                                                <v-card-title>
-                                                  <span class="headline">Dodaj temat</span>
-                                                </v-card-title>
-                                                <v-card-text>
-                                                  <v-container grid-list-md>
-                                                    <v-layout wrap>
-                                                      <v-flex xs12>
-                                                        <v-textarea
-                                                          v-model="editedItem.Subject"
-                                                          label="Temat"
-                                                          
-                                                          required
-                                                        ></v-textarea>
-                                                      </v-flex>
-                                                      <v-flex xs12 sm6 md6>
-                                                        <v-text-field
-                                                          v-model="editedItem.TheoryTime"
-                                                          label="Ilość godzin teoretycznych"
-                                                          
-                                                          required
-                                                        ></v-text-field>
-                                                      </v-flex>
-                                                      <v-flex xs12 sm6 md6>
-                                                        <v-text-field
-                                                          v-model="editedItem.PracticeTime"
-                                                          label="Ilość godzin praktycznych"
-                                                          
-                                                          required
-                                                        ></v-text-field>
-                                                      </v-flex>
-                                                    </v-layout>
-                                                  </v-container>
-                                                </v-card-text>
-                                    
-                                                <v-card-actions>
-                                                  <v-spacer></v-spacer>
-                                                  <v-btn color="blue darken-1" flat @click="close">Anuluj</v-btn>
-                                                  <v-btn color="blue darken-1" :disabled="!valid" flat @click="save">Zapisz</v-btn>
-                                                </v-card-actions>
-                                              </v-card>
-                                            </v-dialog>
-                                        <v-data-table
-                                        :headers="headers"
-                                        :items="program"
-                                        class="elevation-1"
-                                        hide-actions
-                                      >
-                                      <template slot="items" slot-scope="props">
-                                            <td>${ props.item.Subject }</td>
-                                            <td class="text-xs-right">${ props.item.TheoryTime }</td>
-                                            <td class="text-xs-right">${ props.item.PracticeTime }</td>
-                                            <td class="justify-center layout px-0">
-                                                    <v-icon small class="mr-2" @click="editItem(props.item)">
-                                                      edit
-                                                    </v-icon>
-                                                    <v-icon small @click="deleteItem(props.item)"> delete </v-icon>
-                                                  </td>
-                                          </template>
-                                        </v-data-table>
-                                </v-card-text>
-                        </v-card>
-                </v-tab-item>
+                  <v-card>
+                    <v-card-title>
+                      <span class="headline">Dodaj temat</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-container grid-list-md>
+                        <v-layout wrap>
+                          <v-flex xs12>
+                            <v-textarea
+                              v-model="editedItem.Subject"
+                              label="Temat"
+                              required
+                            ></v-textarea>
+                          </v-flex>
+                          <v-flex xs12 sm6 md6>
+                            <v-text-field
+                              v-model="editedItem.TheoryTime"
+                              label="Ilość godzin teoretycznych"
+                              @keyup="removeComma"
+                              required
+                            ></v-text-field>
+                          </v-flex>
+                          <v-flex xs12 sm6 md6>
+                            <v-text-field
+                              v-model="editedItem.PracticeTime"
+                              label="Ilość godzin praktycznych"
+                              @keyup="removeComma"
+                              required
+                            ></v-text-field>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" flat @click="close"
+                        >Anuluj</v-btn
+                      >
+                      <v-btn
+                        color="blue darken-1"
+                        :disabled="!valid"
+                        flat
+                        @click="save"
+                        >Zapisz</v-btn
+                      >
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+                <v-data-table
+                  :headers="headers"
+                  :items="program"
+                  class="elevation-1"
+                  hide-actions
+                >
+                  <template slot="items" slot-scope="props">
+                    <td>${ props.item.Subject }</td>
+                    <td class="text-xs-right">${ props.item.TheoryTime }</td>
+                    <td class="text-xs-right">${ props.item.PracticeTime }</td>
+                    <td class="justify-center layout px-0">
+                      <v-icon small class="mr-2" @click="editItem(props.item)">
+                        edit
+                      </v-icon>
+                      <v-icon small @click="deleteItem(props.item)">
+                        delete
+                      </v-icon>
+                    </td>
+                  </template>
+                </v-data-table>
+              </v-card-text>
+            </v-card>
+          </v-tab-item>
         </v-tabs>
         <v-btn @click="submit">ZAPISZ</v-btn>
-    </v-form>
+      </v-form>
     </v-content>
-    </v-app>
+  </v-app>
 </div>
 <script>
-String.prototype.replaceAll = function(search, replacement) {
+  String.prototype.replaceAll = function(search, replacement) {
     var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
-};
-Vue.use( CKEditor );
-new Vue({ 
-    delimiters: ['${', '}'],
-    el: '#app',
+    return target.replace(new RegExp(search, "g"), replacement);
+  };
+  Vue.use(CKEditor);
+  new Vue({
+    delimiters: ["${", "}"],
+    el: "#app",
     data: {
-        editor: ClassicEditor,
-        editorData: '{{ .Data.CertFrontpage }}',
-        editorConfig: {
-            language: 'pl'
-        },
-        
-        headers: [
-            {
-                text: 'Temat',
-                align: 'left',
-                sortable: false,
-                value: 'Subject'
-            },
-            { 
-                text: 'Ilość godzin teoretycznych',
-                align: 'right',
-                sortable: false,
-                value: 'TheoryTime'
-            },
-            { 
-                text: 'Ilość godzin praktycznych',
-                align: 'right',
-                sortable: false,
-                value: 'PracticeTime'
-            }
+      editor: ClassicEditor,
+      editorData: "{{ .Data.CertFrontpage }}",
+      editorConfig: {
+        language: "pl"
+      },
 
-        ],
-        editedIndex: -1,
-        editedItem: {
-            Subject: '',
-            TheoryTime: "0",
-            PracticeTime: "0",
+      headers: [
+        {
+          text: "Temat",
+          align: "left",
+          sortable: false,
+          value: "Subject"
         },
-        dialog: false,
-        program: [],
-        courses: [],
-        valid: true,
-        active: null,
-        name: '{{ .Data.Name }}',
-        nameRules: [v => !!v] || 'Wpisz nazwę kursu',
-        symbol: '{{ .Data.Symbol }}',
-        expirytime: '{{ .Data.ExpiryTime }}',
-        expiryRules: [v => !!v || 'Wpisz termin ważności',
-        v => /\d/.test(v) || 'Musi być liczbą']
+        {
+          text: "Ilość godzin teoretycznych",
+          align: "right",
+          sortable: false,
+          value: "TheoryTime"
         },
+        {
+          text: "Ilość godzin praktycznych",
+          align: "right",
+          sortable: false,
+          value: "PracticeTime"
+        }
+      ],
+      editedIndex: -1,
+      editedItem: {
+        Subject: "",
+        TheoryTime: "0",
+        PracticeTime: "0"
+      },
+      dialog: false,
+      program: [],
+      courses: [],
+      valid: true,
+      active: null,
+      name: "{{ .Data.Name }}",
+      nameRules: [v => !!v] || "Wpisz nazwę kursu",
+      symbol: "{{ .Data.Symbol }}",
+      expirytime: "{{ .Data.ExpiryTime }}",
+      expiryRules: [
+        v => !!v || "Wpisz termin ważności",
+        v => /\d/.test(v) || "Musi być liczbą"
+      ]
+    },
     beforeCreate() {
-        axios
-            .get('/courses/json')
-            .then((response) => {
-            this.courses = response.data;
-            })
-            
-        },
-    created () {
-      this.program = JSON.parse(`{{ .Data.CourseProgram }}`)
-    },    
+      axios.get("/courses/json").then(response => {
+        this.courses = response.data;
+      });
+    },
+    created() {
+      this.program = JSON.parse(`{{ .Data.CourseProgram }}`);
+    },
     methods: {
-        submit () {
-            axios
-            .put('/courses/json', {
+      removeComma() {
+        this.editedItem.TheoryTime = String(this.editedItem.TheoryTime).replace(',','.');
+        this.editedItem.PracticeTime = String(this.editedItem.PracticeTime).replace(',','.');
+      },
+      submit() {
+        axios
+          .put("/courses/json", {
             Name: this.name,
             Symbol: this.symbol,
             ExpiryTime: this.expirytime,
             CourseProgram: this.program,
             CertFrontpage: this.editorData
           })
-          .then(function (response) {
-            //this.editedItem.id = response.data.id; 
+          .then(function(response) {
+            //this.editedItem.id = response.data.id;
             //console.log(this.users);
-            window.location.replace('/courses')
+            window.location.replace("/courses");
           })
-          .catch(function (error) {
+          .catch(function(error) {
             console.log(error);
           });
-        },
-        isUnique (value) {
-            return this.courses.some(item => item.Symbol === value)
-        },
-        close () {
-        this.dialog = false
+      },
+      isUnique(value) {
+        return this.courses.some(item => item.Symbol === value);
+      },
+      close() {
+        this.dialog = false;
         setTimeout(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        }, 300)
-        },
-        save() {
+          this.editedItem = Object.assign({}, this.defaultItem);
+          this.editedIndex = -1;
+        }, 300);
+      },
+      save() {
         if (this.editedIndex > -1) {
           this.editedItem.Subject = String(this.editedItem.Subject).replace(
             /(\r\n\t|\n|\r\t)/gm,
-            ""
+            ''
           );
           Object.assign(this.program[this.editedIndex], this.editedItem);
         } else {
           //if (this.$refs.form.validate()) {
           this.editedItem.Subject = String(this.editedItem.Subject).replace(
             /(\r\n\t|\n|\r\t)/gm,
-            ""
+            ''
           );
           this.program.push(this.editedItem);
-          
         }
         this.close();
-        },
-        editItem (item) {
-        this.editedIndex = this.program.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
-        },
-        deleteItem (item) {
-        const index = this.program.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.program.splice(index, 1)
-        console.log(item);
       },
-    },
-})
+      editItem(item) {
+        this.editedIndex = this.program.indexOf(item);
+        this.editedItem = Object.assign({}, item);
+        this.dialog = true;
+      },
+      deleteItem(item) {
+        const index = this.program.indexOf(item);
+        confirm("Are you sure you want to delete this item?") &&
+          this.program.splice(index, 1);
+        console.log(item);
+      }
+    }
+  });
 </script>
 {{ end }}

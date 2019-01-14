@@ -56,8 +56,9 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 		font-size: 50px;
 	}
 	table, th, td {
-		padding: 15px;
-		font-size: 20px;
+		padding: 10px;
+		font-size: 15px;
+        font-family: "Times New Roman";
 		border: 1px solid black;
 	}
 	p {
@@ -111,12 +112,12 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	pdfg.Dpi.Set(300)
 	pdfg.Orientation.Set(wkhtmltopdf.OrientationPortrait)
 	pdfg.Grayscale.Set(false)
-	pdfg.MarginLeft.Set(50)
-	pdfg.MarginLeft.Set(50)
+	pdfg.MarginLeft.Set(10)
+	pdfg.MarginRight.Set(10)
 
 	// Create a new input page from an URL
 	page1 := wkhtmltopdf.NewPageReader(strings.NewReader(page))
-	page1.MinimumFontSize.Set(20)
+	//page1.MinimumFontSize.Set(20)
 
 	// Set options for this page
 	//page1.FooterRight.Set("[page]")

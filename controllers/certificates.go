@@ -48,23 +48,20 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	}
 	table {
 		border-collapse: collapse;
-	  }
+	}
 	.hour {
 		text-align: center;
 	}
-	 table, th, td {
+	table, th, td {
 		padding: 15px;
 		font-size: 20px;
 		border: 1px solid black;
-	  }
-
-	  h2{
-	  font-size: 50px;	
-		}
+	}
 	p {
-	font-size: 20px;
+		font-size: 20px;
+	}
 	
-	}</style><body>` + front
+	</style><body>` + front
 	var back = ""
 	var rw = ""
 
@@ -73,7 +70,7 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	
 	<div class="break"></div>
 	<div class="spacer"></div>
-	<table> <thead>
+	<table><thead>
 	<tr>
 	  <th>Lp.</th>
 	  <th>Temat szkolenia</th>
@@ -101,7 +98,7 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 
 	page := front + back
 	//Printing certificate
-	//fmt.Println(page)
+	fmt.Println(page)
 	pdfg, err := wkhtmltopdf.NewPDFGenerator()
 	if err != nil {
 		log.Fatal(err)

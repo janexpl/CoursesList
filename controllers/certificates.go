@@ -98,7 +98,7 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 
 	page := front + back
 	//Printing certificate
-	fmt.Println(page)
+	//fmt.Println(page)
 	pdfg, err := wkhtmltopdf.NewPDFGenerator()
 	if err != nil {
 		log.Fatal(err)
@@ -111,7 +111,7 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 
 	// Create a new input page from an URL
 	page1 := wkhtmltopdf.NewPageReader(strings.NewReader(page))
-
+	page1.MinimumFontSize.Set(20)
 	// Set options for this page
 	//page1.FooterRight.Set("[page]")
 	//page1.FooterFontSize.Set(10)

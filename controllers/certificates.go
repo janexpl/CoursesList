@@ -52,6 +52,9 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	.hour {
 		text-align: center;
 	}
+	h2 {
+		font-size: 50px;
+	}
 	table, th, td {
 		padding: 15px;
 		font-size: 20px;
@@ -108,10 +111,13 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	pdfg.Dpi.Set(300)
 	pdfg.Orientation.Set(wkhtmltopdf.OrientationPortrait)
 	pdfg.Grayscale.Set(false)
+	pdfg.MarginLeft.Set(50)
+	pdfg.MarginLeft.Set(50)
 
 	// Create a new input page from an URL
 	page1 := wkhtmltopdf.NewPageReader(strings.NewReader(page))
 	page1.MinimumFontSize.Set(20)
+
 	// Set options for this page
 	//page1.FooterRight.Set("[page]")
 	//page1.FooterFontSize.Set(10)

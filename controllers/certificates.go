@@ -34,7 +34,37 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	bck := []models.CourseProgram{}
 	err = json.Unmarshal(cert.Registry.Course.CourseProgram, &bck)
 	front := parseHtml(cert)
-	front = `<!doctype html><html><head><meta charset="utf-8"><title>ZAŚWIADCZENIE</title></head><body>` + front
+	front = `<!doctype html><html><head><meta charset="utf-8"><title>ZAŚWIADCZENIE</title></head><style>
+	body {
+		display : block; 
+		margin : 100px;
+	}
+	.break {
+			page-break-before: always;
+			display: block;
+	}
+	.spacer {
+		height: 100px;
+	}
+	table {
+		border-collapse: collapse;
+	  }
+	.hour {
+		text-align: center;
+	}
+	 table, th, td {
+		padding: 15px;
+		font-size: 20px;
+		border: 1px solid black;
+	  }
+
+	  h2{
+	  font-size: 50px;	
+		}
+	p {
+	font-size: 20px;
+	
+	}</style><body>` + front
 	var back = ""
 	var rw = ""
 
@@ -67,38 +97,7 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 		spracticeSum := fmt.Sprintf("%.1f", practiceSum)
 		rw = fmt.Sprintf(`<tr><td colspan="2">RAZEM</td><td class='hour'>%v</td><td class='hour'>%v</td></tr>`, stheorySum, spracticeSum)
 	}
-	back = back + rw + `</table></body><style>
-	body {
-		display : block; 
-		margin : 100px;
-	}
-	.break {
-			page-break-before: always;
-			display: block;
-	}
-	.spacer {
-		height: 100px;
-	}
-	table {
-		
-		border-collapse: collapse;
-	  }
-	.hour {
-		text-align: center;
-	}
-	 table, th, td {
-		padding: 15px;
-		font-size: 20px;
-		border: 1px solid black;
-	  }
-
-	  h2{
-	  font-size: 50px;	
-		}
-	p {
-	font-size: 20px;
-	
-	}</style></html>`
+	back = back + rw + `</table></body></html>`
 
 	page := front + back
 	//Printing certificate

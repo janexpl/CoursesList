@@ -70,7 +70,7 @@ func (crt *CertificatesController) Print(w http.ResponseWriter, r *http.Request)
 	back = back + rw + `</table></body><style>
 	body {
 		display : block; 
-		margin : 80px;
+		margin : 100px;
 	}
 	.break {
 			page-break-before: always;

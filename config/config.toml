@@ -1,5 +1,5 @@
 server = "localhost"
 user = "janusz"
 dbname = "courselist"
-password = "Acetamide#2015"
+password = "12345"
 sslmode = "disable"

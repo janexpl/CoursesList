@@ -18,7 +18,7 @@ type Student struct {
 	Secondname    string
 	Birthdate     time.Time
 	Birthplace    string
-	Pesel         int64
+	Pesel         string
 	AddressStreet string
 	AddressCity   string
 	TelephoneNo   string
@@ -32,10 +32,9 @@ func (s *Student) PutStudent(r *http.Request) (int64, error) {
 	// 	return 0, errors.New("Błędny numer pesel")
 	// }
 	student := Student{}
-	pesel, _ := strconv.ParseInt(r.FormValue("pesel"), 0, 64)
+	pesel := strings.Replace(r.FormValue("pesel"), " ", "", -1)
 	err := config.DB.QueryRow("SELECT pesel FROM students WHERE pesel=$1", pesel).Scan(&student.Pesel)
-
-	if student.Pesel != 0 {
+	if student.Pesel != "" {
 		return 0, errors.New("Istnieje juz kursant o takim samym numerze pesel")
 	}
 	var cpid int
@@ -226,7 +225,7 @@ func (s *Student) OneStudent(r *http.Request) (Student, error) {
 	if pesel == "" {
 		return st, errors.New("400. Bad Request.")
 	}
-	peseli, _ := strconv.ParseInt(pesel, 0, 64)
+
 	err := config.DB.QueryRow(`SELECT
 		students.id,
 		students.firstname,
@@ -244,7 +243,7 @@ func (s *Student) OneStudent(r *http.Request) (Student, error) {
 	FROM 
 		students 
 		LEFT OUTER JOIN companies ON students.company_id = companies.id 
-	WHERE pesel=$1`, peseli).
+	WHERE pesel=$1`, pesel).
 		Scan(&st.ID, &st.Firstname, &st.Lastname, &st.Secondname, &st.Birthdate, &st.Birthplace, &st.Pesel, &st.AddressStreet, &st.AddressCity, &st.TelephoneNo, &cpid, &cpname, &st.AddressZip)
 	if cpid.Valid {
 		st.Company.ID = cpid.Int64
@@ -284,7 +283,7 @@ func (s *Student) UpdateStudent(r *http.Request) error {
 	student.Lastname = r.FormValue("lastname")
 	student.Birthdate, _ = time.Parse("2006-01-02", r.FormValue("birthdate"))
 	student.Birthplace = r.FormValue("birthplace")
-	student.Pesel, _ = strconv.ParseInt(r.FormValue("pesel"), 0, 64)
+	student.Pesel = r.FormValue("pesel")
 	student.AddressStreet = r.FormValue("adstreet")
 	student.AddressCity = r.FormValue("adcity")
 	student.AddressZip = r.FormValue("zip")

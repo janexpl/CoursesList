@@ -40,8 +40,11 @@ func SetFlash(w http.ResponseWriter, r *http.Request, m []byte) {
 	c := &http.Cookie{
 		Name:  "flash",
 		Value: encode(m),
+		//MaxAge: -1,
+		Path: "/",
 	}
 	http.SetCookie(w, c)
+
 }
 func getFlash(w http.ResponseWriter, r *http.Request) (string, error) {
 	c, err := r.Cookie("flash")
@@ -57,8 +60,9 @@ func getFlash(w http.ResponseWriter, r *http.Request) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dc := &http.Cookie{Name: "flash", MaxAge: -1, Path: "/users/login", Expires: time.Unix(1, 0)}
+	dc := &http.Cookie{Name: "flash", Path: "/", MaxAge: -1, Expires: time.Unix(1, 0)}
 	http.SetCookie(w, dc)
+
 	st := fmt.Sprintf("%s", value)
 	return st, nil
 }
@@ -89,7 +93,6 @@ func GetLoggedUser(req *http.Request) (loggedUser, error) {
 		return loggedUser{}, err
 	}
 	se, _ := dbUsers[c.Value]
-
 	return se, nil
 }
 
@@ -121,8 +124,8 @@ func DeleteSession(w http.ResponseWriter, r *http.Request) {
 		}
 		http.SetCookie(w, c)
 		if time.Now().Sub(dbSessionsCleaned) > (time.Second * 30) {
-		go cleanSessions()
-	}
+			go cleanSessions()
+		}
 
 	}
 

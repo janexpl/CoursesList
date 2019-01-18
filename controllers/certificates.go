@@ -165,16 +165,15 @@ func (crt *CertificatesController) Index(w http.ResponseWriter, r *http.Request)
 }
 
 func (crt *CertificatesController) Create(w http.ResponseWriter, r *http.Request) {
-	var flash string
+
 	crs := models.Course{}
 	courses, err := crs.AllCourses()
 	if err != nil {
-		flash = err.Error()
+		config.SetFlash(w, r, []byte(err.Error()))
 	}
-	flash = ""
 	data := map[string]interface{}{
 		"Course": courses,
-		"Flash":  flash,
+		//	"Flash":  flash,
 	}
 	config.RenderTemplate(w, r, "certificates/create", data)
 }
@@ -204,7 +203,7 @@ func (crt *CertificatesController) Update(w http.ResponseWriter, r *http.Request
 	config.RenderTemplate(w, r, "certificates/update", data)
 }
 func (crt *CertificatesController) UpdateProcess(w http.ResponseWriter, r *http.Request) {
-	var flash string
+	//var flash string
 	if r.Method != "POST" {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 		return
@@ -212,24 +211,24 @@ func (crt *CertificatesController) UpdateProcess(w http.ResponseWriter, r *http.
 	cr := models.Certificate{}
 	err := cr.UpdateCertificate(r)
 	if err != nil {
-		flash = err.Error()
+		config.SetFlash(w,r,[]byte(err.Error()))
 	} else {
-		flash = "Dane zapisano poprawnie"
+		config.SetFlash(w,r,[]byte("Certyfikat zapisano poprawnie"))
 	}
-	certs, err := cr.AllCertificates()
-	if err != nil {
-		flash = err.Error()
-	}
-	data := map[string]interface{}{
-		"Data":  certs,
-		"Flash": flash,
-	}
-
-	config.RenderTemplate(w, r, "certificates/certificates", data)
+	// certs, err := cr.AllCertificates()
+	// if err != nil {
+	// 	flash = err.Error()
+	// }
+	// data := map[string]interface{}{
+	// 	"Data":  certs,
+	// 	"Flash": flash,
+	// }
+	http.Redirect(w, r, "/certificates", http.StatusSeeOther)
+	//config.RenderTemplate(w, r, "certificates/certificates", data)
 }
 
 func (crt *CertificatesController) CreateProcess(w http.ResponseWriter, r *http.Request) {
-	var flash string
+	//var flash string
 	if r.Method != "POST" {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 		return
@@ -237,27 +236,27 @@ func (crt *CertificatesController) CreateProcess(w http.ResponseWriter, r *http.
 	cr := models.Certificate{}
 	err := cr.PutCertificate(r)
 	if err != nil {
+		config.SetFlash(w, r, []byte(err.Error()))
+		http.Redirect(w, r, "/certificates/create", http.StatusSeeOther)
 
-		flash = err.Error()
-		config.RenderTemplate(w, r, "certificates/create", map[string]interface{}{
-			"Data":  nil,
-			"Flash": flash,
-		})
+		//	config.RenderTemplate(w, r, "certificates/create", map[string]interface{}{
+		//		"Data": nil,
+		//	"Flash": flash,
+		//	})
 		return
 	} else {
-		flash = "Zapisano kursanta poprawnie"
-
+		config.SetFlash(w, r, []byte("Zaświadczenie zapisano poprawnie"))
 	}
-	crs, err := cr.AllCertificates()
-	if err != nil {
-		flash = err.Error()
-	}
-	data := map[string]interface{}{
-		"Data":  crs,
-		"Flash": flash,
-	}
-
-	config.RenderTemplate(w, r, "certificates/certificates", data)
+	// crs, err := cr.AllCertificates()
+	// if err != nil {
+	// 	config.SetFlash(w, r, []byte(err.Error()))
+	// }
+	//data := map[string]interface{}{
+	//	"Data": crs,
+	// "Flash": flash,
+	//}
+	http.Redirect(w, r, "/certificates", http.StatusSeeOther)
+	//config.RenderTemplate(w, r, "certificates/certificates", data)
 }
 
 func (crt *CertificatesController) DeleteProcess(w http.ResponseWriter, r *http.Request) {

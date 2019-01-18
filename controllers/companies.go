@@ -31,11 +31,9 @@ func (c *CompaniesController) GetAllJson(w http.ResponseWriter, r *http.Request)
 	if err != nil {
 		logging.Error.Println(err.Error())
 	}
-
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK) // 200
 	fmt.Fprintf(w, "%s\n", uj)
-
 }
 func (c *CompaniesController) Index(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
@@ -87,7 +85,7 @@ func (c *CompaniesController) CreateFromModal(w http.ResponseWriter, r *http.Req
 }
 
 func (c *CompaniesController) CreateProcess(w http.ResponseWriter, r *http.Request) {
-	var flash string
+
 	if r.Method != "POST" {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 		return
@@ -95,26 +93,22 @@ func (c *CompaniesController) CreateProcess(w http.ResponseWriter, r *http.Reque
 	cp := models.Company{}
 	_, err := cp.PutCompany(r)
 	if err != nil {
-		flash = err.Error()
-		config.RenderTemplate(w, r, "companies/create", map[string]interface{}{
-			"Data":  nil,
-			"Flash": flash,
-		})
+		config.SetFlash(w, r, []byte(err.Error()))
+		http.Redirect(w, r, "/companies/create", http.StatusSeeOther)
 		return
 	} else {
-		flash = "Dane zapisano poprawnie"
-
+		config.SetFlash(w, r, []byte("Dane zapisano poprawnie"))
 	}
-	companies, err := cp.AllCompanies()
-	if err != nil {
-		flash = err.Error()
-	}
-	data := map[string]interface{}{
-		"Data":  companies,
-		"Flash": flash,
-	}
-
-	config.RenderTemplate(w, r, "companies/companies", data)
+	// companies, err := cp.AllCompanies()
+	// if err != nil {
+	// 	flash = err.Error()
+	// }
+	// data := map[string]interface{}{
+	// 	"Data":  companies,
+	// 	"Flash": flash,
+	// }
+	http.Redirect(w, r, "/companies", http.StatusSeeOther)
+	//config.RenderTemplate(w, r, "companies/companies", data)
 }
 
 func (c *CompaniesController) Show(w http.ResponseWriter, r *http.Request) {
@@ -156,16 +150,18 @@ func (c *CompaniesController) DeleteProcess(w http.ResponseWriter, r *http.Reque
 		http.Error(w, http.StatusText(400), http.StatusBadRequest)
 		return
 	}
-	companies, err := cp.AllCompanies()
-	if err != nil {
-		http.Error(w, http.StatusText(500)+err.Error(), http.StatusInternalServerError)
-		return
-	}
-	data := map[string]interface{}{
-		"Data":  companies,
-		"Flash": "Dane usunięte poprawnie.",
-	}
-	config.RenderTemplate(w, r, "companies/companies", data)
+	// companies, err := cp.AllCompanies()
+	// if err != nil {
+	// 	http.Error(w, http.StatusText(500)+err.Error(), http.StatusInternalServerError)
+	// 	return
+	// }
+	config.SetFlash(w, r, []byte("Dane usunięte poprawnie"))
+	// data := map[string]interface{}{
+	// 	"Data":  companies,
+	// 	"Flash": "Dane usunięte poprawnie.",
+	// }
+	http.Redirect(w, r, "/companies", http.StatusSeeOther)
+	//config.RenderTemplate(w, r, "companies/companies", data)
 }
 
 func (c *CompaniesController) Update(w http.ResponseWriter, r *http.Request) {
@@ -192,7 +188,7 @@ func (c *CompaniesController) Update(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *CompaniesController) UpdateProcess(w http.ResponseWriter, r *http.Request) {
-	var flash string
+	//var flash string
 	if r.Method != "POST" {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 		return
@@ -200,21 +196,20 @@ func (c *CompaniesController) UpdateProcess(w http.ResponseWriter, r *http.Reque
 	cp := models.Company{}
 	err := cp.UpdateCompany(r)
 	if err != nil {
-
-		flash = err.Error()
-
+		config.SetFlash(w, r, []byte(err.Error()))
+		http.Redirect(w, r, "/companies/create", http.StatusSeeOther)
+		return
 	} else {
-		flash = "Dane zapisano poprawnie"
-
+		config.SetFlash(w, r, []byte("Dane zapisano poprawnie"))
 	}
-	companies, err := cp.AllCompanies()
-	if err != nil {
-		flash = err.Error()
-	}
-	data := map[string]interface{}{
-		"Data":  companies,
-		"Flash": flash,
-	}
-
-	config.RenderTemplate(w, r, "companies/companies", data)
+	// companies, err := cp.AllCompanies()
+	// if err != nil {
+	// 	flash = err.Error()
+	// }
+	// data := map[string]interface{}{
+	// 	"Data":  companies,
+	// 	"Flash": flash,
+	// }
+	http.Redirect(w, r, "/companies/update", http.StatusSeeOther)
+	//config.RenderTemplate(w, r, "companies/companies", data)
 }

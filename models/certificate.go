@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -133,16 +132,22 @@ func (c *Certificate) PutCertificate(r *http.Request) error {
 	cr.Student = st
 	cr.CourseDateStart, _ = time.Parse("2006-01-02", r.FormValue("startdate"))
 	cr.CourseDateEnd, _ = time.Parse("2006-01-02", r.FormValue("enddate"))
-
 	reg := Registry{}
 	regid, err := reg.PutRegistry(r)
+	if err != nil {
+		return err
+	}
 
+	if regid == 0 {
+		return errors.New("Błąd zapisywania do bazy danych")
+	}
 	_, err = config.DB.Exec("INSERT INTO certificates(date,student_id,coursedatestart,coursedateend,registry_id) VALUES ($1,$2,$3,$4,$5)", cr.Date, cr.Student.ID, cr.CourseDateStart, cr.CourseDateEnd, regid)
 
 	if err != nil {
 		return errors.New("500. Internal Server Error." + err.Error())
 	}
 	return nil
+
 }
 func (c *Certificate) UpdateCertificate(r *http.Request) error {
 
@@ -157,7 +162,7 @@ func (c *Certificate) UpdateCertificate(r *http.Request) error {
 	cr.CourseDateEnd, _ = time.Parse("2006-01-02", r.FormValue("enddate"))
 
 	regid, _ := strconv.ParseInt(r.FormValue("RegID"), 0, 64)
-	fmt.Println(regid, cr)
+
 	_, err = config.DB.Exec("UPDATE certificates SET date=$1 ,student_id=$2,coursedatestart=$3,coursedateend=$4,registry_id=$5 WHERE id=$6", cr.Date, cr.Student.ID, cr.CourseDateStart, cr.CourseDateEnd, regid, cr.ID)
 
 	if err != nil {
@@ -224,7 +229,7 @@ func (c *Certificate) DeleteCertificate(r *http.Request) error {
 	reg := Registry{}
 	err := config.DB.QueryRow("SELECT registry_id FROM certificates WHERE id = $1", cid).Scan(&rid)
 	if err != nil {
-		return err
+		return errors.New("Data jest spoza dopuszczalnego zakresu")
 	}
 
 	err = reg.DeleteRegistryWithId(rid)

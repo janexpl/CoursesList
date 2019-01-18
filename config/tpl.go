@@ -64,9 +64,7 @@ func init() {
 		template.
 			New("t").Funcs(layoutFuncs).
 			ParseGlob("templates/*/*.gohtml"))
-
 }
-
 func RenderTemplate(w http.ResponseWriter, r *http.Request, name string, data map[string]interface{}) {
 	if data == nil {
 		data = map[string]interface{}{}
@@ -75,6 +73,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, name string, data ma
 
 	data["CurrentUser"] = un
 	data["Flash"], _ = getFlash(w, r)
+	
 	templates = template.Must(
 		template.
 			New("t").Funcs(layoutFuncs).

@@ -64,6 +64,7 @@
         name="certdate"
         id="certdate"
         placeholder="Wpisz datę"
+        disabled
         value="{{ formdatefmt .Data.Date }}"
         required
       />
@@ -180,7 +181,7 @@ $('#course-select').selectize();
 var $studentselect = $('#student-select').selectize({
     valueField: 'ID',
     searchField:['Lastname','Firstname'],
-    preload: true,
+    preload:true,
     render: {
             option: function(data, escape) {
                         
@@ -212,7 +213,7 @@ var $studentselect = $('#student-select').selectize({
                 },
                 success: function(res) {
                     var selectize = this;
-                    console.log("Load")
+                  
                     callback(res);
 
                 }

@@ -20,7 +20,6 @@ type Company struct {
 	ContactPerson string
 	TelephoneNo   string
 	Note          string
-	//Certificates []Cert
 }
 
 func (c *Company) PutCompany(r *http.Request) (int64, error) {
@@ -34,8 +33,6 @@ func (c *Company) PutCompany(r *http.Request) (int64, error) {
 	if company.Nip != "" {
 		return 0, errors.New("Istnieje juz firma o takim numerze nip.")
 	}
-
-	//company.ID = bson.NewObjectId()
 	company.Name = r.FormValue("name")
 	company.Street = r.FormValue("street")
 	company.City = r.FormValue("city")

@@ -73,7 +73,7 @@ func (st *StudentsController) GetAllJson(w http.ResponseWriter, r *http.Request)
 }
 
 func (st *StudentsController) CreateProcess(w http.ResponseWriter, r *http.Request) {
-	var flash string
+	//var flash string
 	if r.Method != "POST" {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 		return
@@ -81,27 +81,27 @@ func (st *StudentsController) CreateProcess(w http.ResponseWriter, r *http.Reque
 	s := models.Student{}
 	_, err := s.PutStudent(r)
 	if err != nil {
-
-		flash = err.Error()
-		config.RenderTemplate(w, r, "students/create", map[string]interface{}{
-			"Data":  nil,
-			"Flash": flash,
-		})
+		config.SetFlash(w, r, []byte(err.Error()))
+		http.Redirect(w, r, "/students/create", http.StatusSeeOther)
+		// config.RenderTemplate(w, r, "students/create", map[string]interface{}{
+		// 	"Data":  nil,
+		// 	"Flash": flash,
+		// })
 		return
 	} else {
-		flash = "Zapisano kursanta poprawnie"
+		config.SetFlash(w, r, []byte("Kursanta zapisano poprawnie"))
 
 	}
-	students, err := s.AllStudents()
-	if err != nil {
-		flash = err.Error()
-	}
-	data := map[string]interface{}{
-		"Data":  students,
-		"Flash": flash,
-	}
-
-	config.RenderTemplate(w, r, "students/students", data)
+	// students, err := s.AllStudents()
+	// if err != nil {
+	// 	flash = err.Error()
+	// }
+	// data := map[string]interface{}{
+	// 	"Data":  students,
+	// 	"Flash": flash,
+	// }
+	http.Redirect(w, r, "/students", http.StatusSeeOther)
+	//config.RenderTemplate(w, r, "students/students", data)
 }
 
 func (st *StudentsController) Show(w http.ResponseWriter, r *http.Request) {
@@ -133,7 +133,7 @@ func (st *StudentsController) Show(w http.ResponseWriter, r *http.Request) {
 }
 
 func (st *StudentsController) DeleteProcess(w http.ResponseWriter, r *http.Request) {
-	var flash string
+	//var flash string
 	if r.Method != "GET" {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 		return
@@ -141,18 +141,21 @@ func (st *StudentsController) DeleteProcess(w http.ResponseWriter, r *http.Reque
 	s := models.Student{}
 	err := s.DeleteStudent(r)
 	if err != nil {
-		flash = err.Error()
+		config.SetFlash(w, r, []byte(err.Error()))
+		//flash = err.Error()
 	}
-	students, err := s.AllStudents()
-	if err != nil {
-		flash = err.Error()
-	}
-	flash = "Kursant usunięty pomyślnie"
-	data := map[string]interface{}{
-		"Data":  students,
-		"Flash": flash,
-	}
-	config.RenderTemplate(w, r, "students/students", data)
+	// students, err := s.AllStudents()
+	// if err != nil {
+	// 	flash = err.Error()
+	// }
+	// flash = "Kursant usunięty pomyślnie"
+	// data := map[string]interface{}{
+	// 	"Data":  students,
+	// 	"Flash": flash,
+	// }
+	config.SetFlash(w, r, []byte("Kursant kursant usunięty poprawnie"))
+	http.Redirect(w, r, "/students", http.StatusSeeOther)
+	//config.RenderTemplate(w, r, "students/students", data)
 }
 
 func (st *StudentsController) Update(w http.ResponseWriter, r *http.Request) {
@@ -203,7 +206,7 @@ func (st *StudentsController) CreateFromModal(w http.ResponseWriter, r *http.Req
 
 }
 func (st *StudentsController) UpdateProcess(w http.ResponseWriter, r *http.Request) {
-	var flash string
+	//var flash string
 	if r.Method != "POST" {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 		return
@@ -212,20 +215,20 @@ func (st *StudentsController) UpdateProcess(w http.ResponseWriter, r *http.Reque
 	err := s.UpdateStudent(r)
 	if err != nil {
 
-		flash = err.Error()
+		config.SetFlash(w, r, []byte(err.Error()))
+		http.Redirect(w, r, "/students/update", http.StatusSeeOther)
 
 	} else {
-		flash = "Kursanta zapisano poprawnie"
-
+		config.SetFlash(w, r, []byte("Kursanta zapisano poprawnie"))
 	}
-	students, err := s.AllStudents()
-	if err != nil {
-		flash = err.Error()
-	}
-	data := map[string]interface{}{
-		"Data":  students,
-		"Flash": flash,
-	}
-
-	config.RenderTemplate(w, r, "students/students", data)
+	// students, err := s.AllStudents()
+	// if err != nil {
+	// 	flash = err.Error()
+	// }
+	// data := map[string]interface{}{
+	// 	"Data":  students,
+	// 	"Flash": flash,
+	// }
+	http.Redirect(w, r, "students/students", http.StatusSeeOther)
+	//config.RenderTemplate(w, r, "students/students", data)
 }

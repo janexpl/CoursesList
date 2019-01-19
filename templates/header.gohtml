@@ -4,9 +4,7 @@
     
     <a class="navbar-brand" href="/">Zaświadczenia</a>
     {{ if .CurrentUser.Email }}
-
-   
-    <ul class="nav navbar-nav mr-auto">
+    <ul class="nav sticky-top navbar-nav mr-auto">
             <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Kursy
@@ -32,7 +30,7 @@
                     Klienci
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/companies">Pokaż wszyskie</a>
+                    <a class="dropdown-item" href="/companies">Pokaż wszyskich</a>
                     <a class="dropdown-item" href="/companies/create">Nowa firma</a>
                 </div>
 
@@ -42,7 +40,7 @@
                         Zaświadczenia
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/certificates">Pokaz wszyskie</a>
+                        <a class="dropdown-item" href="/certificates">Pokaż wszyskie</a>
                         
                         <a class="dropdown-item" href="/certificates/create">Nowe zaświadczenie</a>
                     </div>

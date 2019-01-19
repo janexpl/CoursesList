@@ -1,7 +1,7 @@
 {{ define "courses/courses"}}
 
 <h1>Lista kursów</h1>
-<table id="coursesTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+<table id="coursesTable" class="table table-sm table-striped " cellspacing="0" width="100%">
         <thead>
           <tr>
             <th class="th-sm" scope="col">Nazwa</th>
@@ -17,19 +17,25 @@
             <td>{{ .Symbol }}</td>
             <td>{{ .ExpiryTime }}</td>
             <td>
-            <a class="btn btn-sm btn-danger" data-toggle="confirmation"
+            <a data-toggle="confirmation"
             data-btn-ok-label="Kontynuować?" data-btn-ok-class="btn-success"
             data-btn-ok-icon-class="fa fa-check" 
             data-btn-cancel-label="Anuluj" data-btn-cancel-class="btn-danger"
             data-btn-cancel-icon-class="fa fa-ban" 
             data-title="Usuń" data-content="Czy na pewno usunąć?" href="/courses/delete/process?symbol={{ .Symbol }}">
-              <i class="fa fa-trash-o" aria-hidden="true"></i>
+            <i aria-hidden="true" class="v-icon mr-2 v-icon--link material-icons theme--light" style="font-size: 16px;">
+              delete
+            </i>
             </a>
-            <a class="btn btn-sm btn-success" href="/courses/update?symbol={{ .Symbol }}">
-                <i class="fa fa-edit" aria-hidden="true"></i>
+            <a href="/courses/update?symbol={{ .Symbol }}">
+              <i aria-hidden="true" class="v-icon mr-2 v-icon--link material-icons theme--light" style="font-size: 16px;">
+                edit
+              </i>
             </a>
-            <a class="btn btn-sm btn-success" href="/courses/show?symbol={{ .Symbol }}">
-              <i class="fa fa-eye" aria-hidden="true"></i>
+            <a  href="/courses/show?symbol={{ .Symbol }}">
+              <i aria-hidden="true" class="v-icon mr-2 v-icon--link material-icons theme--light" style="font-size: 16px;">
+                visibility
+              </i>
           </a>
              
           </tr>

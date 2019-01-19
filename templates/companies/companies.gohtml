@@ -1,7 +1,7 @@
 {{ define "companies/companies"}}
 
 <h1>Lista firm</h1>
-<table id="compTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+<table id="compTable" class="table table-sm table-striped" cellspacing="0" width="100%">
         <thead>
           <tr>
             <th class="th-sm" scope="col">Nazwa</th>
@@ -26,19 +26,26 @@
             <td>{{ .TelephoneNo }}</td>
             
             <td>
-            <a class="btn btn-sm btn-danger" data-toggle="confirmation"
+            <a data-toggle="confirmation"
             data-btn-ok-label="Kontynuować?" data-btn-ok-class="btn-success"
             data-btn-ok-icon-class="fa fa-check" 
             data-btn-cancel-label="Anuluj" data-btn-cancel-class="btn-danger"
             data-btn-cancel-icon-class="fa fa-ban" 
             data-title="Usuń" data-content="Czy na pewno usunąć?" href="/companies/delete/process?nip={{ .Nip }}">
-              <i class="fa fa-trash-o" aria-hidden="true"></i>
+            <i aria-hidden="true" class="v-icon mr-2 v-icon--link material-icons theme--light" style="font-size: 16px;">
+              delete
+            </i>
             </a>
-            <a class="btn btn-sm btn-success" href="/companies/update?nip={{ .Nip }}">
-                <i class="fa fa-edit" aria-hidden="true"></i>
+            <a  href="/companies/update?nip={{ .Nip }}">
+              <i aria-hidden="true" class="v-icon mr-2 v-icon--link material-icons theme--light" style="font-size: 16px;">
+                edit
+              </i>
           </a>
-          <a class="btn btn-sm btn-success" href="/companies/show?nip={{ .Nip }}">
-                <i class="fa fa-eye" aria-hidden="true"></i>
+          <a  href="/companies/show?nip={{ .Nip }}">
+                <!-- <i class="fa fa-eye" aria-hidden="true"></i> -->
+                <i aria-hidden="true" class="v-icon mr-2 v-icon--link material-icons theme--light" style="font-size: 16px;">
+                  visibility
+                </i>
           </a>
              
           </tr>

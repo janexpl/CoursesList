@@ -85,7 +85,8 @@ func (c *Certificate) AllCertificatesWithStudent(id int64) ([]Certificate, error
     registries.number,
     registries.year,
 	courses.symbol,
-	courses.name
+	courses.name,
+	courses.expirytime
 FROM
 	certificates
 	
@@ -107,7 +108,7 @@ WHERE student_id = $1`, id)
 				&crt.Student.Firstname, &crt.Student.Secondname, &crt.Student.Lastname, &crt.Student.Birthdate, &crt.Student.Birthplace, &crt.Student.Pesel,
 				&crt.CourseDateStart, &crt.CourseDateEnd,
 				&crt.Registry.Number, &crt.Registry.Year,
-				&crt.Registry.Course.Symbol, &crt.Registry.Course.Name)
+				&crt.Registry.Course.Symbol, &crt.Registry.Course.Name, &crt.Registry.Course.ExpiryTime)
 
 		if err != nil {
 			return nil, err

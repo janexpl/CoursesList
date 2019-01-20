@@ -61,8 +61,8 @@ func checkDateIsValid(id int64, year int, number int, date time.Time) (bool, err
 		}
 		ress = append(ress, res)
 	}
-	min := 0
-	max := len(ress) - 1
+	min := -1
+	max := len(ress)
 	for i := range ress {
 		if ress[i].number <= number {
 			if min <= i {
@@ -75,13 +75,22 @@ func checkDateIsValid(id int64, year int, number int, date time.Time) (bool, err
 			}
 		}
 	}
-	if max == len(ress)-1 {
+
+	if min == -1 {
+		res := new(Result)
+		res.number = number
+		res.date = date
+		ress = append([]*Result{res}, ress...)
+		min++
+	}
+	if max == len(ress) {
 		res := new(Result)
 		res.number = number
 		res.date = date
 		ress = append(ress, res)
-		max++
+		//max++
 	}
+
 	mindate := ress[min].date.Unix()
 	maxdate := ress[max].date.Unix()
 

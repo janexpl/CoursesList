@@ -2,6 +2,7 @@ $(document).ready(function() {
   $("#coursesTable").DataTable();
   $("#studentsTable").DataTable();
   $("#compTable").DataTable();
+  $("#certsTable").DataTable();
   $(".dataTables_length").addClass("bs-select");
 });
 

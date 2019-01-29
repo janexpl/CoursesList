@@ -190,6 +190,7 @@
       <thead>
         <tr>
           <th class="th-sm" scope="col">Data wystawienia</th>
+          <th class="th-sm" scope="col">Data ważności</th>
           <th class="th-sm" scope="col">Imię</th>
           <th class="th-sm" scope="col">Nazwisko</th>
           <th class="th-sm" scope="col">Data urodzenia</th>
@@ -204,6 +205,8 @@
         {{ range .Certs }}
         <tr>
           <td>{{ dateformat .Date }}</td>
+          <td>{{ countexpiry .Date .Registry.Course.ExpiryTime }}</td>
+          
           <td>{{ .Student.Firstname }}</td>
           <td>{{ .Student.Lastname }}</td>
           <td>{{ dateformat .Student.Birthdate }}</td>

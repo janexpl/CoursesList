@@ -1,142 +1,263 @@
 {{ define "companies/show"}}
 <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" id="company-tab" data-toggle="tab" href="#company" role="tab" aria-controls="company" aria-selected="true">Dane klienta</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="students-tab" data-toggle="tab" href="#students" role="tab" aria-controls="students" aria-selected="false">Zarejestrowane osoby</a>
-        </li>
-      
-      </ul>
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="company" role="tabpanel" aria-labelledby="company-tab"><br>
-                <div class="row ">
-                        <div class="col-md-6 mb-2 ">
-                            Nazwa
-                            
-                        </div>  
-                        <div class="col-md-6 mb-2 ">
-                                <strong>{{ .Data.Name }}</strong>
-                        </div>
-                </div>
-                <div class="row ">
-                        <div class="col-md-6 mb-2 ">
-                            Ulica
-                            
-                        </div>  
-                        <div class="col-md-6 mb-2 ">
-                                <strong>{{ .Data.Street }}</strong>
-                        </div>
-                </div>
-                <div class="row ">
-                        <div class="col-md-6 mb-2 ">
-                            Miejscowość
-                        </div>  
-                        <div class="col-md-6 mb-2 ">
-                                <strong>{{ .Data.City }}</strong>
-                        </div>
-                </div>
-                <div class="row ">
-                        <div class="col-md-6 mb-2 ">
-                            Kod pocztowy
-                        </div>  
-                        <div class="col-md-6 mb-2 ">
-                                <strong>{{ .Data.Zipcode }}</strong>
-                        </div>
-                </div>
-            
-                <div class="row ">
-                        <div class="col-md-6 mb-2 ">
-                            NIP
-                        </div>  
-                        <div class="col-md-6 mb-2 ">
-                                <strong>{{ .Data.Nip }}</strong>
-                        </div>
-                </div>
-                <div class="row ">
-                        <div class="col-md-6 mb-2 ">
-                            Email
-                        </div>  
-                        <div class="col-md-6 mb-2 ">
-                                <strong>{{ .Data.Email }}</strong>
-                        </div>
-                </div>
-                <div class="row ">
-                        <div class="col-md-6 mb-2 ">
-                            Osoba kontaktowa
-                        </div>  
-                        <div class="col-md-6 mb-2 ">
-                                <strong>{{ .Data.ContactPerson }}</strong>
-                        </div>
-                </div>
-                <div class="row ">
-                        <div class="col-md-6 mb-2 ">
-                            Numer telefonu
-                        </div>  
-                        <div class="col-md-6 mb-2 ">
-                                <strong>{{ .Data.TelephoneNo }}</strong>
-                        </div>
-                    </div>
-                
-                   
-
-                        
-
-
-        </div>
-        <div class="tab-pane fade" id="students" role="tabpanel" aria-labelledby="students-tab">
-                <table id="studentsTable" class="table table-sm table-striped " cellspacing="0" width="100%">
-                        <thead>
-                          <tr>
-                            <th class="th-sm" scope="col">Imię</th>
-                            <th class="th-sm" scope="col">Drugie imię</th>
-                            <th class="th-sm" scope="col">Nazwisko</th>
-                            <th class="th-sm" scope="col">Data urodzenia</th>
-                            <th class="th-sm" scope="col">Miejsce urodzenia</th>
-                            <th class="th-sm" scope="col">PESEL</th>
-                            
-                            <th></th>
-                          </tr>
-                        </thead>
-                       
-                        <tbody>
-                                {{ range .Data1 }}
-                          <tr>
-                            <td>{{ .Firstname }}</td>
-                            <td>{{ .Secondname }}</td>
-                            <td>{{ .Lastname }}</td>
-                            <td>{{ dateformat .Birthdate }}</td>
-                            <td>{{ .Birthplace }}</td>
-                            <td>{{ .Pesel }}</td>
-                            
-                            <td>
-                            <a data-toggle="confirmation"
-                            data-btn-ok-label="Kontynuować?" data-btn-ok-class="btn-success"
-                            data-btn-ok-icon-class="fa fa-check" 
-                            data-btn-cancel-label="Anuluj" data-btn-cancel-class="btn-danger"
-                            data-btn-cancel-icon-class="fa fa-ban" 
-                            data-title="Usuń" data-content="Czy na pewno usunąć?" href="/courses/delete/process?pesel={{ .Pesel }}">
-                            <i aria-hidden="true" class="v-icon mr-2 v-icon--link material-icons theme--light" style="font-size: 16px;">
-                                delete
-                              </i>
-                            </a>
-                            <a href="/students/update?pesel={{ .Pesel }}">
-                                <i aria-hidden="true" class="v-icon mr-2 v-icon--link material-icons theme--light" style="font-size: 16px;">
-                                        edit
-                                      </i>
-                          </a>
-                          <a href="/students/show?pesel={{ .Pesel }}">
-                                <i aria-hidden="true" class="v-icon mr-2 v-icon--link material-icons theme--light" style="font-size: 16px;">
-                                        visibility
-                                      </i>
-                          </a>
-                             
-                          </tr>
-                          
-                          {{ end }}
-                        </tbody>
-                      </table>   
-        </div>
-     
+  <li class="nav-item">
+    <a
+      class="nav-link active"
+      id="company-tab"
+      data-toggle="tab"
+      href="#company"
+      role="tab"
+      aria-controls="company"
+      aria-selected="true"
+      >Dane klienta</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      id="students-tab"
+      data-toggle="tab"
+      href="#students"
+      role="tab"
+      aria-controls="students"
+      aria-selected="false"
+      >Zarejestrowane osoby</a
+    >
+    <li class="nav-item">
+        <a
+          class="nav-link"
+          id="certificates-tab"
+          data-toggle="tab"
+          href="#certificates"
+          role="tab"
+          aria-controls="certificates"
+          aria-selected="false"
+          >Wystawione zaświadczenia</a
+        >
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div
+    class="tab-pane fade show active"
+    id="company"
+    role="tabpanel"
+    aria-labelledby="company-tab"
+  >
+    <br />
+    <div class="row ">
+      <div class="col-md-6 mb-2 ">Nazwa</div>
+      <div class="col-md-6 mb-2 ">
+        <strong>{{ .Data.Name }}</strong>
       </div>
+    </div>
+    <div class="row ">
+      <div class="col-md-6 mb-2 ">Ulica</div>
+      <div class="col-md-6 mb-2 ">
+        <strong>{{ .Data.Street }}</strong>
+      </div>
+    </div>
+    <div class="row ">
+      <div class="col-md-6 mb-2 ">Miejscowość</div>
+      <div class="col-md-6 mb-2 ">
+        <strong>{{ .Data.City }}</strong>
+      </div>
+    </div>
+    <div class="row ">
+      <div class="col-md-6 mb-2 ">Kod pocztowy</div>
+      <div class="col-md-6 mb-2 ">
+        <strong>{{ .Data.Zipcode }}</strong>
+      </div>
+    </div>
+
+    <div class="row ">
+      <div class="col-md-6 mb-2 ">NIP</div>
+      <div class="col-md-6 mb-2 ">
+        <strong>{{ .Data.Nip }}</strong>
+      </div>
+    </div>
+    <div class="row ">
+      <div class="col-md-6 mb-2 ">Email</div>
+      <div class="col-md-6 mb-2 ">
+        <strong>{{ .Data.Email }}</strong>
+      </div>
+    </div>
+    <div class="row ">
+      <div class="col-md-6 mb-2 ">Osoba kontaktowa</div>
+      <div class="col-md-6 mb-2 ">
+        <strong>{{ .Data.ContactPerson }}</strong>
+      </div>
+    </div>
+    <div class="row ">
+      <div class="col-md-6 mb-2 ">Numer telefonu</div>
+      <div class="col-md-6 mb-2 ">
+        <strong>{{ .Data.TelephoneNo }}</strong>
+      </div>
+    </div>
+  </div>
+  <div
+    class="tab-pane fade"
+    id="students"
+    role="tabpanel"
+    aria-labelledby="students-tab"
+  >
+    <table
+      id="studentsTable"
+      class="table table-sm table-striped "
+      cellspacing="0"
+      width="100%"
+    >
+      <thead>
+        <tr>
+          <th class="th-sm" scope="col">Imię</th>
+          <th class="th-sm" scope="col">Drugie imię</th>
+          <th class="th-sm" scope="col">Nazwisko</th>
+          <th class="th-sm" scope="col">Data urodzenia</th>
+          <th class="th-sm" scope="col">Miejsce urodzenia</th>
+          <th class="th-sm" scope="col">PESEL</th>
+
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {{ range .Data1 }}
+        <tr>
+          <td>{{ .Firstname }}</td>
+          <td>{{ .Secondname }}</td>
+          <td>{{ .Lastname }}</td>
+          <td>{{ dateformat .Birthdate }}</td>
+          <td>{{ .Birthplace }}</td>
+          <td>{{ .Pesel }}</td>
+
+          <td>
+            <a
+              data-toggle="confirmation"
+              data-btn-ok-label="Kontynuować?"
+              data-btn-ok-class="btn-success"
+              data-btn-ok-icon-class="fa fa-check"
+              data-btn-cancel-label="Anuluj"
+              data-btn-cancel-class="btn-danger"
+              data-btn-cancel-icon-class="fa fa-ban"
+              data-title="Usuń"
+              data-content="Czy na pewno usunąć?"
+              href="/courses/delete/process?pesel={{ .Pesel }}"
+            >
+              <i
+                aria-hidden="true"
+                class="v-icon mr-2 v-icon--link material-icons theme--light"
+                style="font-size: 16px;"
+              >
+                delete
+              </i>
+            </a>
+            <a href="/students/update?pesel={{ .Pesel }}">
+              <i
+                aria-hidden="true"
+                class="v-icon mr-2 v-icon--link material-icons theme--light"
+                style="font-size: 16px;"
+              >
+                edit
+              </i>
+            </a>
+            <a href="/students/show?pesel={{ .Pesel }}">
+              <i
+                aria-hidden="true"
+                class="v-icon mr-2 v-icon--link material-icons theme--light"
+                style="font-size: 16px;"
+              >
+                visibility
+              </i>
+            </a>
+          </td>
+        </tr>
+
+        {{ end }}
+      </tbody>
+    </table>
+  </div>
+  <div
+    class="tab-pane fade"
+    id="certificates"
+    role="tabpanel"
+    aria-labelledby="certificates-tab"
+  >
+    <h1>Lista zaświadczeń</h1>
+    <table
+      id="studentsTable"
+      class="table table-striped "
+      cellspacing="0"
+      width="100%"
+    >
+      <thead>
+        <tr>
+          <th class="th-sm" scope="col">Data wystawienia</th>
+          <th class="th-sm" scope="col">Imię</th>
+          <th class="th-sm" scope="col">Nazwisko</th>
+          <th class="th-sm" scope="col">Data urodzenia</th>
+          <th class="th-sm" scope="col">Miejsce urodzenia</th>
+          <th class="th-sm" scope="col">PESEL</th>
+          <th class="th-sm" scope="col">Numer</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {{ range .Certs }}
+        <tr>
+          <td>{{ dateformat .Date }}</td>
+          <td>{{ .Student.Firstname }}</td>
+          <td>{{ .Student.Lastname }}</td>
+          <td>{{ dateformat .Student.Birthdate }}</td>
+          <td>{{ .Student.Birthplace }}</td>
+          <td>{{ .Student.Pesel }}</td>
+          <td>
+            {{ .Registry.Number }}/{{ .Registry.Course.Symbol }}/{{ .Registry.Year }}
+          </td>
+          <td>
+            <a
+              data-toggle="confirmation"
+              data-btn-ok-label="Kontynuować?"
+              data-btn-ok-class="btn-success"
+              data-btn-ok-icon-class="fa fa-check"
+              data-btn-cancel-label="Anuluj"
+              data-btn-cancel-class="btn-danger"
+              data-btn-cancel-icon-class="fa fa-ban"
+              data-title="Usuń"
+              data-content="Czy na pewno usunąć?"
+              href="/certificates/delete/process?id={{ .ID }}"
+            >
+              <i
+                aria-hidden="true"
+                class="v-icon mr-2 v-icon--link material-icons theme--light"
+                style="font-size: 16px;"
+              >
+                delete
+              </i>
+            </a>
+            <a href="/certificates/update?id={{ .ID }}">
+              <i
+                aria-hidden="true"
+                class="v-icon mr-2 v-icon--link material-icons theme--light"
+                style="font-size: 16px;"
+              >
+                edit
+              </i>
+            </a>
+            <a href="/certificates/print?id={{ .ID }}" target="_blank">
+              <i
+                aria-hidden="true"
+                class="v-icon mr-2 v-icon--link material-icons theme--light"
+                style="font-size: 16px;"
+              >
+                print
+              </i>
+            </a>
+          </td>
+        </tr>
+
+        {{ end }}
+      </tbody>
+    </table>
+  </div>
+</div>
 {{ end }}

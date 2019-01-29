@@ -68,7 +68,7 @@ func (s *Student) PutStudent(r *http.Request) (int64, error) {
 	}
 	return sid, nil
 }
-func (s *Student) AllStudentsWithCompany(cp Company) ([]Student, error) {
+func (s *Student) AllStudentsWithCompany(id int64) ([]Student, error) {
 
 	rows, err := config.DB.Query(`SELECT
 	students.id,
@@ -87,7 +87,7 @@ func (s *Student) AllStudentsWithCompany(cp Company) ([]Student, error) {
 FROM 
 	students 
 	LEFT OUTER JOIN companies ON students.company_id = companies.id
-WHERE students.company_id = $1`, cp.ID)
+WHERE students.company_id = $1`, id)
 	if err != nil {
 		return nil, err
 	}

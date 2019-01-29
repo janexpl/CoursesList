@@ -172,6 +172,20 @@ func (c *Certificate) UpdateCertificate(r *http.Request) error {
 	}
 	return nil
 }
+func (c *Certificate) GetCertificateWithCompanyId(id int64) ([]Certificate, error){
+	st := Student{};
+	sts := []Student{};
+	sts, err := st.AllStudentsWithCompany(id)
+	crts := []Certificate{};
+	for _, row := range sts {
+		crs, _ := c.AllCertificatesWithStudent(row.ID)
+		for _, rw := range crs{
+			crts = append(crts, rw)
+		}
+	}
+	return crts, err
+}
+
 func (c *Certificate) GetCertificatesWithCourseId(id int64) ([]Certificate, error) {
 	rows, err := config.DB.Query(`SELECT
 	certificates.id,

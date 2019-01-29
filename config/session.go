@@ -25,7 +25,6 @@ type loggedUser struct {
 }
 type sessions struct {
 	un string
-
 	lastActivity time.Time
 }
 

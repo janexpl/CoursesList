@@ -90,7 +90,6 @@ func checkDateIsValid(id int64, year int, number int, date time.Time) (bool, err
 		ress = append(ress, res)
 		//max++
 	}
-
 	mindate := ress[min].date.Unix()
 	maxdate := ress[max].date.Unix()
 

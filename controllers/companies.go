@@ -122,16 +122,18 @@ func (c *CompaniesController) Show(w http.ResponseWriter, r *http.Request) {
 	company, err := cp.OneCompany(r)
 	st := models.Student{}
 
-	students, err := st.AllStudentsWithCompany(company)
+	students, err := st.AllStudentsWithCompany(company.ID)
 
 	if err != nil {
 		flash = err.Error()
 	}
 	flash = ""
-
+	cert := models.Certificate{}
+	certs, err := cert.GetCertificateWithCompanyId(company.ID)
 	data := map[string]interface{}{
 		"Data":  company,
 		"Data1": students,
+		"Certs": certs,
 		"Flash": flash,
 	}
 

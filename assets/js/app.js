@@ -4,12 +4,21 @@ $(document).ready(function() {
   $("#compTable").DataTable();
   $("#certsTable").DataTable();
   $(".dataTables_length").addClass("bs-select");
+  $('.datepicker').pickadate({
+    format: 'yyyy-mm-dd',
+    formatSubmit: 'yyyy-mm-dd',
+    selectYears: 80,
+    max: true,
+    selectMonths: true
+  });
 });
 
 $("[data-toggle=confirmation]").confirmation({
   rootSelector: "[data-toggle=confirmation]"
   // other options
 });
+
+
 
 $(function() {
   $("#flash")
@@ -22,6 +31,7 @@ $(function() {
 });
 
 jQuery(function($) {
+  
   $("form[data-async]").on("submit", function(event) {
     var $form = $(this);
     var $target = $($form.attr("data-target"));

@@ -214,10 +214,8 @@ func (st *StudentsController) UpdateProcess(w http.ResponseWriter, r *http.Reque
 	s := models.Student{}
 	err := s.UpdateStudent(r)
 	if err != nil {
-
 		config.SetFlash(w, r, []byte(err.Error()))
 		http.Redirect(w, r, "/students/update", http.StatusSeeOther)
-
 	} else {
 		config.SetFlash(w, r, []byte("Kursanta zapisano poprawnie"))
 	}

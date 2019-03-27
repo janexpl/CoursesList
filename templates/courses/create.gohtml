@@ -12,9 +12,15 @@
             <v-card flat>
               <v-card-text>
                 <v-text-field
+						v-model="mainname"
+						:rules="mainnameRules"
+						label="Nazwa główna"
+						required
+					 ></v-text-field>
+					 <v-text-field
                   v-model="name"
                   :rules="nameRules"
-                  label="Nazwa kursu"
+                  label="Nazwa kursu na zaświadczeniu"
                   required
                 ></v-text-field>
                 <v-text-field
@@ -171,8 +177,10 @@
       courses: [],
       valid: true,
       active: null,
+      mainname: "",
+		mainnameRules: [v => !!v] || "Wpisz nazwę główną",
       name: "",
-      nameRules: [v => !!v] || "Wpisz nazwę kursu",
+		nameRules: [v => !!v] || "Wpisz nazwę kursu",
       symbol: "",
       expirytime: "",
       expiryRules: [
@@ -193,6 +201,7 @@
       submit() {
         axios
           .post("/courses/json", {
+			   Mainname: this.mainname,
             Name: this.name,
             Symbol: this.symbol,
             ExpiryTime: this.expirytime,

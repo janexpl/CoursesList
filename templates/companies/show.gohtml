@@ -58,8 +58,8 @@
     </div>
     <div class="row ">
       <div class="col-md-6 mb-2 ">Miejscowość</div>
-      <div class="col-md-6 mb-2 ">
-        <strong>{{ .Data.City }}</strong>
+		<div class="col-md-6 mb-2 ">
+			<strong>{{ .Data.City }}</strong>
       </div>
     </div>
     <div class="row ">
@@ -68,7 +68,6 @@
         <strong>{{ .Data.Zipcode }}</strong>
       </div>
     </div>
-
     <div class="row ">
       <div class="col-md-6 mb-2 ">NIP</div>
       <div class="col-md-6 mb-2 ">
@@ -93,6 +92,13 @@
         <strong>{{ .Data.TelephoneNo }}</strong>
       </div>
     </div>
+    <div class="row ">
+      <div class="col-md-6 mb-2 ">Osoba odpowiedzialna</div>
+      <div class="col-md-6 mb-2 ">
+        <strong>{{ .Data.Person.Firstname.String }} {{ .Data.Person.Lastname.String}}</strong>
+      </div>
+    </div>
+
   </div>
   <div
     class="tab-pane fade"

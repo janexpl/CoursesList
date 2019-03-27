@@ -212,6 +212,6 @@ func (c *CompaniesController) UpdateProcess(w http.ResponseWriter, r *http.Reque
 	// 	"Data":  companies,
 	// 	"Flash": flash,
 	// }
-	http.Redirect(w, r, "/companies/update", http.StatusSeeOther)
+	http.Redirect(w, r, "/companies", http.StatusSeeOther)
 	//config.RenderTemplate(w, r, "companies/companies", data)
 }

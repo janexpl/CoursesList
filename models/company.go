@@ -20,6 +20,7 @@ type Company struct {
 	ContactPerson string
 	TelephoneNo   string
 	Note          string
+	Person        User
 }
 
 func (c *Company) PutCompany(r *http.Request) (int64, error) {
@@ -30,6 +31,7 @@ func (c *Company) PutCompany(r *http.Request) (int64, error) {
 	}
 	company := Company{}
 	err := config.DB.QueryRow("SELECT nip FROM companies WHERE nip=$1", nip).Scan(&company.Nip)
+
 	if company.Nip != "" {
 		return 0, errors.New("Istnieje juz firma o takim numerze nip.")
 	}
@@ -42,8 +44,15 @@ func (c *Company) PutCompany(r *http.Request) (int64, error) {
 	company.ContactPerson = r.FormValue("contactperson")
 	company.TelephoneNo = r.FormValue("telephone")
 	company.Note = r.FormValue("note")
+	id, _ := strconv.ParseInt(r.FormValue("person"), 0, 64)
+	user := User{}
+	user, err = user.GetUserWithId(id)
+	if err != nil {
+		return 0, err
+	}
+	company.Person = user
 	var cid int64
-	err = config.DB.QueryRow("INSERT INTO companies(name,street,city,zipcode,nip,email,contactperson,telephoneno,note) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id", company.Name, company.Street, company.City, company.Zipcode, company.Nip, company.Email, company.ContactPerson, company.TelephoneNo, company.Note).Scan(&cid)
+	err = config.DB.QueryRow("INSERT INTO companies(name,street,city,zipcode,nip,email,contactperson,telephoneno,note,person_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id", company.Name, company.Street, company.City, company.Zipcode, company.Nip, company.Email, company.ContactPerson, company.TelephoneNo, company.Note, user.ID).Scan(&cid)
 	if err != nil {
 		return 0, errors.New("500. Internal Server Error." + err.Error())
 	}
@@ -51,15 +60,17 @@ func (c *Company) PutCompany(r *http.Request) (int64, error) {
 }
 
 func (c *Company) AllCompanies() ([]Company, error) {
-	rows, err := config.DB.Query("SELECT * FROM companies")
+	rows, err := config.DB.Query("SELECT companies.*, users.email, users.firstname, users.lastname from companies LEFT JOIN users on companies.person_id=users.id")
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 	companies := []Company{}
+
 	for rows.Next() {
 		cmp := Company{}
-		err := rows.Scan(&cmp.ID, &cmp.Name, &cmp.Street, &cmp.City, &cmp.Zipcode, &cmp.Nip, &cmp.Email, &cmp.ContactPerson, &cmp.TelephoneNo, &cmp.Note)
+
+		err := rows.Scan(&cmp.ID, &cmp.Name, &cmp.Street, &cmp.City, &cmp.Zipcode, &cmp.Nip, &cmp.Email, &cmp.ContactPerson, &cmp.TelephoneNo, &cmp.Note, &cmp.Person.ID, &cmp.Person.Email, &cmp.Person.Firstname, &cmp.Person.Lastname)
 		if err != nil {
 			return nil, err
 		}
@@ -89,8 +100,8 @@ func (c *Company) GetCompanyWithId(id int) (Company, error) {
 
 	cmp := Company{}
 
-	err := config.DB.QueryRow("SELECT * FROM companies WHERE id = $1", id).
-		Scan(&cmp.ID, &cmp.Name, &cmp.Street, &cmp.City, &cmp.Zipcode, &cmp.Nip, &cmp.Email, &cmp.ContactPerson, &cmp.TelephoneNo, &cmp.Note)
+	err := config.DB.QueryRow("SELECT companies.*, users.email, users.firstname, users.lastname from companies left join users on companies.person_id=users.id WHERE id = $1", id).
+		Scan(&cmp.ID, &cmp.Name, &cmp.Street, &cmp.City, &cmp.Zipcode, &cmp.Nip, &cmp.Email, &cmp.ContactPerson, &cmp.TelephoneNo, &cmp.Note, &cmp.Person.ID, &cmp.Person.Email, &cmp.Person.Firstname, &cmp.Person.Lastname)
 	if err != nil {
 		return cmp, err
 	}
@@ -105,9 +116,8 @@ func (c *Company) OneCompany(r *http.Request) (Company, error) {
 	if nip == "" {
 		return cmp, errors.New("400. Bad Request.")
 	}
-	row := config.DB.QueryRow("SELECT * FROM companies WHERE nip = $1", nip)
-	err := row.Scan(&cmp.ID, &cmp.Name, &cmp.Street, &cmp.City, &cmp.Zipcode, &cmp.Nip, &cmp.Email, &cmp.ContactPerson, &cmp.TelephoneNo, &cmp.Note)
-
+	row := config.DB.QueryRow("SELECT companies.*, users.email, users.firstname, users.lastname from companies LEFT join users on companies.person_id=users.id WHERE nip = $1 ", nip)
+	err := row.Scan(&cmp.ID, &cmp.Name, &cmp.Street, &cmp.City, &cmp.Zipcode, &cmp.Nip, &cmp.Email, &cmp.ContactPerson, &cmp.TelephoneNo, &cmp.Note, &cmp.Person.ID, &cmp.Person.Email, &cmp.Person.Firstname, &cmp.Person.Lastname)
 	if err != nil {
 		return cmp, err
 	}
@@ -128,8 +138,16 @@ func (c *Company) UpdateCompany(r *http.Request) error {
 	company.ContactPerson = r.FormValue("contactperson")
 	company.TelephoneNo = r.FormValue("telephone")
 	company.Note = r.FormValue("note")
+	id, _ := strconv.ParseInt(r.FormValue("person"), 0, 64)
+	user := User{}
+	user, err := user.GetUserWithId(id)
+	if err != nil {
+		return err
+	}
+	company.Person = user
 
-	_, err := config.DB.Exec("UPDATE companies SET name=$1, street=$2, city=$3, zipcode=$4,nip=$5,email=$6,contactperson=$7,telephoneno=$8,note=$9 where nip=$5", company.Name, company.Street, company.City, company.Zipcode, company.Nip, company.Email, company.ContactPerson, company.TelephoneNo, company.Note)
+	_, err = config.DB.Exec("UPDATE companies SET name=$1, street=$2, city=$3, zipcode=$4,nip=$5,email=$6,contactperson=$7,telephoneno=$8,note=$9, person_id=$10 where nip=$5", company.Name, company.Street, company.City, company.Zipcode, company.Nip, company.Email, company.ContactPerson, company.TelephoneNo, company.Note, company.Person.ID)
+
 	if err != nil {
 		return err
 	}

@@ -9,19 +9,20 @@ import (
 	"strings"
 
 	"github.com/janexpl/CoursesList/logging"
+	null "gopkg.in/guregu/null.v3"
 
 	"github.com/janexpl/CoursesList/config"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	ID        int64  `json:"id"`
-	Email     string `json:"email"`
-	Password  []byte `json:"password"`
-	SPassword string `json:"spassword"`
-	Firstname string `json:"firstname"`
-	Lastname  string `json:"lastname"`
-	Role      int    `json:"role"`
+	ID        null.Int    `json:"id"`
+	Email     null.String `json:"email"`
+	Password  []byte      `json:"password"`
+	SPassword string      `json:"spassword"`
+	Firstname null.String `json:"firstname"`
+	Lastname  null.String `json:"lastname"`
+	Role      int         `json:"role"`
 }
 
 func (u *User) AllUsers() ([]User, error) {
@@ -33,7 +34,6 @@ func (u *User) AllUsers() ([]User, error) {
 	us := []User{}
 	for rows.Next() {
 		err = rows.Scan(&u.ID, &u.Email, &u.Password, &u.Firstname, &u.Lastname, &u.Role)
-
 		if err != nil {
 			return nil, err
 		}
@@ -60,9 +60,12 @@ func (u *User) PutUser(r *http.Request) (User, error) {
 		u.Password = bpas
 
 	} else {
-		u.Email = r.FormValue("semail")
-		u.Firstname = r.FormValue("sfirstname")
-		u.Lastname = r.FormValue("slastname")
+		email := r.FormValue("semail")
+		u.Email = null.NewString(email, email != "")
+		firstname := r.FormValue("sfirstname")
+		u.Firstname = null.NewString(firstname, firstname != "")
+		lastname := r.FormValue("slastname")
+		u.Lastname = null.NewString(lastname, lastname != "")
 		if r.FormValue("srole") != "" {
 			u.Role = 1
 		} else {
@@ -98,6 +101,16 @@ func (u *User) GetUser(email string) (User, error) {
 	return *u, nil
 
 }
+func (u *User) GetUserWithId(id int64) (User, error) {
+
+	err := config.DB.QueryRow("SELECT * FROM users WHERE id = $1", id).Scan(&u.ID, &u.Email, &u.Password, &u.Firstname, &u.Lastname, &u.Role)
+	fmt.Printf(u.Email.String)
+	if err != nil {
+		return *u, err
+	}
+	return *u, nil
+
+}
 func (u *User) DeleteUser(r *http.Request) error {
 	id := r.FormValue("id")
 	_, err := config.DB.Exec("DELETE FROM users WHERE id = $1", id)
@@ -107,7 +120,6 @@ func (u *User) UpdateUser(r *http.Request) error {
 	var query string
 	if strings.Contains(r.Header.Get("Content-Type"), "json") {
 		json.NewDecoder(r.Body).Decode(&u)
-		
 
 		if u.SPassword != "" {
 			bpas, err := bcrypt.GenerateFromPassword([]byte(u.SPassword), bcrypt.MinCost)
@@ -122,10 +134,15 @@ func (u *User) UpdateUser(r *http.Request) error {
 		}
 
 	} else {
-		u.ID, _ = strconv.ParseInt(r.FormValue("id"), 0, 64)
-		u.Email = r.FormValue("semail")
-		u.Firstname = r.FormValue("sfirstname")
-		u.Lastname = r.FormValue("slastname")
+		id, _ := strconv.ParseInt(r.FormValue("id"), 0, 64)
+		u.ID = null.NewInt(id, id != 0)
+		email := r.FormValue("email")
+		u.Email = null.NewString(email, email != "")
+		firstname := r.FormValue("sfirstname")
+		u.Firstname = null.NewString(firstname, firstname != "")
+		lastname := r.FormValue("slastname")
+		u.Lastname = null.NewString(lastname, lastname != "")
+
 		if r.FormValue("srole") != "" {
 			u.Role = 1
 		} else {

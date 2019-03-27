@@ -211,9 +211,9 @@ func (crt *CertificatesController) UpdateProcess(w http.ResponseWriter, r *http.
 	cr := models.Certificate{}
 	err := cr.UpdateCertificate(r)
 	if err != nil {
-		config.SetFlash(w,r,[]byte(err.Error()))
+		config.SetFlash(w, r, []byte(err.Error()))
 	} else {
-		config.SetFlash(w,r,[]byte("Certyfikat zapisano poprawnie"))
+		config.SetFlash(w, r, []byte("Certyfikat zapisano poprawnie"))
 	}
 	// certs, err := cr.AllCertificates()
 	// if err != nil {
@@ -302,6 +302,8 @@ func parseHtml(c models.Certificate) string {
 			tags[htmls[cap[0]:cap[1]]] = (c.Student.Birthdate).Format("02.01.2006")
 		case "miejsce_urodzenia":
 			tags[htmls[cap[0]:cap[1]]] = c.Student.Birthplace
+		case "pesel":
+			tags[htmls[cap[0]:cap[1]]] = c.Student.Pesel
 		case "nazwa_kursu":
 			tags[htmls[cap[0]:cap[1]]] = c.Registry.Course.Name
 		case "data_rozpoczecia":

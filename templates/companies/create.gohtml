@@ -58,7 +58,16 @@
               Wpisz telefon kontaktowy
           </div>
       </div>  
-      
+     <div class="col-md-6 mb-3 ">
+      <label for="person-select">Osoba odpowiedzialna</label>
+
+      <select
+        id="person-select"
+        name="person"
+        class="form-control"
+        title="Wybierz osobę odpowiedzialną">
+      </select>
+    </div>
       </div>
       <div class="form-row">
           <div class="col-md-12 mb-3">
@@ -86,6 +95,52 @@
     });
   }, false);
 })();
+
+// Pobieranie userów do selecta
+var $personselect = $('#person-select').selectize({
+  valueField: 'id',
+  searchField: ['firstname','lastname'],
+  create : false,
+  preload: true,
+  render: {
+        option: function(data, escape) {
+          var bdate = new Date(data.Birthdate);
+
+          return (
+            '<div class="option">' +
+            '<span class="firstname">' +
+            escape(data.firstname) +
+            " </span>" +
+            '<span class="lastname">' +
+            escape(data.lastname) +
+            " </span></div>"
+          );
+        },
+        item: function(data, escape) {
+          return (
+            '<div class="item">' +
+            escape(data.firstname) +
+            " " +
+            escape(data.lastname) +
+            "</div>"
+          );
+        }
+      },
+    load: function(query, callback) {
+    if (!query.length) return callback();
+    $.ajax({
+        url: '/users/json',
+        type: 'GET',
+        dataType: 'json',
+        error: function() {
+            callback();
+        },
+        success: function(res) {
+            callback(res);
+        }
+    });
+  }
+});
       </script>
 
 

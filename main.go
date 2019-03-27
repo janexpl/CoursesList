@@ -13,6 +13,7 @@ import (
 func main() {
 	port := flag.Int("port", 8080, "an int")
 	flag.Parse()
+	fmt.Println("test")
 	ports := strconv.Itoa(*port)
 	http.HandleFunc("/", index)
 	courses := controllers.NewCoursesController()

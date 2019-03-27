@@ -133,7 +133,7 @@ func (u *UsersController) LoginProcess(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 	logging.Trace.Println("Logowanie")
-	config.NewSession(w, r, user.Email, user.Role)
+	config.NewSession(w, r, user.Email.String, user.Role)
 	http.Redirect(w, r, "/certificates", http.StatusSeeOther)
 
 }

@@ -1,8 +1,15 @@
+
 $(document).ready(function() {
+  $.fn.dataTable.moment('DD.MM.YYYY');
+    
   $("#coursesTable").DataTable();
   $("#studentsTable").DataTable();
   $("#compTable").DataTable();
-  $("#certsTable").DataTable();
+  $("#certsTable").DataTable({
+    columnDefs: [
+    { type: 'cert-number', targets: 7}]
+  });
+
   $(".dataTables_length").addClass("bs-select");
   $('.datepicker').pickadate({
     format: 'yyyy-mm-dd',

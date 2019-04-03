@@ -1,10 +1,13 @@
 
 $(document).ready(function() {
-  $.fn.dataTable.moment('DD.MM.YYYY');
+  
     
   $("#coursesTable").DataTable();
   $("#studentsTable").DataTable();
   $("#compTable").DataTable();
+  //uruchomienie sortowania dat
+  $.fn.dataTable.moment('DD.MM.YYYY');
+  //definicja tabeli z certyfikatami - definicja sortowania numerów certyfikatów
   $("#certsTable").DataTable({
     columnDefs: [
     { type: 'cert-number', targets: 7}]

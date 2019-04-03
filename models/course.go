@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-
+		
 	"github.com/janexpl/CoursesList/logging"
 
 	"github.com/janexpl/CoursesList/config"
@@ -12,6 +12,7 @@ import (
 
 type Course struct {
 	ID            int64
+	Mainname      string
 	Name          string
 	Symbol        string
 	ExpiryTime    string
@@ -25,10 +26,10 @@ type CourseProgram struct {
 	PracticeTime string
 }
 
+//Dodawanie kursu z formularza VUE przez JSON
 func (cr *Course) PutCourseJson(r *http.Request) error {
 	json.NewDecoder(r.Body).Decode(&cr)
-
-	_, err := config.DB.Exec("INSERT INTO courses(name,symbol,expirytime,courseprogram,certfrontpage) VALUES ($1,$2,$3,$4,$5)", cr.Name, cr.Symbol, cr.ExpiryTime, cr.CourseProgram, cr.CertFrontpage)
+	_, err := config.DB.Exec("INSERT INTO courses(mainname,name,symbol,expirytime,courseprogram,certfrontpage) VALUES ($1,$2,$3,$4,$5,$6)", cr.Mainname, cr.Name, cr.Symbol, cr.ExpiryTime, cr.CourseProgram, cr.CertFrontpage)
 	if err != nil {
 		errors.New("500. Internal Server Error." + err.Error())
 	}
@@ -56,13 +57,14 @@ func (cr *Course) PutCourse(r *http.Request) error {
 		logging.Error.Println(err.Error())
 	}
 	course.CourseProgram = bs
+	course.Mainname = r.FormValue("mainname")
 	course.Name = r.FormValue("courseName")
 	course.Symbol = smb
 	course.ExpiryTime = r.FormValue("courseExpT")
 	if course.Symbol == "" || course.Name == "" {
 		return errors.New("Proszę wypełnić wskazane pola")
 	}
-	_, err = config.DB.Exec("INSERT INTO courses(name,symbol,expirytime,courseprogram) VALUES ($1,$2,$3,$4)", course.Name, course.Symbol, course.ExpiryTime, course.CourseProgram)
+	_, err = config.DB.Exec("INSERT INTO courses(mainname,name,symbol,expirytime,courseprogram) VALUES ($1,$2,$3,$4,$5)", course.Mainname, course.Name, course.Symbol, course.ExpiryTime, course.CourseProgram)
 	if err != nil {
 		logging.Error.Println(err.Error())
 		return errors.New("500. Internal Server Error." + err.Error())
@@ -71,7 +73,7 @@ func (cr *Course) PutCourse(r *http.Request) error {
 }
 
 func (cr *Course) AllCourses() ([]Course, error) {
-	rows, err := config.DB.Query("SELECT id,name,symbol,expirytime,courseprogram FROM courses")
+	rows, err := config.DB.Query("SELECT id,mainname,name,symbol,expirytime,courseprogram FROM courses")
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +82,7 @@ func (cr *Course) AllCourses() ([]Course, error) {
 	crs := []Course{}
 	for rows.Next() {
 		cr := Course{}
-		err := rows.Scan(&cr.ID, &cr.Name, &cr.Symbol, &cr.ExpiryTime, &cr.CourseProgram)
+		err := rows.Scan(&cr.ID, &cr.Mainname, &cr.Name, &cr.Symbol, &cr.ExpiryTime, &cr.CourseProgram)
 		if err != nil {
 			return nil, err
 		}
@@ -95,8 +97,8 @@ func (cr *Course) AllCourses() ([]Course, error) {
 func (cr *Course) GetCourseWithId(r *http.Request) (Course, error) {
 	id := r.FormValue("courseid")
 	crs := Course{}
-	err := config.DB.QueryRow("SELECT id,name,symbol,expirytime,courseprogram FROM courses WHERE id = $1", id).
-		Scan(&crs.ID, &crs.Name, &crs.Symbol, &crs.ExpiryTime, &crs.CourseProgram)
+	err := config.DB.QueryRow("SELECT id,mainname,name,symbol,expirytime,courseprogram FROM courses WHERE id = $1", id).
+		Scan(&crs.ID, &crs.Mainname, &crs.Name, &crs.Symbol, &crs.ExpiryTime, &crs.CourseProgram)
 	if err != nil {
 		return crs, err
 	}
@@ -126,7 +128,7 @@ func (cr *Course) OneCourse(r *http.Request) (Course, error) {
 	}
 
 	row := config.DB.QueryRow("SELECT * FROM courses WHERE symbol = $1", smb)
-	err := row.Scan(&crs.ID, &crs.Name, &crs.Symbol, &crs.ExpiryTime, &crs.CourseProgram, &crs.CertFrontpage)
+	err := row.Scan(&crs.ID, &crs.Mainname, &crs.Name, &crs.Symbol, &crs.ExpiryTime, &crs.CourseProgram, &crs.CertFrontpage)
 	if err != nil {
 		return crs, err
 	}
@@ -134,6 +136,7 @@ func (cr *Course) OneCourse(r *http.Request) (Course, error) {
 
 }
 
+//Aktualizacja kursu z forumularza VUE przez JSON
 func (cr *Course) UpdateCourse(r *http.Request) error {
 	// course := Course{}
 	// course.Name = r.FormValue("courseName")
@@ -146,7 +149,7 @@ func (cr *Course) UpdateCourse(r *http.Request) error {
 	// }
 	// return nil
 	json.NewDecoder(r.Body).Decode(&cr)
-	_, err := config.DB.Exec("UPDATE courses SET name=$1,symbol=$2,expirytime=$3,courseprogram=$4,certfrontpage=$5 WHERE symbol=$2", cr.Name, cr.Symbol, cr.ExpiryTime, cr.CourseProgram, cr.CertFrontpage)
+	_, err := config.DB.Exec("UPDATE courses SET mainname=$1, name=$2,symbol=$3,expirytime=$4,courseprogram=$5,certfrontpage=$6 WHERE symbol=$3", cr.Mainname, cr.Name, cr.Symbol, cr.ExpiryTime, cr.CourseProgram, cr.CertFrontpage)
 	if err != nil {
 		errors.New("500. Internal Server Error." + err.Error())
 	}

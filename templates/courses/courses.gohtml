@@ -4,7 +4,7 @@
 <table id="coursesTable" class="table table-sm table-striped " cellspacing="0" width="100%">
         <thead>
           <tr>
-            <th class="th-sm" scope="col">Nazwa</th>
+				<th class="th-sm" scope="col">Nazwa</th>
             <th class="th-sm" scope="col">Symbol</th>
             <th class="th-sm" scope="col">Termin wazności</th>
             <th scope="col"></th>
@@ -13,7 +13,7 @@
         <tbody>
                 {{ range .Data }}
           <tr>
-            <td>{{ .Name }}</td>
+            <td>{{ .Mainname }}</td>
             <td>{{ .Symbol }}</td>
             <td>{{ .ExpiryTime }}</td>
             <td>

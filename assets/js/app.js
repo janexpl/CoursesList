@@ -18,7 +18,7 @@ $(document).ready(function() {
     format: 'yyyy-mm-dd',
     formatSubmit: 'yyyy-mm-dd',
     selectYears: 80,
-    max: true,
+    
     selectMonths: true
   });
 });

@@ -310,6 +310,8 @@ func parseHtml(c models.Certificate) string {
 			tags[htmls[cap[0]:cap[1]]] = (c.CourseDateEnd).Format("02.01.2006")
 		case "data_wystawienia":
 			tags[htmls[cap[0]:cap[1]]] = (c.Date).Format("02.01.2006")
+		case "pesel":
+			tags[htmls[cap[0]:cap[1]]] = c.Student.Pesel
 		case "numer_zaswiadczenia":
 			tags[htmls[cap[0]:cap[1]]] = fmt.Sprintf("%v/%v/%v", c.Registry.Number, c.Registry.Course.Symbol, c.Registry.Year)
 		default:

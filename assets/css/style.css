@@ -86,7 +86,19 @@ table.dataTable thead .sorting_desc_disabled:after {
 body { 
   font-family: 'Roboto', sans-serif !important;
 }
-
+.picker__select--year {
+  font-size: 12px;
+  width: 40px;
+  height: 30px;
+}
+.picker__select--month {
+  font-size: 12px;
+  height: 30px;
+  width: 70px;
+}
+.picker--opened {
+  width: 200px;
+}
 /* .navbar > .container,
 .navbar > .container-fluid
  {

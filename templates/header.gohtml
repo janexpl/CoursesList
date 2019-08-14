@@ -1,75 +1,86 @@
 {{define "header" }}
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-    
+
     <a class="navbar-brand" href="/">Zaświadczenia</a>
     {{ if .CurrentUser.Email }}
     <ul class="nav sticky-top navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Kursy
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/courses">Pokaż wszystkie</a>
-                        <a class="dropdown-item" href="/courses/create">Nowy kurs</a>
-                    </div>
-            </li>
-        
-    
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Kursanci
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/students">Pokaż wszystkich</a>
-                    <a class="dropdown-item" href="/students/create">Nowy kursant</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Klienci
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/companies">Pokaż wszyskich</a>
-                    <a class="dropdown-item" href="/companies/create">Nowa firma</a>
-                </div>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Kursy
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/courses">Pokaż wszystkie</a>
+            <a class="dropdown-item" href="/courses/create">Nowy kurs</a>
+        </div>
+    </li>
 
-            </li>
-            <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Zaświadczenia
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/certificates">Pokaż wszyskie</a>
-                        
-                        <a class="dropdown-item" href="/certificates/create">Nowe zaświadczenie</a>
-                    </div>
-                    
-                </li>
-            {{ if eq .CurrentUser.Admin 1}}
-            <li class="nav-item dropdown">
-                <a class="nav-link" href="/users" id="users" role="button" >
-                    Użytkownicy
-                </a> 
-            </li>
-            {{ end }}
-    </ul>
-    <ul class="nav navbar-nav">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-cog" aria-hidden="true"></i>
-                    Twoje konto
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/users/update">Zmień</a> 
-                    <a class="dropdown-item" href="/users/logout">Wyloguj</a>    
-                    
-                </div>
-                        
-            </li>
-    </ul>
- 
+    
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Kursanci
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/students">Pokaż wszystkich</a>
+            <a class="dropdown-item" href="/students/create">Nowy kursant</a>
+        </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Klienci
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/companies">Pokaż wszyskich</a>
+            <a class="dropdown-item" href="/companies/create">Nowa firma</a>
+        </div>
+
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Zaświadczenia
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/certificates">Pokaż wszyskie</a>
+
+            <a class="dropdown-item" href="/certificates/create">Nowe zaświadczenie</a>
+        </div>
+
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dzienniki
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Formy szkolenia</a>
+            <a class="dropdown-item" href="#">Lista dzienników</a>
+            <a class="dropdown-item" href="#">Nowy dziennik</a>
+        </div>
+        
+    </li>
+    {{ if eq .CurrentUser.Admin 1}}
+    <li class="nav-item dropdown">
+        <a class="nav-link" href="/users" id="users" role="button" >
+            Użytkownicy
+        </a> 
+    </li>
     {{ end }}
+</ul>
+<ul class="nav navbar-nav">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-cog" aria-hidden="true"></i>
+            Twoje konto
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/users/update">Zmień</a> 
+            <a class="dropdown-item" href="/users/logout">Wyloguj</a>    
+
+        </div>
+
+    </li>
+</ul>
+
+{{ end }}
 
 </nav>
 

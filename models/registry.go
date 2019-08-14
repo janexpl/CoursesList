@@ -48,6 +48,7 @@ func checkDateIsValid(id int64, year int, number int, date time.Time) (bool, err
    		WHERE registries."year" = $1 and courses.id = $2
     ORDER BY
         "number"`, year, id)
+
 	if err != nil {
 		return false, err
 	}
@@ -94,12 +95,11 @@ func checkDateIsValid(id int64, year int, number int, date time.Time) (bool, err
 	maxdate := ress[max].date.Unix()
 
 	if date.Unix() < mindate || date.Unix() > maxdate {
-
 		return false, err
 	}
-	if err != nil {
-		return false, err
-	}
+	// if err != nil {
+	// 	return false, err
+	// }
 
 	return true, nil
 }

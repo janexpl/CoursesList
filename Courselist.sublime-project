@@ -3,6 +3,9 @@
 	[
 		{
 			"path": "."
+		},
+		{
+			"path": "/Users/janusz/Development/Projects/Nauka/wxCpp"
 		}
 	]
 }
